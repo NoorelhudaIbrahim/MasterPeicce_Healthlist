@@ -69,7 +69,7 @@ if(isset($_GET['delete'])){
 
 <head>
     <meta charset="utf-8">
-    <title>Art Hand Kraft</title>
+    <title>Healthlist</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -85,7 +85,7 @@ if(isset($_GET['delete'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -103,7 +103,7 @@ if(isset($_GET['delete'])){
             content: "\f0c9";
         }
         .btn-primary {
-            background-color: rgb(0, 0, 69);
+            background-color: #189116;
             border-color: rgb(0, 0, 69);
         }
         .sidebar {
@@ -120,7 +120,7 @@ if(isset($_GET['delete'])){
             background-color: #fff !important;
         }
         .bg-secondary {
-            background-color: rgb(0, 0, 69) !important;
+            background-color: #189116 !important;
         }
     </style>
 </head>
@@ -135,7 +135,7 @@ if(isset($_GET['delete'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../uploaded_img/logo1.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
@@ -152,6 +152,8 @@ if(isset($_GET['delete'])){
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="products.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="Recipe.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Recipes</a>
+                    <a href="Brands.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Brands</a>
                     <a href="sold.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-store-slash me-2"></i>Sold</a>
                     <a href="sales.php" class="nav-item nav-link"><i class="fa-brands fa-adversal me-2"></i>Sales</a>
                     <a href="category.php" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Category</a>
@@ -171,10 +173,10 @@ if(isset($_GET['delete'])){
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <h5 class="mb-4">Add New Product</h5>
+                            <h5 class="mb-4">Add New Category</h5>
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Product Name</label>
+                                    <label for="exampleInputEmail1" class="form-label">Category Name</label>
                                     <input type="text" name="name" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
@@ -187,7 +189,7 @@ if(isset($_GET['delete'])){
                     </div>
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <img src="https://cdn.shopify.com/s/files/1/0277/3614/5999/articles/soorten-kunst.png?v=1623749344" width="550px" height="500px">
+                            <img src="https://media.healthyfood.com/wp-content/uploads/2023/02/iStock-996422316-500x500.jpg" width="550px" height="500px">
                         </div>
                     </div>
                 </div>
@@ -203,7 +205,7 @@ if(isset($_GET['delete'])){
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <h5 class="mb-4">Your Category</h5>
+                            <h5 class="mb-4">Categories</h5>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>

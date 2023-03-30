@@ -57,7 +57,7 @@ if(isset($_POST['update'])){
 
 <head>
     <meta charset="utf-8">
-    <title>Art Hand Kraft</title>
+    <title>Healthlist</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -77,7 +77,7 @@ if(isset($_POST['update'])){
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-    <link rel="icon" type="image/x-icon" href="../images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -92,7 +92,7 @@ if(isset($_POST['update'])){
             content: "\f0c9";
         }
         .btn-primary {
-            background-color: rgb(0, 0, 69);
+            background-color: #189116;
             border-color: rgb(0, 0, 69);
         }
         .sidebar {
@@ -109,7 +109,7 @@ if(isset($_POST['update'])){
             background-color: #fff !important;
         }
         .bg-secondary {
-            background-color: rgb(0, 0, 69) !important;
+            background-color: #189116 !important;
         }
     </style>
 </head>
@@ -124,7 +124,7 @@ if(isset($_POST['update'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../uploaded_img/logo1.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
