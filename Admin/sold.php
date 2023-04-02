@@ -130,7 +130,7 @@ if(isset($_GET['delete'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -180,7 +180,7 @@ if(isset($_GET['delete'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                <img src="../Images/logo0.png"  width="150px" height="55px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">

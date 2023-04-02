@@ -17,7 +17,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo.png" width="160rem" height="50rem">
+                        <img src="./Images/logo1.png" width="160rem" height="50rem">
                     </div>
                     <div class="col-md-5 my-auto" style="position: relative;left:12rem;">
                         <form role="search">

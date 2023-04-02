@@ -47,7 +47,7 @@ if(isset($_POST['name']) && isset($_POST['pass'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -99,8 +99,7 @@ if(isset($_POST['name']) && isset($_POST['pass'])){
         <div class="container-fluid">
 
             <div style="position: absolute;">
-                <img src="../Images/logo.png" width="450px" height="250px" style="float: left; margin-left: 200px; margin-top: 200px;">
-                <!-- <p style="margin-left: 80px; color: rgb(0, 0, 69); font-size: 60px; font-weight: bold; margin-top: 460px;">ART HAND KRAFT</p> -->
+            <img src="../Images/logo1.png" width="450px" height="250px" style="float: left; margin-left: 200px; margin-top: 200px;">
             </div>
             
                <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh; margin-left: 500px;">

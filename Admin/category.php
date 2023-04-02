@@ -19,7 +19,7 @@ if(isset($_POST['add_category'])){
    $image_01 = htmlspecialchars($image_01, ENT_QUOTES);
    $image_size_01 = $_FILES['image_01']['size'];
    $image_tmp_name_01 = $_FILES['image_01']['tmp_name'];
-   $image_folder_01 = '../uploaded_img/'.$image_01;
+   $image_folder_01 = './uploaded_img/'.$image_01; 
 
    $select_categorys = $conn->prepare("SELECT * FROM `category` WHERE category_name = ?");
    $select_categorys->execute([$name]);
@@ -51,7 +51,7 @@ if(isset($_GET['delete'])){
    $delete_category_image = $conn->prepare("SELECT * FROM `category` WHERE category_id = ?");
    $delete_category_image->execute([$delete_id]);
    $fetch_delete_image = $delete_category_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image_01']);
+   unlink('./uploaded_img/'.$fetch_delete_image['image_01']);
    $delete_category = $conn->prepare("DELETE FROM `category` WHERE category_id = ?");
    $delete_category->execute([$delete_id]);
    header('location:category.php');
@@ -85,7 +85,7 @@ if(isset($_GET['delete'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -135,7 +135,7 @@ if(isset($_GET['delete'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                <img src="../Images/logo0.png"  width="150px" height="55px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
@@ -232,7 +232,7 @@ if(isset($_GET['delete'])){
 
                                             <td><?= $fetch_categorys['category_name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_categorys['image_01']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_categorys['image_01']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
                                             
                                             <td><a style="color:blue" href="update_category.php?update=<?= $fetch_categorys['category_id']; ?>" class="option-btn">Update</a></td>

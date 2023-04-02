@@ -23,6 +23,7 @@ if(isset($_POST['add_product'])){
    $details = $_POST['details'];
    $details = htmlspecialchars($details, ENT_QUOTES);
    $category_id = $_POST['category'];
+   $brand_id = $_POST['brand'];
    $quantity = $_POST['store'];
 
 // تحميل صورة و تشفيرها
@@ -34,7 +35,7 @@ if(isset($_POST['add_product'])){
 // تحديد المسار الموجودة فيه الصورة
    $image_tmp_name = $_FILES['image']['tmp_name'];
 // تحديد المسار الجديد للصورة و تذكر انه يجب انشاء مجلد جديد مشابه للاسم المختار في المسار الجديد
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = './uploaded_img/'.$image;
 
 
 // قراءة جميع المنتجات الموجودة في الداتابيس لتأكد من ان اسم المنتج غير متكرر , جدول المنتجات-عمود الاسم
@@ -55,8 +56,8 @@ if(isset($_POST['add_product'])){
 
 // القيام برفع كافة تفاصيل المنتج التي تم ادخالها و يجب التاكد من ان عدد الاعمدة مساوي لعدد البيانات المراد رفعها
 
-    $insert_products = $conn->prepare("INSERT INTO `products`(name, details, price, image, category_id, store) VALUES(?,?,?,?,?,?)");
-    $insert_products->execute([$name, $details, $price, $image, $category_id , $quantity ]);
+    $insert_products = $conn->prepare("INSERT INTO `products`(name, details, price, image, category_id, brand_id,store) VALUES(?,?,?,?,?,?,?)");
+    $insert_products->execute([$name, $details, $price, $image, $category_id ,$brand_id,$quantity ]);
       
 // شرط للتأكد من ان حجم الصورة اقل من 2 ميجا
 
@@ -94,7 +95,7 @@ if(isset($_GET['delete'])){
    $delete_product_image = $conn->prepare("SELECT * FROM `products` WHERE product_id = ?");
    $delete_product_image->execute([$delete_id]);
    $fetch_delete_image = $delete_product_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image']);
+   unlink('./uploaded_img/'.$fetch_delete_image['image']);
 
 // هون بدي امسح المنتج كامل و بعدين اقله انقلني على صفحة المنتجات عشان ما اضطر اعمل ريفريش للصفحة لما احذف منتج
    $delete_product = $conn->prepare("DELETE FROM `products` WHERE product_id = ?");
@@ -130,7 +131,7 @@ if(isset($_GET['delete'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -180,7 +181,7 @@ if(isset($_GET['delete'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                <img src="../Images/logo0.png"  width="150px" height="55px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
@@ -268,6 +269,32 @@ if(isset($_GET['delete'])){
                                         ?>    
                                     </select>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Product Brand</label>
+                                    <select name="brand" placeholder="enter product brand" required class="box" required maxlength="500" cols="60" rows="10">
+                                        <?php
+                                        // اول اشي استدعي كل الاعمدة الي بجدول البراند
+                                                $prepare_brand = $conn->prepare("SELECT * FROM `brands`");
+                                                $prepare_brand->execute();
+                                        // هون بسأله اذا اصلا فيه بيانات بجدول البراند اول , الفانكشن (روو كاونت ) بحسب عدد الصفوف بالجدول فلو كان صفر يعني ما فيه داتا بهادا الجدول
+
+                                                if($prepare_brand->rowCount() > 0){
+                                                    // اذا الجدول فيه داتا فبقله اقرألي هاي البيانات و اعطيها اسم الي هو فيتش_كاتيجوري
+                                                    while($fetch_brand = $prepare_brand->fetch(PDO::FETCH_ASSOC)){
+                                        ?>
+                                        <option class="dropdown-item" name="brand">
+                                                <?php 
+                                                // جوا تاج الاوبشن بقله اطبعلي الاي دييه لكل براند بالاضافة لاسمها و بسكر التاج بعيدها
+                                                echo $fetch_brand['brand_id'] . "/" . $fetch_brand['brand_name']; 
+                                                ?>
+                                        </option>
+                                        <!-- هون بتكون جملة اللوب الاولى تبعت الوايل خلصت , فبرجع بلف كمان مرة و بطلع البراند الثانية و هيك -->
+                                        <?php 
+                                        // هاي جملة الايلس تبعت في حال كان عدد الصفوف بالجدول يساوي صفر , طبعا اول قوس كيرلي هو تسكيرة قوس الوايل لانه لازم يكون بعد تاج الاوبشن حتى ما يصير فيه مشاكل بعرض الداتا
+                                                } } else { echo 'There is no brand. Please create one first.';} 
+                                        ?>    
+                                    </select>
+                                </div>
                                 <button type="submit" class="btn btn-primary" value="Add Product" name="add_product">Add Product</button>
                             </form>
                         </div>
@@ -301,6 +328,7 @@ if(isset($_GET['delete'])){
                                             <th scope="col">Product Price</th>
                                             <th scope="col">Product Discount</th>
                                             <th scope="col">Product Category</th>
+                                            <th scope="col">Product Brand</th>
                                             <th scope="col">Product Details</th>
                                             <th scope="col">Remaining</th>
                                             <th scope="col">Product Update</th>
@@ -322,7 +350,7 @@ if(isset($_GET['delete'])){
 
                                             <td><?= $fetch_products['name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
                                             <?php if ($fetch_products['is_sale'] == 1){ ?>
 
@@ -346,6 +374,20 @@ if(isset($_GET['delete'])){
                                             ?>
 
                                             <td>Category : <?= $fetch_product_category['category_name']; ?></td>
+
+                                            <?php } } } ?>
+
+                                            <?php $product_brand = $conn->prepare("SELECT * 
+                                                                                    FROM `products`
+                                                                                    INNER JOIN `brands` ON products.brand_id = brands.brand_id");
+                                                    $product_brand->execute();
+                                                    if($product_brand->rowCount() > 0){
+                                                        while($fetch_product_brand = $product_brand->fetch(PDO::FETCH_ASSOC)){ 
+                                                            if($i==0 && $fetch_products['brand_id'] == $fetch_product_brand['brand_id'] ){
+                                                            $i++;
+                                            ?>
+
+                                            <td>Brand : <?= $fetch_product_brand['brand_name']; ?></td>
 
                                             <?php } } } ?>
          

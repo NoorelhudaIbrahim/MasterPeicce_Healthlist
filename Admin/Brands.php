@@ -10,7 +10,7 @@ if(!isset($admin_id)){
    header('location:admin_login.php');
 };
 
-if(isset($_POST['add_category'])){
+if(isset($_POST['add_brand'])){
 
    $name = $_POST['name'];
    $name = htmlspecialchars($name, ENT_QUOTES);
@@ -19,19 +19,19 @@ if(isset($_POST['add_category'])){
    $image_01 = htmlspecialchars($image_01, ENT_QUOTES);
    $image_size_01 = $_FILES['image_01']['size'];
    $image_tmp_name_01 = $_FILES['image_01']['tmp_name'];
-   $image_folder_01 = '../uploaded_img/'.$image_01;
+   $image_folder_01 = './uploaded_img/'.$image_01;
 
-   $select_brands = $conn->prepare("SELECT * FROM `brands` WHERE brand_name = ?");
-   $select_brands->execute([$name]);
+   $select_brand = $conn->prepare("SELECT * FROM `brands` WHERE brand_name = ?");
+   $select_brand->execute([$name]);
 
-   if($select_brands->rowCount() > 0){
+   if($select_brand->rowCount() > 0){
       $message[] = 'brand name already exist!';
    }else{
 
-      $insert_brands = $conn->prepare("INSERT INTO `brands`(brand_name, image_01) VALUES(?,?)");
-      $insert_brands->execute([$name, $image_01]);
+      $insert_brand = $conn->prepare("INSERT INTO `brands`(brand_name, image_01) VALUES(?,?)");
+      $insert_brand->execute([$name, $image_01]);
 
-      if($insert_brands){
+      if($insert_brand){
          if($image_size_01 > 2000000){
             $message[] = 'image size is too large!';
          }else{
@@ -48,12 +48,12 @@ if(isset($_POST['add_category'])){
 if(isset($_GET['delete'])){
 
    $delete_id = $_GET['delete'];
-   $delete_category_image = $conn->prepare("SELECT * FROM `brands` WHERE brand_id = ?");
-   $delete_category_image->execute([$delete_id]);
-   $fetch_delete_image = $delete_category_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image_01']);
-   $delete_category = $conn->prepare("DELETE FROM `brands` WHERE brand_id = ?");
-   $delete_category->execute([$delete_id]);
+   $delete_brand_image = $conn->prepare("SELECT * FROM `brands` WHERE brand_id = ?");
+   $delete_brand_image->execute([$delete_id]);
+   $fetch_delete_image = $delete_brand_image->fetch(PDO::FETCH_ASSOC);
+   unlink('./uploaded_img/'.$fetch_delete_image['image_01']);
+   $delete_brand = $conn->prepare("DELETE FROM `brands` WHERE brand_id = ?");
+   $delete_brand->execute([$delete_id]);
    header('location:brand.php');
 }
 
@@ -85,7 +85,7 @@ if(isset($_GET['delete'])){
     <!-- Icon Font Stylesheet -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="../Images/logo.png">
+    <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
     <!-- Libraries Stylesheet -->
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
@@ -135,7 +135,7 @@ if(isset($_GET['delete'])){
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-secondary navbar-dark" style="height: 100%;">
                 <a href="index.html" class="navbar-brand mx-4 mb-3">
-                    <img src="../Images/logo.png" style="border-radius: 50%;" width="100px" height="100px" alt="0">
+                <img src="../Images/logo0.png"  width="150px" height="55px" alt="0">
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
@@ -183,13 +183,13 @@ if(isset($_GET['delete'])){
                                     <label for="exampleInputEmail1" class="form-label">Image</label>
                                     <input type="file" name="image_01" accept="image/jpg, image/jpeg, image/png, image/webp" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
-                                <button type="submit" class="btn btn-primary" value="Add Category" name="add_category">Add Brand</button>
+                                <button type="submit" class="btn btn-primary" value="Add Brand" name="add_brand">Add Brand</button>
                             </form>
                         </div>
                     </div>
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <img src="https://cdn.shopify.com/s/files/1/2449/5585/files/IMG_7094_large.JPG?v=1512668052" width="550px" height="500px">
+                            <img src="https://cdn.glutenfreeliving.com/2022/02/gfl-gluten-free-bobs-red-mill-shutterstock-1436289356-825x338.jpg" width="550px" height="500px">
                         </div>
                     </div>
                 </div>
@@ -222,20 +222,20 @@ if(isset($_GET['delete'])){
 
                                     <?php
                                         $numbering =1;
-                                        $select_brands = $conn->prepare("SELECT * FROM `brands`");
-                                        $select_brands->execute();
-                                        if($select_brands->rowCount() > 0){
-                                            while($fetch_brands = $select_brands->fetch(PDO::FETCH_ASSOC)){ 
+                                        $select_brand = $conn->prepare("SELECT * FROM `brands`");
+                                        $select_brand->execute();
+                                        if($select_brand->rowCount() > 0){
+                                            while($fetch_brand = $select_brand->fetch(PDO::FETCH_ASSOC)){ 
                                     ?>
                                         <tr>
                                             <td><?= $numbering++; ?> 
 
-                                            <td><?= $fetch_brands['brand_name']; ?></td>
+                                            <td><?= $fetch_brand['brand_name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_brands['image_01']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_brand['image_01']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
                                             
-                                            <td><a style="color:blue" href="update_category.php?update=<?= $fetch_brands['brand_id']; ?>" class="option-btn">Update</a></td>
+                                            <td><a style="color:blue" href="update_brand.php?update=<?= $fetch_brand['brand_id']; ?>" class="option-btn">Update</a></td>
 
                                             <td><a href="brand.php?delete=<?= $fetch_brands['brand_id']; ?>" class="delete-btn" onclick="return confirm('delete this brand?');">Delete</a></td>
 

@@ -35,7 +35,7 @@ if(isset($_POST['submit'])){
    <title>Healthlist</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
-   <link rel="icon" type="image/x-icon" href="../images/hllogo.png">
+   <link rel="icon" type="image/x-icon" href="../Images/logotitle.png">
 
    <link rel="stylesheet" href="../css/admin_style.css">
 
