@@ -6,8 +6,8 @@
     <title>Healthlist</title>
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="stylesheet" href="CSS/index.css">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/home.css">
 
 </head>
 <body>
@@ -33,26 +33,26 @@
                         <ul class="nav justify-content-end">
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="cart.html">
+                                <a class="nav-link" href="Cart.php">
                                     <i class="fa fa-shopping-cart"></i> Cart (0)
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
+                                <a class="nav-link" href="Wishlist.php">
                                     <i class="fa fa-heart"></i> Wishlist (0)
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user"></i> Username 
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
                                 <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
                                 <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="register.html"><i class="fa fa-sign-up"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="login.html"><i class="fa fa-sign-in"></i> Login</a></li>
+                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-sign-up"></i> Register</a></li>
+                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
                                 <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
                                 </ul>
                             </li>
@@ -73,22 +73,22 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav me-20 mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="#index"><b>Home</b></a>
+                            <a class="nav-link" href="Home.php"><b>Home</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="about.html"><b>About Us</b></a>
+                            <a class="nav-link" href="About.php"><b>About Us</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html"><b>Products</b></a>
+                            <a class="nav-link" href="Product.php"><b>Products</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="brands.html"><b>Brands</b></a>
+                            <a class="nav-link" href="Brand_product.php"><b>Brands</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="recipe.html"><b>Recipe</b></a>
+                            <a class="nav-link" href="Recipes.php"><b>Recipes</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="contact.html"><b>Contact</b></a>
+                            <a class="nav-link" href="Contact.php"><b>Contact</b></a>
                         </li>
                         <!-- <li class="nav-item">
                             <a class="nav-link" href="#">Accessories</a>
@@ -200,6 +200,355 @@
             });
         });
     </script>
+<!-- ----------------------------------------------------------- -->
+
+
+
+<!-- -------------------------shop by category-------------------------------- -->
+<section class="category">
+
+
+   <h1 class="heading">shop by category</h1>
+
+
+   <div >
+
+      
+
+
+
+         <a href="category.php?category=Dairy Free" class="swiper-slide slide">
+            <img src="./uploaded_img/Dairy_Free.png" alt="">
+            <h3>Dairy Free</h3>
+         </a>
+
+         <a href="category.php?category=Gluten Free" class="swiper-slide slide">
+            <img src="./uploaded_img/Gluten_Free.png" alt="">
+            <h3>Gluten Free</h3>
+         </a>
+
+         <a href="category.php?category=Vegan" class="swiper-slide slide">
+            <img src="./uploaded_img/Vegan.png" alt="">
+            <h3>Vegan</h3>
+         </a>
+
+         <a href="category.php?category=Diabetes Friendly" class="swiper-slide slide">
+            <img src="./uploaded_img/Diabetes_Friendly.png" alt="">
+            <h3>Diabetes_Friendly</h3>
+         </a>
+
+      </div>
+     
+
+
+</section>
+
+<!-- ----------------------------------------------------------------------- -->
+<div class="col-lg-12">
+                    <div class="title-all text-center">
+                        <h1>Featured Products</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+                    </div>
+                    <div class="featured-products-box owl-carousel owl-theme owl-loaded owl-drag">
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                    <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1125px, 0px, 0px); transition: all 0.25s ease 0s; width: 4500px;"><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
+                            <div class="products-single fix">
+                                <div class="box-img-hover">
+                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
+                                    <div class="mask-icon">
+                                        <ul>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
+                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
+                                        </ul>
+                                        <a class="cart" href="#">Add to Cart</a>
+                                    </div>
+                                </div>
+                                <div class="why-text">
+                                    <h4>Lorem ipsum dolor sit amet</h4>
+                                    <h5> $9.79</h5>
+                                </div>
+                            </div>
+                        </div></div></div></div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><i class="fas fa-arrow-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="fas fa-arrow-right"></i></button></div><div class="owl-dots disabled"></div></div>
+                </div>
+
 <!-- -------------------------footer-------------------------------- -->
       <div>
         <div class="footer-area">

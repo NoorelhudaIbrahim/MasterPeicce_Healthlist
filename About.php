@@ -13,8 +13,10 @@
     <!-- ------------------googlefont--------------------- -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cinzel+Decorative:wght@700&family=Mr+Dafoe&family=Tangerine:wght@700&display=swap" rel="stylesheet">
     <!-- ------------------external css--------------------- -->
-    <link rel="stylesheet" href="CSS/style.css">
-    <link rel="stylesheet" href="CSS/about.css">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/about.css">
+    <link rel="stylesheet" href="css/contact.css">
+
     <title>About</title>   
 </head>
 
@@ -26,7 +28,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo.png" width="160rem" height="50rem">
+                        <img src="./Images/logo1.png" width="160rem" height="50rem">
                     </div>
                     <div class="col-md-5 my-auto" style="position: relative;left:12rem;">
                         <form role="search">
@@ -125,6 +127,44 @@
     </script>
 
 <!-- -------------------------About-------------------------------- -->
+<!-- <section>
+    <div class="about" >
+        <div class="row">
+            <div class="content">
+                <h2>Who we are?</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat vero voluptatem deleniti reprehenderit, et, numquam accusamus totam recusandae dicta cupiditate cum facere minima commodi. Qui voluptates delectus quia, consequatur sed necessitatibus dolorum eligendi possimus magnam aliquam dolores sit ipsa esse hic ratione nihil ut soluta natus doloribus voluptatem ipsum? Molestias!</p>
+                <a href="#" class="btn">learn more</a>
+            </div>
+            <div class="image">
+                <img src="#" alt="">
+            </div>
+        </div>
+        <div class="row">
+          <div class="image">
+            <img src="#" alt="">
+        </div>
+          <div class="content" id="our-vision">
+              <h2>Our vision</h2>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat vero voluptatem deleniti reprehenderit, et, numquam accusamus totam recusandae dicta cupiditate cum facere minima commodi. Qui voluptates delectus quia, consequatur sed necessitatibus dolorum eligendi possimus magnam aliquam dolores sit ipsa esse hic ratione nihil ut soluta natus doloribus voluptatem ipsum? Molestias!</p>
+              <a href="#" class="btn">learn more</a>
+          </div>
+          
+      </div>
+    </div>
+</section> -->
+<div class="container-fluid page-header wow fadeIn" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn;">
+<div class="container">
+<h1 class="display-3 mb-3  slideInDown">About Us</h1>
+<nav aria-label="breadcrumb animated slideInDown">
+<ol class="breadcrumb mb-0">
+<li class="breadcrumb-item"><a class="text-body" href="#">Home</a></li>
+<li class="breadcrumb-item"><a class="text-body" href="#">Pages</a></li>
+<li class="breadcrumb-item text-dark active" aria-current="page">Contact Us</li>
+</ol>
+</nav>
+</div>
+</div>
+        
 <section>
     <div class="about" >
         <div class="row">
@@ -151,6 +191,40 @@
     </div>
 </section>
 
+<div class="container-fluid bg-light bg-icon py-6">
+<div class="container">
+<div class="section-header text-center mx-auto mb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 500px; visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<h1 class="display-5 mb-3">Our Features</h1>
+<p>Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed rebum vero dolor duo.</p>
+</div>
+<div class="row g-4">
+<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;">
+<div class="bg-white text-center h-100 p-4 p-xl-5">
+<img class="img-fluid mb-4" src="./Images/icon-1.png" alt="">
+<h4 class="mb-3">Natural Process</h4>
+<p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
+<a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+</div>
+</div>
+<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInUp;">
+<div class="bg-white text-center h-100 p-4 p-xl-5">
+<img class="img-fluid mb-4" src="./Images/icon-2.png" alt="">
+<h4 class="mb-3">Organic Products</h4>
+<p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
+<a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+</div>
+</div>
+<div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+<div class="bg-white text-center h-100 p-4 p-xl-5">
+<img class="img-fluid mb-4" src="./Images/icon-3.png" alt="">
+<h4 class="mb-3">Biologically Safe</h4>
+<p class="mb-4">Tempor ut dolore lorem kasd vero ipsum sit eirmod sit. Ipsum diam justo sed vero dolor duo.</p>
+<a class="btn btn-outline-primary border-2 py-2 px-4 rounded-pill" href="">Read More</a>
+</div>
+</div>
+</div>
+</div>
+</div>
 <!-- -------------------------Services-------------------------------- -->
 
 <!-- <div class="services pd">

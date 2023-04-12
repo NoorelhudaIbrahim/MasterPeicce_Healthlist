@@ -20,6 +20,8 @@ if(isset($_POST['add_product'])){
    $name = htmlspecialchars($name, ENT_QUOTES);
    $price = $_POST['price'];
    $price = htmlspecialchars($price, ENT_QUOTES);
+   $description = $_POST['description'];
+   $description = htmlspecialchars($description, ENT_QUOTES);
    $details = $_POST['details'];
    $details = htmlspecialchars($details, ENT_QUOTES);
    $category_id = $_POST['category'];
@@ -56,8 +58,8 @@ if(isset($_POST['add_product'])){
 
 // القيام برفع كافة تفاصيل المنتج التي تم ادخالها و يجب التاكد من ان عدد الاعمدة مساوي لعدد البيانات المراد رفعها
 
-    $insert_products = $conn->prepare("INSERT INTO `products`(name, details, price, image, category_id, brand_id,store) VALUES(?,?,?,?,?,?,?)");
-    $insert_products->execute([$name, $details, $price, $image, $category_id ,$brand_id,$quantity ]);
+    $insert_products = $conn->prepare("INSERT INTO `products`(name, description ,details, price, image, category_id, brand_id,store) VALUES(?,?,?,?,?,?,?,?)");
+    $insert_products->execute([$name, $description ,$details, $price, $image, $category_id ,$brand_id,$quantity ]);
       
 // شرط للتأكد من ان حجم الصورة اقل من 2 ميجا
 
@@ -236,6 +238,10 @@ if(isset($_GET['delete'])){
                                     <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Product Description</label>
+                                    <input type="text" name="description" class="form-control" required id="exampleInputPassword1">
+                                </div>
+                                <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Product Details</label>
                                     <input type="text" name="details" class="form-control" required id="exampleInputPassword1">
                                 </div>
@@ -329,6 +335,7 @@ if(isset($_GET['delete'])){
                                             <th scope="col">Product Discount</th>
                                             <th scope="col">Product Category</th>
                                             <th scope="col">Product Brand</th>
+                                            <th scope="col">Product Description</th>
                                             <th scope="col">Product Details</th>
                                             <th scope="col">Remaining</th>
                                             <th scope="col">Product Update</th>
@@ -346,7 +353,7 @@ if(isset($_GET['delete'])){
                                                 $i=0;
                                     ?>
                                         <tr>
-                                            <td><?= $numbering++; ?> 
+                                            <td><?= $numbering++; ?> </td>
 
                                             <td><?= $fetch_products['name']; ?></td>
 
@@ -354,11 +361,11 @@ if(isset($_GET['delete'])){
 
                                             <?php if ($fetch_products['is_sale'] == 1){ ?>
 
-                                                <td><del style="text-decoration:line-through; color:silver">$<?= $fetch_products['price']; ?></del></td>
-                                                <td><ins style="color:rgb(0, 220, 0);"> $<?=$fetch_products['price_discount'];?></ins></td>
+                                                <td><del style="text-decoration:line-through; color:silver"><?= $fetch_products['price']; ?></del>JOD</td>
+                                                <td><ins style="color:rgb(0, 220, 0);"> <?=$fetch_products['price_discount'];?></ins>JOD</td>
 
                                                 <?php } else { ?>
-                                                <td style="color:rgb(0, 220, 0);">$<?= $fetch_products['price']; ?></td>
+                                                <td style="color:rgb(0, 220, 0);"><?= $fetch_products['price']; ?>JOD</td>
                                                 <td>Not On Sale</td>
                                                 <?php } 
                                             ?>
@@ -390,7 +397,7 @@ if(isset($_GET['delete'])){
                                             <td>Brand : <?= $fetch_product_brand['brand_name']; ?></td>
 
                                             <?php } } } ?>
-         
+                                            <td><?= $fetch_products['description']; ?></td>
                                             <td><?= $fetch_products['details']; ?></td>
                                             <td style="text-align: center;"><?= $fetch_products['store']-$fetch_products['sold']; ?></td>
 
@@ -408,22 +415,6 @@ if(isset($_GET['delete'])){
                     </div>
                 </div>
             </div>
-            
-            <!-- Sales Chart End -->
-
-
-            <!-- Recent Sales Start -->
-            
-            <!-- Recent Sales End -->
-
-
-            <!-- Widgets Start -->
-            
-            <!-- Widgets End -->
-
-
-            <!-- Footer Start -->
-            <!-- Footer End -->
         </div>
         <!-- Content End -->
 

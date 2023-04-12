@@ -1,448 +1,222 @@
-
-<!doctype html>
-<html class="no-js" lang="zxx">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Healthlist</title>
-    <meta name="robots" content="noindex, follow" />
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="css/404page.css">
+    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/home.css">
 
-    <!-- Place favicon.png in the root directory -->
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
-    <!-- Font Icons css -->
-    <link rel="stylesheet" href="css/font-icons.css">
-    <!-- plugins css -->
-    <link rel="stylesheet" href="css/plugins.css">
-    <!-- Main Stylesheet -->
-    <link rel="stylesheet" href="css/style.css">
-    <!-- Responsive css -->
-    <link rel="stylesheet" href="css/responsive.css">
 </head>
-
 <body>
-   
-
-    <!-- Add your site or application content here -->
-
-<!-- Body main wrapper start -->
-<div class="body-wrapper">
-
-    <!-- HEADER AREA START (header-5) -->
-    <header class="ltn__header-area ltn__header-5 ltn__header-transparent gradient-color-2">
-        <!-- ltn__header-top-area start -->
-        <div class="ltn__header-top-area d-none">
-            <div class="container">
+<!-- -------------------------logo bar-------------------------------- -->
+    <div class="main-navbar shadow-sm sticky-top">
+        <div class="top-navbar">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-7">
-                        <div class="ltn__top-bar-menu">
-                            <ul>
-                                <li><a href="locations.html"><i class="icon-placeholder"></i> 15/A, Nest Tower, NYC</a></li>
-                                <li><a href="mailto:info@webmail.com?Subject=Flower%20greetings%20to%20you"><i class="icon-mail"></i> info@webmail.com</a></li>
-                            </ul>
-                        </div>
+                    <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
+                        <img src="./Images/logo1.png" width="160rem" height="50rem">
                     </div>
-                    <div class="col-md-5">
-                        <div class="top-bar-right text-right">
-                            <div class="ltn__top-bar-menu">
-                                <ul>
-                                    <li>
-                                        <!-- ltn__language-menu -->
-                                        <div class="ltn__drop-menu ltn__currency-menu ltn__language-menu">
-                                            <ul>
-                                                <li><a href="#" class="dropdown-toggle"><span class="active-currency">English</span></a>
-                                                    <ul>
-                                                        <li><a href="#">Arabic</a></li>
-                                                        <li><a href="#">Bengali</a></li>
-                                                        <li><a href="#">Chinese</a></li>
-                                                        <li><a href="#">English</a></li>
-                                                        <li><a href="#">French</a></li>
-                                                        <li><a href="#">Hindi</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <!-- ltn__social-media -->
-                                        <div class="ltn__social-media">
-                                            <ul>
-                                                <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                                                <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                                                
-                                                <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-                                                <li><a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a></li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
+                    <div class="col-md-5 my-auto" style="position: relative;left:12rem;">
+                        <form role="search">
+                            <div class="input-group">
+                                <input type="search" placeholder="Search your product" class="form-control" />
+                                <button class="btn bg-white" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
-                </div>
-            </div>
-        </div>
-        <!-- ltn__header-top-area end -->
-
-        <!-- ltn__header-middle-area start -->
-        <div class="ltn__header-middle-area ltn__header-sticky ltn__sticky-bg-black plr--9---">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="site-logo-wrap">
-                            <div class="site-logo">
-                                <a href="index.html"><img src="img/logo-2.png" alt="Logo"></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col header-menu-column menu-color-white">
-                        <div class="header-menu d-none d-xl-block">
-                            <nav>
-                                <div class="ltn__main-menu">
-                                    <ul>
-                                        <li class="menu-icon"><a href="#">Home</a>
-                                            <ul class="sub-menu menu-pages-img-show ltn__sub-menu-col-2---">
-                                                <li>
-                                                    <a href="index.html">Home Style 01</a>
-                                                    <img src="img/home-demos/home-1.jpg" alt="#">
-                                                </li>
-                                               
-                                            </ul>
-                                        </li>
-                                        <li class="menu-icon"><a href="#">About</a>
-                                        </li>
-                                        <li class="menu-icon"><a href="#">Shop</a>
-                                            <ul>
-                                                <li><a href="shop.html">Shop</a></li>
-                                                <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                                <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                                <li><a href="product-details.html">Shop details </a></li>
-                                                <li><a href="#">Other Pages <span class="float-right">>></span></a>
-                                                    <ul>
-                                                        <li><a href="cart.html">Cart</a></li>
-                                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                                        <li><a href="checkout.html">Checkout</a></li>
-                                                        <li><a href="order-tracking.html">Order Tracking</a></li>
-                                                        <li><a href="account.html">My Account</a></li>
-                                                        <li><a href="login.html">Sign in</a></li>
-                                                        <li><a href="register.html">Register</a></li>
-                                                    </ul>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        
-                                        <li class="menu-icon"><a href="#">Pages</a>
-                                            <ul class="mega-menu">
-                                                
-                                                <li><a href="#">Inner Pages</a>
-                                                    <ul>
-                                                        <li><a href="404.html">404</a></li>
-                                                        <li><a href="contact.html">Contact</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Shop Pages</a>
-                                                    <ul>
-                                                        <li><a href="shop.html">Shop</a></li>
-                                                        <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                                                        <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                                                        <li><a href="shop-grid.html">Shop Grid</a></li>
-                                                        <li><a href="product-details.html">Shop details </a></li>
-                                                        <li><a href="cart.html">Cart</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="shop.html"><img src="img/banner/menu-banner-1.png" alt="#"></a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li class="special-link"><a href="contact.html">GET A QUOTE</a></li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
-                    </div>
-                    <div class="ltn__header-options ltn__header-options-2">
-                        <!-- header-search-1 -->
-                        <div class="header-search-wrap">
-                            <div class="header-search-1">
-                                <div class="search-icon">
-                                    <i class="icon-search for-search-show"></i>
-                                    <i class="icon-cancel  for-search-close"></i>
-                                </div>
-                            </div>
-                            <div class="header-search-1-form">
-                                <form id="#" method="get"  action="#">
-                                    <input type="text" name="search" value="" placeholder="Search here..."/>
-                                    <button type="submit">
-                                        <span><i class="icon-search"></i></span>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                        <!-- user-menu -->
-                        <div class="ltn__drop-menu user-menu">
-                            <ul>
-                                <li>
-                                    <a href="#"><i class="icon-user"></i></a>
-                                    <ul>
-                                        <li><a href="login.html">Sign in</a></li>
-                                        <li><a href="register.html">Register</a></li>
-                                        <li><a href="account.html">My Account</a></li>
-                                        <li><a href="wishlist.html">Wishlist</a></li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <!-- mini-cart -->
-                        <div class="mini-cart-icon">
-                            <a href="#ltn__utilize-cart-menu" class="ltn__utilize-toggle">
-                                <i class="icon-shopping-cart"></i>
-                                <sup>2</sup>
-                            </a>
-                        </div>
-                        <!-- mini-cart -->
-                        <!-- Mobile Menu Button -->
-                        <div class="mobile-menu-toggle d-xl-none">
-                            <a href="#ltn__utilize-mobile-menu" class="ltn__utilize-toggle">
-                                <svg viewBox="0 0 800 600">
-                                    <path d="M300,220 C300,220 520,220 540,220 C740,220 640,540 520,420 C440,340 300,200 300,200" id="top"></path>
-                                    <path d="M300,320 L540,320" id="middle"></path>
-                                    <path d="M300,210 C300,210 520,210 540,210 C740,210 640,530 520,410 C440,330 300,190 300,190" id="bottom" transform="translate(480, 320) scale(1, -1) translate(-480, -318) "></path>
-                                </svg>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- ltn__header-middle-area end -->
-    </header>
-    <!-- HEADER AREA END -->
-    
-    <!-- Utilize Cart Menu Start -->
-    <div id="ltn__utilize-cart-menu" class="ltn__utilize ltn__utilize-cart-menu">
-        <div class="ltn__utilize-menu-inner ltn__scrollbar">
-            <div class="ltn__utilize-menu-head">
-                <span class="ltn__utilize-menu-title">Cart</span>
-                <button class="ltn__utilize-close">×</button>
-            </div>
-            <div class="mini-cart-product-area ltn__scrollbar">
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/1.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Red Hot Tomato</a></h6>
-                        <span class="mini-cart-quantity">1 x $65.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/2.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Vegetables Juices</a></h6>
-                        <span class="mini-cart-quantity">1 x $85.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/3.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Orange Sliced Mix</a></h6>
-                        <span class="mini-cart-quantity">1 x $92.00</span>
-                    </div>
-                </div>
-                <div class="mini-cart-item clearfix">
-                    <div class="mini-cart-img">
-                        <a href="#"><img src="img/product/4.png" alt="Image"></a>
-                        <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
-                    </div>
-                    <div class="mini-cart-info">
-                        <h6><a href="#">Orange Fresh Juice</a></h6>
-                        <span class="mini-cart-quantity">1 x $68.00</span>
-                    </div>
-                </div>
-            </div>
-            <div class="mini-cart-footer">
-                <div class="mini-cart-sub-total">
-                    <h5>Subtotal: <span>$310.00</span></h5>
-                </div>
-                <div class="btn-wrapper">
-                    <a href="cart.html" class="theme-btn-1 btn btn-effect-1">View Cart</a>
-                    <a href="cart.html" class="theme-btn-2 btn btn-effect-2">Checkout</a>
-                </div>
-                <p>Free Shipping on All Orders Over $100!</p>
-            </div>
-
-        </div>
-    </div>
-    <!-- Utilize Cart Menu End -->
-
-    <!-- Utilize Mobile Menu Start -->
-    <div id="ltn__utilize-mobile-menu" class="ltn__utilize ltn__utilize-mobile-menu">
-        <div class="ltn__utilize-menu-inner ltn__scrollbar">
-            <div class="ltn__utilize-menu-head">
-                <div class="site-logo">
-                    <a href="index.html"><img src="img/logo.png" alt="Logo"></a>
-                </div>
-                <button class="ltn__utilize-close">×</button>
-            </div>
-            <div class="ltn__utilize-menu-search-form">
-                <form action="#">
-                    <input type="text" placeholder="Search...">
-                    <button><i class="fas fa-search"></i></button>
-                </form>
-            </div>
-            <div class="ltn__utilize-menu">
-                <ul>
-                    <li><a href="#">Home</a>
-                    </li>
-                    <li><a href="#">About</a>
-                        <ul class="sub-menu">
-                            <li><a href="about.html">About</a></li>
+                    <div class="col-md-5 my-auto">
+                        <ul class="nav justify-content-end">
                             
+                            <li class="nav-item">
+                                <a class="nav-link" href="Cart.php">
+                                    <i class="fa fa-shopping-cart"></i> Cart (0)
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="Wishlist.php">
+                                    <i class="fa fa-heart"></i> Wishlist (0)
+                                </a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> Username 
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
+                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-sign-up"></i> Register</a></li>
+                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                </ul>
+                            </li>
                         </ul>
-                    </li>
-                    <li><a href="#">Shop</a>
-                        <ul class="sub-menu">
-                            <li><a href="shop.html">Shop</a></li>
-                            <li><a href="shop-grid.html">Shop Grid</a></li>
-                            <li><a href="shop-left-sidebar.html">Shop Left sidebar</a></li>
-                            <li><a href="shop-right-sidebar.html">Shop right sidebar</a></li>
-                            <li><a href="product-details.html">Shop details </a></li>
-                            <li><a href="cart.html">Cart</a></li>
-                            <li><a href="wishlist.html">Wishlist</a></li>
-                            <li><a href="checkout.html">Checkout</a></li>
-                            <li><a href="order-tracking.html">Order Tracking</a></li>
-                            <li><a href="account.html">My Account</a></li>
-                            <li><a href="login.html">Sign in</a></li>
-                            <li><a href="register.html">Register</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">News</a>
-                    </li>
-                    <li><a href="#">Pages</a>
-                        <ul class="sub-menu">
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="service.html">Services</a></li>
-                            <li><a href="service-details.html">Service Details</a></li>
-                            <li><a href="portfolio.html">Portfolio</a></li>
-                            <li><a href="portfolio-details.html">Portfolio Details</a></li>
-                            <li><a href="team.html">Team</a></li>
-                            <li><a href="team-details.html">Team Details</a></li>
-                            <li><a href="faq.html">FAQ</a></li>
-                            <li><a href="404.html">404</a></li>
-                            <li><a href="contact.html">Contact</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="contact.html">Contact</a></li>
-                </ul>
-            </div>
-            <div class="ltn__utilize-buttons ltn__utilize-buttons-2">
-                <ul>
-                    <li>
-                        <a href="account.html" title="My Account">
-                            <span class="utilize-btn-icon">
-                                <i class="far fa-user"></i>
-                            </span>
-                            My Account
-                        </a>
-                    </li>
-                    <li>
-                        <a href="wishlist.html" title="Wishlist">
-                            <span class="utilize-btn-icon">
-                                <i class="far fa-heart"></i>
-                                <sup>3</sup>
-                            </span>
-                            Wishlist
-                        </a>
-                    </li>
-                    <li>
-                        <a href="cart.html" title="Shoping Cart">
-                            <span class="utilize-btn-icon">
-                                <i class="fas fa-shopping-cart"></i>
-                                <sup>5</sup>
-                            </span>
-                            Shoping Cart
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="ltn__social-media-2">
-                <ul>
-                    <li><a href="#" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="#" title="Twitter"><i class="fab fa-twitter"></i></a></li>
-                    <li><a href="#" title="Linkedin"><i class="fab fa-linkedin"></i></a></li>
-                    <li><a href="#" title="Instagram"><i class="fab fa-instagram"></i></a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <!-- Utilize Mobile Menu End -->
-
-    <div class="ltn__utilize-overlay"></div>
-
-    <!-- BREADCRUMB AREA START -->
-    <div class="ltn__breadcrumb-area ltn__breadcrumb-area-2 ltn__breadcrumb-color-white bg-overlay-theme-black-90 bg-image pt-115 pb-110" data-bg="img/bg/9.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ltn__breadcrumb-inner ltn__breadcrumb-inner-2 justify-content-between">
-                        <div class="section-title-area ltn__section-title-2">
-                            <h6 class="section-subtitle ltn__secondary-color">//  Welcome to our company</h6>
-                            <h1 class="section-title white-color">404 Page</h1>
-                        </div>
-                        <div class="ltn__breadcrumb-list">
-                            <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li>404</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+<!-- -------------------------navbar-------------------------------- --> 
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <a class="navbar-brand d-block d-sm-block d-md-none d-lg-none" href="#">
+                    Funda Ecom
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-20 mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Home.php"><b>Home</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="About.php"><b>About Us</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Product.php"><b>Products</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Brand_product.php"><b>Brands</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Recipes.php"><b>Recipes</b></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Contact.php"><b>Contact</b></a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">Accessories</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Appliances</a>
+                        </li> -->
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-    <!-- BREADCRUMB AREA END -->
 
-    <!-- 404 area start -->
-    <div class="ltn__404-area ltn__404-area-1 mb-120">
+<!-- -------------------------404page not found-------------------------------- --> 
+<!-- <div class="content" style="padding-top: 80px;padding-bottom: 80px;margin-bottom: -101rem;">
         <div class="container">
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="error-404-inner text-center">
-                        <h1 class="error-404-title">404</h1>
-                        <h2>Page Not Found! Page Not Found!</h2>
-                        <!-- <h3>Oops! Looks like something going rong</h3> -->
-                        <p>Oops! The page you are looking for does not exist. It might have been moved or deleted.</p>
-                        <div class="btn-wrapper">
-                            <a href="index.html" class="btn btn-transparent"><i class="fas fa-long-arrow-alt-left"></i> BACK TO HOME</a>
-                        </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="error-section">
+                        <h2 class="text-success">Let’s Take A Break</h2>
+                        <h2 class="error-title">404</h2>
+                        <span class="error-small-title">Error</span>
+                        <p>Oooopsssss!!!! The page you are looking for is does not exist.</p>
+                        <a href="#" class="btn btn-success btn-lg">Back to Home</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    <div class="error-img"><img src="./Images/error_img.png" alt="" class="img-responsive">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!-- 404 area end -->
+    </div> -->
 
-    
-
+<div class="container-xxl py-6 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;padding-top: 6rem;padding-bottom: 6rem;margin-bottom: -97rem;">
+    <div class="container text-center">
+        <div class="row justify-content-center">
+<div class="col-lg-6">
+<!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-exclamation-triangle display-1 text-success" viewBox="0 0 16 16" >
+  <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z"/>
+  <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z"/>
+</svg> -->
+<i class="bi bi-exclamation-triangle display-1 text-primary"></i>
+<h1 class="display-1 text-success" style="color:green;">404</h1>
+<h1 class="mb-4">Page Not Found</h1>
+<p class="mb-4">We’re sorry, the page you have looked for does not exist in our website! Maybe go to our home page or try to use a search?</p>
+<a class="btn btn-success rounded-pill py-3 px-5" href="Home.php" style="background-color:green;">Go Back To Home</a>
 </div>
-<!-- Body main wrapper end -->
+        </div>
+    </div>
+</div>
 
-    <!-- All JS Plugins -->
-    <script src="js/plugins.js"></script>
-    <!-- Main JS -->
-    <script src="js/main.js"></script>
-  
+<!-- -------------------------footer-------------------------------- -->
+      <div>
+        <div class="footer-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Healthlist E-Commerce</h4>
+                        <div class="footer-underline"></div>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Quick Links</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2"><a href="" class="text-white">Home</a></div>
+                        <div class="mb-2"><a href="" class="text-white">About Us</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+                        <!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Extra Links</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2"><a href="" class="text-white">Login</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Register</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Cart</a></div>
+                        <div class="mb-2"><a href="" class="text-white">orders</a></div>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Reach Us</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2">
+                            <p>
+                                <i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+                            </p>
+                        </div>
+                        <div class="mb-2">
+                            <a href="" class="text-white">
+                                <i class="fa fa-phone"></i> +91 888-XXX-XXXX
+                            </a>
+                        </div>
+                        <div class="mb-2">
+                            <a href="" class="text-white">
+                                <i class="fa fa-envelope"></i> healthlist@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area " >
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="social-media">
+                            Get Connected:
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script> -->
 </body>
 </html>
-

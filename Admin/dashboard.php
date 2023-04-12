@@ -86,17 +86,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
     
  }
 
-
-
-
 ?>
-
-<?php 
-
-
-
-?>
-
 
 
 
@@ -165,9 +155,6 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
 
 <body>
     <div class="container-fluid position-relative d-flex p-0">
-        <!-- Spinner Start -->
-        <!-- Spinner End -->
-
 
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
@@ -178,7 +165,6 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
                         <h4 class="mb-0">
-
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();
                                 $admin_name = $select_accounts->fetch();
@@ -208,125 +194,125 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
         <!-- Content Start -->
         <div class="content">
 
-            <div class="container-fluid pt-4 px-4">
-                <!-- <div class="row g-4">
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4" style="background-color: #fff !important; ">
-                            <i class="fa fa-chart-line fa-3x text-primary" style="color:rgb(0, 0, 69) !important"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Sale</p>
-                                <h6 class="mb-0" style="color:black !important">$234</h6>
-                            </div>
+            <div class="container-fluid px-4">
+                <h3 class="mt-5  text-center fw-normal" style="color: rgb(92, 92, 92);">Admin Panel-Overview</h3>
+            <div class="row mt-7">
+                   <div class="col-xl-3 col-md-6 ">
+
+                     <div class="card bg-primary text-white mb-4">
+                        <div class="card-body text-white">Total Categories
+                        <?php $select_category = $conn->prepare("SELECT COUNT(*) FROM `category`");
+                                $select_category->execute();
+                                $result = $select_category->fetchColumn();
+                                echo '<h4 class="mb-0">'. $result.'</h4>';
+                        ?>
+                           
+                        </div> 
+
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                             <a class="small text-white stretched-link" href="category.php">View Details</a>
+                             <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                        </div>
                         </div>
                     </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4" style="background-color: #fff !important; ">
-                            <i class="fa fa-chart-bar fa-3x text-primary" style="color:rgb(0, 0, 69) !important"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Sale</p>
-                                <h6 class="mb-0" style="color:black !important">$3522</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4" style="background-color: #fff !important; ">
-                            <i class="fa fa-chart-area fa-3x text-primary" style="color:rgb(0, 0, 69) !important"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Today Revenue</p>
-                                <h6 class="mb-0" style="color:black !important">$104</h6>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6 col-xl-3">
-                        <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4" style="background-color: #fff !important; ">
-                            <i class="fa fa-chart-pie fa-3x text-primary" style="color:rgb(0, 0, 69) !important"></i>
-                            <div class="ms-3">
-                                <p class="mb-2">Total Revenue</p>
-                                <h6 class="mb-0" style="color:black !important">$2606</h6>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-            </div>
+
+                   
+
+
+<div class="col-xl-3 col-md-6">
+
+<div class="card bg-warning text-white mb-4">
+   <div class="card-body text-white">Total Products
+   <?php $select_product = $conn->prepare("SELECT COUNT(*) FROM `products`");
+         $select_product->execute();
+         $result = $select_product->fetchColumn();
+         echo '<h4 class="mb-0">'. $result.'</h4>';
+    ?>
+   </div> 
+   <div class="card-footer d-flex align-items-center justify-content-between">
+        <a class="small text-white stretched-link" href="products.php">View Details</a>
+        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+   </div>
+   </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+
+<div class="card bg-success text-white mb-4">
+   <div class="card-body text-white">Total Brands
+   <?php $select_brand = $conn->prepare("SELECT COUNT(*) FROM `brands`");
+         $select_brand->execute();
+         $result = $select_brand->fetchColumn();
+         echo '<h4 class="mb-0">'. $result.'</h4>';
+    ?>   
+    </div> 
+   <div class="card-footer d-flex align-items-center justify-content-between">
+        <a class="small text-white stretched-link" href="Brands.php">View Details</a>
+        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+   </div>
+   </div>
+</div>
+
+<div class="col-xl-3 col-md-6">
+
+<div class="card bg-danger text-white mb-4">
+   <div class="card-body text-white">Total Recipes
+   <?php $select_recipe = $conn->prepare("SELECT COUNT(*) FROM `recipes`");
+         $select_recipe->execute();
+         $result = $select_recipe->fetchColumn();
+         echo '<h4 class="mb-0">'. $result.'</h4>';
+    ?>      </div> 
+   <div class="card-footer d-flex align-items-center justify-content-between">
+        <a class="small text-white stretched-link" href="Recipe.php">View Details</a>
+        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+   </div>
+   </div>
+</div>
+</div>
             
-            <!-- Sales Chart End -->
-
-            <!-- <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4" style="background-color: #fff !important; ">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0" style="color:black !important">Worldwide Sales</h6>
-                            </div>
-                            <img src="https://www.imf.org/wp-content/uploads/2021/12/COTW-FDI-update.gif" width="320px">
-                        </div>
-                    </div>
-                    <div class="col-sm-12 col-xl-6">
-                        <div class="bg-secondary text-center rounded p-4" style="background-color: #fff !important; ">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0" style="color:black !important">Salse & Revenue</h6>
-                            </div>
-                            <img src="https://exceljet.net/sites/default/files/images/chart/inline/income%20statement%20annual%20final.png">
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-            <!-- Sales Chart End -->
-
-
-            <!-- Recent Sales Start -->
+            <!-- Top Sales Products -->
             <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary text-center rounded p-4" style="background-color: #fff !important; ">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0" style="color:black !important">Top Products</h6>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col" style="color:black !important">Product Name</th>
-                                    <th scope="col" style="color:black !important">Customer</th>
-                                    <th scope="col" style="color:black !important">Amount</th>
-                                    <th scope="col" style="color:black !important">Review</th>
-                                </tr>
-                            </thead>
-                            <!-- <tbody>
-                                <tr>
-                                    <td>Mandala Quilling</td>
-                                    <td>asem</td>
-                                    <td>$530</td>
-                                    <td>Excellent</td>                                   
-                                </tr>
-                                <tr>
-                                    <td>Realistic and real</td>
-                                    <td>abood</td>
-                                    <td>$430</td>
-                                    <td>Amazing</td>                                    
-                                </tr>
-                                <tr>
-                                    <td>Sun and Moon</td>
-                                    <td>Abdelmajied</td>
-                                    <td>$250</td>
-                                    <td>Very Good</td>                                   
-                                </tr>
-                                <tr>
-                                    <td>Acrylic and gold leaf</td>
-                                    <td>abrar</td>
-                                    <td>$150</td>
-                                    <td>Interesting Product</td>                                   
-                                </tr>
-                                <tr>
-                                    <td>Resin Art Inspo</td>
-                                    <td>Aladdin Amayreh</td>
-                                    <td>$135</td>
-                                    <td>Very Good</td>
-                                </tr>
-                            </tbody> -->
-                        </table>
-                    </div>
-                </div>
+            <div class="bg-secondary text-center rounded p-4" style="background-color: #fff !important; ">
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h5 class="mb-0" style="color: rgb(92, 92, 92);">Top Sales Products</h5>
+            </div>
+            <div class="table-responsive">
+                <?php
+                $sql = "SELECT product_id, SUM(quantity) AS total_sales FROM order_details GROUP BY product_id ORDER BY total_sales DESC LIMIT 10";
+
+                // Execute the query and fetch the results
+                $stmt = $conn->prepare($sql);
+                $stmt->execute();
+                $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                // Store the product details in an array
+                $product_details = array();
+                foreach ($products as $product) {
+                    $product_id = $product['product_id'];
+                    $total_sales = $product['total_sales'];
+                    $sql = "SELECT * FROM products WHERE id = :product_id";
+                    $stmt = $pdo->prepare($sql);
+                    $stmt->bindParam(':product_id', $product_id);
+                    $stmt->execute();
+                    $product_details[] = array_merge($stmt->fetch(PDO::FETCH_ASSOC), array('total_sales' => $total_sales));
+                }
+
+                // Display the top-selling products in a table
+                echo '<table class="table">';
+                echo "<tr><th>Product ID</th><th>Product Name</th><th>Price</th><th>Total Sales</th></tr>";
+                foreach ($product_details as $product) {
+                    echo "<tr>";
+                    echo "<td>" . $product['id'] . "</td>";
+                    echo "<td>" . $product['name'] . "</td>";
+                    echo "<td>" . $product['price'] . "</td>";
+                    echo "<td>" . $product['total_sales'] . "</td>";
+                    echo "</tr>";
+                }
+                echo "</table>";
+                ?>
             </div>
         </div>
+    </div>
         <!-- Content End -->
 
 
