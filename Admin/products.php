@@ -22,8 +22,6 @@ if(isset($_POST['add_product'])){
    $price = htmlspecialchars($price, ENT_QUOTES);
    $description = $_POST['description'];
    $description = htmlspecialchars($description, ENT_QUOTES);
-   $details = $_POST['details'];
-   $details = htmlspecialchars($details, ENT_QUOTES);
    $category_id = $_POST['category'];
    $brand_id = $_POST['brand'];
    $quantity = $_POST['store'];
@@ -58,8 +56,8 @@ if(isset($_POST['add_product'])){
 
 // القيام برفع كافة تفاصيل المنتج التي تم ادخالها و يجب التاكد من ان عدد الاعمدة مساوي لعدد البيانات المراد رفعها
 
-    $insert_products = $conn->prepare("INSERT INTO `products`(name, description ,details, price, image, category_id, brand_id,store) VALUES(?,?,?,?,?,?,?,?)");
-    $insert_products->execute([$name, $description ,$details, $price, $image, $category_id ,$brand_id,$quantity ]);
+    $insert_products = $conn->prepare("INSERT INTO `products`(name, description, price, image, category_id, brand_id,store) VALUES(?,?,?,?,?,?,?)");
+    $insert_products->execute([$name, $description , $price, $image, $category_id ,$brand_id,$quantity ]);
       
 // شرط للتأكد من ان حجم الصورة اقل من 2 ميجا
 
@@ -242,10 +240,6 @@ if(isset($_GET['delete'])){
                                     <input type="text" name="description" class="form-control" required id="exampleInputPassword1">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Product Details</label>
-                                    <input type="text" name="details" class="form-control" required id="exampleInputPassword1">
-                                </div>
-                                <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Quantity In Store</label>
                                     <input type="number" name="store" class="form-control" required id="exampleInputPassword1">
                                 </div>
@@ -336,7 +330,6 @@ if(isset($_GET['delete'])){
                                             <th scope="col">Product Category</th>
                                             <th scope="col">Product Brand</th>
                                             <th scope="col">Product Description</th>
-                                            <th scope="col">Product Details</th>
                                             <th scope="col">Remaining</th>
                                             <th scope="col">Product Update</th>
                                             <th scope="col">Product Delete</th>
@@ -398,7 +391,6 @@ if(isset($_GET['delete'])){
 
                                             <?php } } } ?>
                                             <td><?= $fetch_products['description']; ?></td>
-                                            <td><?= $fetch_products['details']; ?></td>
                                             <td style="text-align: center;"><?= $fetch_products['store']-$fetch_products['sold']; ?></td>
 
                                             <td><a href="update_product.php?update=<?= $fetch_products['product_id']; ?>" style="color:blue" class="option-btn">Update</a></td>

@@ -210,10 +210,10 @@
     color: var(--light);
 }
 
-.content .navbar .dropdown-item:hover,
+/* .content .navbar .dropdown-item:hover,
 .content .navbar .dropdown-item.active {
-    /* background: var(--dark); */
-}
+    background: var(--dark);
+} */
 
 .content .navbar .dropdown-toggle::after {
     margin-left: 6px;
