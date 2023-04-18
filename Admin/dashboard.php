@@ -199,7 +199,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
             <div class="row mt-7">
                    <div class="col-xl-3 col-md-6 ">
 
-                     <div class="card bg-primary text-white mb-4">
+                     <div class="card bg-success text-white mb-4">
                         <div class="card-body text-white">Total Categories
                         <?php $select_category = $conn->prepare("SELECT COUNT(*) FROM `category`");
                                 $select_category->execute();
@@ -219,56 +219,93 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
                    
 
 
-<div class="col-xl-3 col-md-6">
+                <div class="col-xl-3 col-md-6">
 
-<div class="card bg-warning text-white mb-4">
-   <div class="card-body text-white">Total Products
-   <?php $select_product = $conn->prepare("SELECT COUNT(*) FROM `products`");
-         $select_product->execute();
-         $result = $select_product->fetchColumn();
-         echo '<h4 class="mb-0">'. $result.'</h4>';
-    ?>
-   </div> 
-   <div class="card-footer d-flex align-items-center justify-content-between">
-        <a class="small text-white stretched-link" href="products.php">View Details</a>
-        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
-   </div>
-   </div>
-</div>
+                    <div class="card bg-success text-white mb-4">
+                    <div class="card-body text-white">Total Products
+                    <?php $select_product = $conn->prepare("SELECT COUNT(*) FROM `products`");
+                            $select_product->execute();
+                            $result = $select_product->fetchColumn();
+                            echo '<h4 class="mb-0">'. $result.'</h4>';
+                        ?>
+                    </div> 
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="products.php">View Details</a>
+                            <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                    </div>
+                    </div>
+                    </div>
 
-<div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6">
 
-<div class="card bg-success text-white mb-4">
-   <div class="card-body text-white">Total Brands
-   <?php $select_brand = $conn->prepare("SELECT COUNT(*) FROM `brands`");
-         $select_brand->execute();
-         $result = $select_brand->fetchColumn();
-         echo '<h4 class="mb-0">'. $result.'</h4>';
-    ?>   
-    </div> 
-   <div class="card-footer d-flex align-items-center justify-content-between">
-        <a class="small text-white stretched-link" href="Brands.php">View Details</a>
-        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
-   </div>
-   </div>
-</div>
+                    <div class="card bg-success text-white mb-4">
+                    <div class="card-body text-white">Total Brands
+                    <?php $select_brand = $conn->prepare("SELECT COUNT(*) FROM `brands`");
+                            $select_brand->execute();
+                            $result = $select_brand->fetchColumn();
+                            echo '<h4 class="mb-0">'. $result.'</h4>';
+                        ?>   
+                        </div> 
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="Brands.php">View Details</a>
+                            <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                    </div>
+                    </div>
+                    </div>
 
-<div class="col-xl-3 col-md-6">
+                    <div class="col-xl-3 col-md-6">
 
-<div class="card bg-danger text-white mb-4">
-   <div class="card-body text-white">Total Recipes
-   <?php $select_recipe = $conn->prepare("SELECT COUNT(*) FROM `recipes`");
-         $select_recipe->execute();
-         $result = $select_recipe->fetchColumn();
-         echo '<h4 class="mb-0">'. $result.'</h4>';
-    ?>      </div> 
-   <div class="card-footer d-flex align-items-center justify-content-between">
-        <a class="small text-white stretched-link" href="Recipe.php">View Details</a>
-        <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
-   </div>
-   </div>
-</div>
-</div>
+                    <div class="card bg-success text-white mb-4">
+                    <div class="card-body text-white">Total Recipes
+                    <?php $select_recipe = $conn->prepare("SELECT COUNT(*) FROM `recipes`");
+                            $select_recipe->execute();
+                            $result = $select_recipe->fetchColumn();
+                            echo '<h4 class="mb-0">'. $result.'</h4>';
+                        ?>      </div> 
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="Recipe.php">View Details</a>
+                            <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                    </div>
+                    </div>
+                    </div>
+                    <div class="col-xl-3 col-md-6 ">
+
+                     <div class="card bg-success text-white mb-4">
+                        <div class="card-body text-white">Total Users
+                        <?php $select_user = $conn->prepare("SELECT COUNT(*) FROM `users`");
+                                $select_user->execute();
+                                $result = $select_user->fetchColumn();
+                                echo '<h4 class="mb-0">'. $result.'</h4>';
+                            ?>
+                        </div> 
+                        <div class="card-footer d-flex align-items-center justify-content-between">
+                                <a class="small text-white stretched-link" href="products.php">View Details</a>
+                                <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                        </div>
+                        </div>
+                </div>          
+        
+
+                <div class="col-xl-3 col-md-6 ">
+
+                    <div class="card bg-success text-white mb-4">
+                    <div class="card-body text-white">Total Orders
+                    <?php $select_order = $conn->prepare("SELECT COUNT(*) FROM `orders`");
+                            $select_order->execute();
+                            $result = $select_order->fetchColumn();
+                            echo '<h4 class="mb-0">'. $result.'</h4>';
+                        ?>
+                    </div> 
+                    <div class="card-footer d-flex align-items-center justify-content-between">
+                            <a class="small text-white stretched-link" href="products.php">View Details</a>
+                            <div class="small text-white"><svg class="svg-inline--fa fa-angle-right" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 41.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"></path></svg><!-- <i class="fas fa-angle-right"></i> Font Awesome fontawesome.com --></div>
+                    </div>
+                    </div>
+                    </div>          
+                    </div>
+                    
+
+
             
             <!-- Top Sales Products -->
             <div class="container-fluid pt-4 px-4">

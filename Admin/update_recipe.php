@@ -11,39 +11,41 @@ if(!isset($admin_id)){
 }
 
 if(isset($_POST['update'])){
-
-   $pid = $_POST['pid'];
+   $recipe_id=$_POST['recipe_id'];
    $name = $_POST['name'];
-   $price = $_POST['price'];
-   $description = $_POST['description'];
-   $details = $_POST['details'];
-   $category_data = $_POST['category'];
-   $quantity = $_POST['store'] + $_POST['store_qty'];
+   $rcategory = $_POST['rcategory'];
+   $author = $_POST['author'];
+   $ingredients = $_POST['ingredients'];
+   $instructions = $_POST['instructions'];
+   $nutrition_info = $_POST['nutrition_info'];
+   $category_id = $_POST['category'];
 
-   $update_product = $conn->prepare("UPDATE `products` SET name = ?, price = ?, description= ?,details= ? ,category_id = ?, store = ? WHERE product_id = ?");
-   $update_product->execute([$name, $price,$description ,$details, $category_data, $quantity, $pid]);
 
-   $message[] = 'product updated successfully!';
+
+   $update_recipe = $conn->prepare("UPDATE `recipes` SET name=?, rcategory=?, author=?, ingredients=?, instructions=?, nutrition_info=?, category_id=?, recipe_id=?");
+   $update_recipe->execute([$name,$rcategory,$author,$ingredients,  $instructions,  $nutrition_info, $category_id,$recipe_id]);
+
+   $message[] = 'recipe updated successfully!';
 
    $old_image = $_POST['old_image'];
    $image = $_FILES['image']['name'];
    $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = './uploaded_img/'.$image;
 
    if(!empty($image)){
       if($image_size > 2000000){
          $message[] = 'image size is too large!';
       }else{
-         $update_image = $conn->prepare("UPDATE `products` SET image = ? WHERE product_id = ?");
-         $update_image->execute([$image, $pid]);
+         $update_image = $conn->prepare("UPDATE `recipes` SET image = ? WHERE recipe_id = ?");
+         $update_image->execute([$image, $recipe_id]);
          move_uploaded_file($image_tmp_name, $image_folder);
-         unlink('../uploaded_img/'.$old_image);
+         unlink('./uploaded_img/'.$old_image);
          $message[] = 'image updated successfully!';
-         header('location:http://localhost/php_project/admin/products.php');
+         header('location:http://localhost/php_project/admin/Recipe.php');
       }
    }
-   header('location:http://localhost/MasterPiece_Healthlist/admin/products.php');
+   header('location:http://localhost/MasterPiece_Healthlist/admin/Recipe.php');
 }
 
 
@@ -141,7 +143,8 @@ if(isset($_POST['update'])){
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
-                    <a href="products.php" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="products.php" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="Recipe.php" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Recipes</a>
                     <a href="sold.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-store-slash me-2"></i>Sold</a>
                     <a href="sales.php" class="nav-item nav-link"><i class="fa-brands fa-adversal me-2"></i>Sales</a>
                     <a href="category.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Category</a>
@@ -165,43 +168,55 @@ if(isset($_POST['update'])){
                 <div class="row g-4">
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important;">
-                            <h5 class="mb-4">Edit Your Product</h5>
+                            <h5 class="mb-4">Edit Your Recipe</h5>
                             <?php
                                 $update_id = $_GET['update'];
-                                $select_products = $conn->prepare("SELECT * FROM `products` WHERE product_id = ?");
-                                $select_products->execute([$update_id]);
-                                if($select_products->rowCount() > 0){
-                                    while($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)){ 
+                                $select_recipes = $conn->prepare("SELECT * FROM `recipes` WHERE recipe_id = ?");
+                                $select_recipes->execute([$update_id]);
+                                if($select_recipes->rowCount() > 0){
+                                    while($fetch_recipes = $select_recipes->fetch(PDO::FETCH_ASSOC)){ 
                             ?>
                             <form action="" method="post" enctype="multipart/form-data">
-                            <input type="hidden" name="pid" value="<?= $fetch_products['product_id']; ?>">
-                            <input type="hidden" name="old_image" value="<?= $fetch_products['image']; ?>">
-                            <input type="hidden" name="store_qty" value="<?= $fetch_products['store']; ?>">
+                            <input type="hidden" name="recipe_id" value="<?= $fetch_recipes['recipe_id']; ?>">
+                            <input type="hidden" name="old_image" value="<?= $fetch_recipes['image']; ?>">
+
+
 
 
                                 <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Edit Product Name</label>
-                                    <input type="text" name="name" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_products['name']; ?>">
+                                    <label for="exampleInputEmail1" class="form-label">Edit Recipe Name</label>
+                                    <input type="text" name="name" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_recipes['name']; ?>">
                                 </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Edit Product Price</label>
-                                    <input type="text" name="price" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_products['price']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Edit Product Description</label>
-                                    <input type="text" name="description" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_products['description']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Edit Product Details</label>
-                                    <input type="text" name="details" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_products['details']; ?>">
-                                </div>
-                                <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Edit Product Image</label>
+                                <!-- <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Edit recipe Image</label>
                                     <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                </div> -->
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Edit Recipe Author</label>
+                                    <input type="text" name="author" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  value="<?= $fetch_recipes['author']; ?>">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Quantity In Store</label>
-                                    <input type="number" name="store" class="form-control" id="exampleInputPassword1">
+                                    <label for="exampleInputEmail1" class="form-label">Ingredients</label>
+                                    <textarea class="form-control bg-white" required id="exampleInputEmail1" aria-describedby="emailHelp" name="ingredients" value="<?= $fetch_recipes['ingredients']; ?>"> </textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Instructions</label>
+                                    <textarea class="form-control bg-white" required id="exampleInputEmail1" aria-describedby="emailHelp" name="instructions" value="<?= $fetch_recipes['instructions']; ?>"></textarea>
+                                </div>
+                               
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Nutrition_Info</label>
+                                    <textarea  class="form-control bg-white"  required id="exampleInputEmail1" aria-describedby="emailHelp" name="nutrition_info" value="<?= $fetch_recipes['nutrition_info']; ?>"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Recipe Category</label>
+                                    <select name="rcategory" placeholder="enter product category" required class="box" required maxlength="500" cols="60" rows="10" value="<?= $fetch_recipes['rcategory']; ?>">
+                                        <option value="mains">Mains</option>
+                                        <option value="salads">Salads</option>
+                                        <option value="Side dishes">Side dishes</option>
+                                        <option value="Desserts">Desserts</option>
+                                        <option value="Breakfast">Breakfast</option>
+                                    </select>
                                 </div>
                                 <div class="mb-3">
                                 <select name="category" placeholder="enter product category" class="box" required maxlength="500" cols="60" rows="10">
@@ -223,7 +238,7 @@ if(isset($_POST['update'])){
                                 </div>
 
                                 <button style="background-color: green;" type="submit" name="update" class="btn btn-primary" value="Update">Update</button>
-                                <button style="background-color: yellow !important;" class="btn btn-primary"> <a href="products.php" class="option-btn">Go Back</a> </button>
+                                <button style="background-color: yellow !important;" class="btn btn-primary"> <a href="Recipe.php" class="option-btn">Go Back</a> </button>
                             </form>
                             <?php
                                     }
@@ -237,11 +252,11 @@ if(isset($_POST['update'])){
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important;">
                               <?php
                                     $update_id = $_GET['update'];
-                                    $select_products = $conn->prepare("SELECT * FROM `products` WHERE product_id = ?");
-                                    $select_products->execute([$update_id]);
-                                    $fetch_products = $select_products->fetch(PDO::FETCH_ASSOC);
+                                    $select_recipes = $conn->prepare("SELECT * FROM `recipes` WHERE recipe_id = ?");
+                                    $select_recipes->execute([$update_id]);
+                                    $fetch_recipes = $select_recipes->fetch(PDO::FETCH_ASSOC);
                                  ?>
-                            <img src="../uploaded_img/<?= $fetch_products['image'];?>" width="550px" height="560px">
+                            <img src="./uploaded_img/<?= $fetch_recipes['image'];?>" width="550px" height="560px">
                         </div>
                     </div>
                 </div>

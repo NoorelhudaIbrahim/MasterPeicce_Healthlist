@@ -323,8 +323,8 @@ if(isset($_GET['delete'])){
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Products Name</th>
-                                            <th scope="col">Products Image</th>
+                                            <th scope="col">Product Name</th>
+                                            <th scope="col">Product Image</th>
                                             <th scope="col">Product Price</th>
                                             <th scope="col">Product Discount</th>
                                             <th scope="col">Product Category</th>

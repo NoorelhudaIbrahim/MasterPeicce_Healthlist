@@ -11,19 +11,24 @@ if(!isset($admin_id)){
    header('location:admin_login.php');
 };
 
-// عند تعبئة فورم اضافة منتج جديد بالاسفل , تأكد من تعبئة البيانات التالي ثم القيام بتشفيرها
+// عند تعبئة فورم اضافة وصفة جديد بالاسفل , تأكد من تعبئة البيانات التالي ثم القيام بتشفيرها
 
 
-if(isset($_POST['add_product'])){
+if(isset($_POST['add_recipe'])){
 
    $name = $_POST['name'];
    $name = htmlspecialchars($name, ENT_QUOTES);
-//    $price = $_POST['price'];
-//    $price = htmlspecialchars($price, ENT_QUOTES);
-   $details = $_POST['details'];
-   $details = htmlspecialchars($details, ENT_QUOTES);
+   $rcategory = $_POST['rcategory'];
+   $rcategory= htmlspecialchars($price, ENT_QUOTES);
+   $author = $_POST['author'];
+   $author = htmlspecialchars($author, ENT_QUOTES);
+   $ingredients = $_POST['ingredients'];
+   $ingredients = htmlspecialchars($ingredients, ENT_QUOTES);
+   $instructions = $_POST['instructions'];
+   $instructions = htmlspecialchars($instructions, ENT_QUOTES);
+   $nutrition_info = $_POST['nutrition_info'];
+   $nutrition_info = htmlspecialchars($nutrition_info, ENT_QUOTES);
    $category_id = $_POST['category'];
-//    $quantity = $_POST['store'];
 
 // تحميل صورة و تشفيرها
 
@@ -37,26 +42,26 @@ if(isset($_POST['add_product'])){
    $image_folder = '../uploaded_img/'.$image;
 
 
-// قراءة جميع المنتجات الموجودة في الداتابيس لتأكد من ان اسم المنتج غير متكرر , جدول المنتجات-عمود الاسم
+// قراءة جميع الوصفات الموجودة في الداتابيس لتأكد من ان اسم الوصفة غير متكرر , جدول الوصفات-عمود الاسم
 
 // علامة الاستفهام تعني انتظار عنصر في فانكشين ال الاكسكيوت , اذا بدك حط المتغير مباشرة ولكن الافضل هو هاي
 
    $select_recipes= $conn->prepare("SELECT * FROM `recipes` WHERE name = ?");
    $select_recipes->execute([$name]);
 
-// في حالة ايجاد الاسم اطبع انه المنتج موجود
+// في حالة ايجاد الاسم اطبع انه الوصفة موجودة
 
    if($select_recipes->rowCount() > 0){
       $message[] = 'recipe name already exist!';
 
-// غير ذلك , قم برفع المنتج الجديد الى قاعدة البيانات
+// غير ذلك , قم برفع الوصفة الجديدة الى قاعدة البيانات
 
    }else{
 
-// القيام برفع كافة تفاصيل المنتج التي تم ادخالها و يجب التاكد من ان عدد الاعمدة مساوي لعدد البيانات المراد رفعها
+// القيام برفع كافة تفاصيل الوصفة التي تم ادخالها و يجب التاكد من ان عدد الاعمدة مساوي لعدد البيانات المراد رفعها
 
-    $insert_recipes= $conn->prepare("INSERT INTO `recipes`(name, details, image, category_id) VALUES(?,?,?,?)");
-    $insert_recipes->execute([$name, $details,  $image, $category_id  ]);
+    $insert_recipes= $conn->prepare("INSERT INTO `recipes`(name,image,rcategory,author,ingredients,instructions,nutrition_info,category_id) VALUES(?,?,?,?,?,?,?,?)");
+    $insert_recipes->execute([$name,$image,$rcategory,$author,$ingredients,$instructions,$nutrition_info,$category_id  ]);
       
 // شرط للتأكد من ان حجم الصورة اقل من 2 ميجا
 
@@ -82,7 +87,7 @@ if(isset($_POST['add_product'])){
 
 
 
-// اذا بدك تمسح منتج
+// اذا بدك تمسح وصفة
 
 // اول اشي اتاكد من انه انكبس على كبسة الديليت 
 if(isset($_GET['delete'])){
@@ -90,13 +95,13 @@ if(isset($_GET['delete'])){
 // اقرء الاي ديه الي مبعوث مع الرابط 
    $delete_id = $_GET['delete'];
 
-// هون بدي امسح الصورة تبعت المنتج الي كبسة على الديليت تبعته
+// هون بدي امسح الصورة تبعت الوصفة الي كبسة على الديليت تبعته
    $delete_recipe_image = $conn->prepare("SELECT * FROM `recipes` WHERE recipe_id = ?");
    $delete_recipe_image->execute([$delete_id]);
    $fetch_delete_image = $delete_recipe_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image']);
+   unlink('./uploaded_img/'.$fetch_delete_image['image']);
 
-// هون بدي امسح المنتج كامل و بعدين اقله انقلني على صفحة المنتجات عشان ما اضطر اعمل ريفريش للصفحة لما احذف منتج
+// هون بدي امسح الوصفة كاملة و بعدين اقله انقلني على صفحة الوصفات عشان ما اضطر اعمل ريفريش للصفحة لما احذف وصفة
    $delete_product = $conn->prepare("DELETE FROM `recipes` WHERE recipe_id = ?");
    $delete_product->execute([$delete_id]);
    header('location:recipes.php');
@@ -226,24 +231,39 @@ if(isset($_GET['delete'])){
                                     <label for="exampleInputEmail1" class="form-label">Recipe Name</label>
                                     <input type="text" name="name" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Product Price</label>
-                                    <input type="text" class="form-control" required id="exampleInputEmail1" aria-describedby="emailHelp" name="price">
-                                </div> -->
                                 <div class="mb-3">
                                     <label for="exampleInputEmail1" class="form-label">Image</label>
                                     <input type="file" name="image" accept="image/jpg, image/jpeg, image/png, image/webp" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                                 </div>
                                 <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Recipe Details</label>
-                                    <input type="text" name="details" class="form-control" required id="exampleInputPassword1">
+                                    <label for="exampleInputEmail1" class="form-label">Recipe Author</label>
+                                    <input type="text" class="form-control" required id="exampleInputEmail1" aria-describedby="emailHelp" name="author">
                                 </div>
-                                <!-- <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Quantity In Store</label>
-                                    <input type="number" name="store" class="form-control" required id="exampleInputPassword1">
-                                </div> -->
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Ingredients</label>
+                                    <textarea class="form-control bg-white" required id="exampleInputEmail1" aria-describedby="emailHelp" name="ingredients"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Instructions</label>
+                                    <textarea class="form-control bg-white" required id="exampleInputEmail1" aria-describedby="emailHelp" name="instructions"></textarea>
+                                </div>
+                               
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Nutrition_Info</label>
+                                    <textarea  class="form-control bg-white"  required id="exampleInputEmail1" aria-describedby="emailHelp" name="nutrition_info"></textarea>
+                                </div>
                                 <div class="mb-3">
                                     <label for="exampleInputPassword1" class="form-label">Recipe Category</label>
+                                    <select name="rcategory" placeholder="enter product category" required class="box" required maxlength="500" cols="60" rows="10">
+                                        <option value="mains">Mains</option>
+                                        <option value="salads">Salads</option>
+                                        <option value="Side dishes">Side dishes</option>
+                                        <option value="Desserts">Desserts</option>
+                                        <option value="Breakfast">Breakfast</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Main Category</label>
                                     <select name="category" placeholder="enter product category" required class="box" required maxlength="500" cols="60" rows="10">
                                         <?php
                                         // اول اشي استدعي كل الاعمدة الي بجدول الكاتيجوري
@@ -290,19 +310,20 @@ if(isset($_GET['delete'])){
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <h5 class="mb-4">Recipess Table</h5>
+                            <h5 class="mb-4">Recipes Table</h5>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Recipes Name</th>
-                                            <th scope="col">Recipes Image</th>
-                                            <!-- <th scope="col">Product Price</th> -->
-                                            <!-- <th scope="col">Product Discount</th> -->
-                                            <th scope="col">Recipes Category</th>
-                                            <th scope="col">Recipes Details</th>
-                                            <!-- <th scope="col">Remaining</th> -->
+                                            <th scope="col">Recipe Name</th>
+                                            <th scope="col">Recipe Image</th>
+                                            <th scope="col">Recipe Author</th> 
+                                            <th scope="col">Recipe Category</th>
+                                            <th scope="col">Main Category</th>
+                                            <th scope="col">Ingredients</th>
+                                            <th scope="col">Instructions</th> 
+                                            <th scope="col">Nutrition_Info</th>
                                             <th scope="col">Recipe Update</th>
                                             <th scope="col">Recipe Delete</th>
                                         </tr>
@@ -311,7 +332,7 @@ if(isset($_GET['delete'])){
 
                                     <?php
                                         $numbering = 1;
-                                        $select_recipes= $conn->prepare("SELECT * FROM `recipes` WHERE store!=sold");
+                                        $select_recipes= $conn->prepare("SELECT * FROM `recipes`");
                                         $select_recipes->execute();
                                         if($select_recipes->rowCount() > 0){
                                             while($fetch_recipes= $select_recipes->fetch(PDO::FETCH_ASSOC)){ 
@@ -322,18 +343,9 @@ if(isset($_GET['delete'])){
 
                                             <td><?= $fetch_recipes['name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_recipes['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
-
-                                            <?php if ($fetch_recipes['is_sale'] == 1){ ?>
-
-                                                <td><del style="text-decoration:line-through; color:silver">$<?= $fetch_recipes['price']; ?></del></td>
-                                                <td><ins style="color:rgb(0, 220, 0);"> $<?=$fetch_recipes['price_discount'];?></ins></td>
-
-                                                <?php } else { ?>
-                                                <td style="color:rgb(0, 220, 0);">$<?= $fetch_recipes['price']; ?></td>
-                                                <td>Not On Sale</td>
-                                                <?php } 
-                                            ?>
+                                            <td><img src="./uploaded_img/<?= $fetch_recipes['image']; ?>" alt="" width="50px" height="50px"></td> 
+                                            <td><?= $fetch_recipes['author']; ?></td>
+                                            <td><?= $fetch_recipes['rcategory']; ?></td>
 
                                             <?php $product_category = $conn->prepare("SELECT * 
                                                                                     FROM `recipes`
@@ -345,16 +357,17 @@ if(isset($_GET['delete'])){
                                                             $i++;
                                             ?>
 
-                                            <td>Category : <?= $fetch_product_category['category_name']; ?></td>
+                                            <td> <?= $fetch_product_category['category_name']; ?></td>
 
                                             <?php } } } ?>
          
-                                            <td><?= $fetch_recipes['details']; ?></td>
-                                            <td style="text-align: center;"><?= $fetch_recipes['store']-$fetch_recipes['sold']; ?></td>
+                                            <td><?= $fetch_recipes['ingredients']; ?></td>
+                                            <td><?= $fetch_recipes['instructions']; ?></td>
+                                            <td><?= $fetch_recipes['nutrition_info']; ?></td>
 
-                                            <td><a href="update_product.php?update=<?= $fetch_recipes['product_id']; ?>" style="color:blue" class="option-btn">Update</a></td>
+                                            <td><a href="update_recipe.php?update=<?= $fetch_recipes['recipe_id']; ?>" style="color:blue" class="option-btn">Update</a></td>
 
-                                            <td><a href="recipes.php?delete=<?= $fetch_recipes['product_id']; ?>" class="delete-btn" onclick="return confirm('delete this product?');">Delete</a></td>
+                                            <td><a href="recipes.php?delete=<?= $fetch_recipes['recipe_id']; ?>" class="delete-btn" onclick="return confirm('delete this recipe?');">Delete</a></td>
                                         </tr>
                                        <?php } } else{
                                                 echo '<p class="empty">no accounts available!</p>';
@@ -366,22 +379,7 @@ if(isset($_GET['delete'])){
                     </div>
                 </div>
             </div>
-            
-            <!-- Sales Chart End -->
-
-
-            <!-- Recent Sales Start -->
-            
-            <!-- Recent Sales End -->
-
-
-            <!-- Widgets Start -->
-            
-            <!-- Widgets End -->
-
-
-            <!-- Footer Start -->
-            <!-- Footer End -->
+        
         </div>
         <!-- Content End -->
 

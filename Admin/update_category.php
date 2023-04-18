@@ -12,7 +12,7 @@ if(!isset($admin_id)){
 
 if(isset($_POST['update'])){
 
-   $cat_id = $_POST['cat_id'];
+   $cat_id = $_POST['category_id'];
    $name = $_POST['name'];
    $name = htmlspecialchars($name, ENT_QUOTES);
 
@@ -26,7 +26,7 @@ if(isset($_POST['update'])){
    $image_01 = htmlspecialchars($image_01, ENT_QUOTES);
    $image_size_01 = $_FILES['image_01']['size'];
    $image_tmp_name_01 = $_FILES['image_01']['tmp_name'];
-   $image_folder_01 = '../uploaded_img/'.$image_01;
+   $image_folder_01 = './uploaded_img/'.$image_01;
 
    if(!empty($image_01)){
       if($image_size_01 > 2000000){
@@ -35,7 +35,7 @@ if(isset($_POST['update'])){
          $update_image_01 = $conn->prepare("UPDATE `category` SET image_01 = ? WHERE category_id = ?");
          $update_image_01->execute([$image_01, $cat_id]);
          move_uploaded_file($image_tmp_name_01, $image_folder_01);
-         unlink('../uploaded_img/'.$old_image_01);
+         unlink('./uploaded_img/'.$old_image_01);
          $message[] = 'image 01 updated successfully!';
       }
    }
@@ -136,6 +136,7 @@ if(isset($_POST['update'])){
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="products.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="Recipe.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Recipes</a>
                     <a href="sold.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-store-slash me-2"></i>Sold</a>
                     <a href="sales.php" class="nav-item nav-link"><i class="fa-brands fa-adversal me-2"></i>Sales</a>
                     <a href="category.php" class="nav-item nav-link active"><i class="fa fa-table me-2"></i>Category</a>
@@ -193,7 +194,7 @@ if(isset($_POST['update'])){
                                     $select_category->execute([$update_id]);
                                     $fetch_category = $select_category->fetch(PDO::FETCH_ASSOC);
                                  ?>
-                            <img src="../uploaded_img/<?= $fetch_category['image_01'];?>" width="350px" height="300px" style="margin-left:100px">
+                            <img src="./uploaded_img/<?= $fetch_category['image_01'];?>" width="350px" height="300px" style="margin-left:100px">
                         </div>
                     </div>
                 </div>

@@ -142,6 +142,7 @@ if(isset($_POST['update'])){
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="products.php" class="nav-item nav-link active"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="Recipe.php" class="nav-item nav-link "><i class="fa fa-th me-2"></i>Recipes</a>
                     <a href="sold.php" class="nav-item nav-link"><i class="fa-sharp fa-solid fa-store-slash me-2"></i>Sold</a>
                     <a href="sales.php" class="nav-item nav-link"><i class="fa-brands fa-adversal me-2"></i>Sales</a>
                     <a href="category.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Category</a>
@@ -241,7 +242,7 @@ if(isset($_POST['update'])){
                                     $select_products->execute([$update_id]);
                                     $fetch_products = $select_products->fetch(PDO::FETCH_ASSOC);
                                  ?>
-                            <img src="../uploaded_img/<?= $fetch_products['image'];?>" width="550px" height="560px">
+                            <img src="./uploaded_img/<?= $fetch_products['image'];?>" width="550px" height="560px">
                         </div>
                     </div>
                 </div>

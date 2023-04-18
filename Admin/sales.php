@@ -24,7 +24,7 @@ if(isset($_POST['add_product'])){
    $image = filter_var($image, FILTER_SANITIZE_STRING);
    $image_size_01 = $_FILES['image']['size'];
    $image_tmp_name_01 = $_FILES['image']['tmp_name'];
-   $image_folder_01 = '../uploaded_img/'.$image;
+   $image_folder_01 = './uploaded_img/'.$image;
 
 
    $select_products = $conn->prepare("SELECT * FROM `products` WHERE name = ?");
@@ -57,7 +57,7 @@ if(isset($_GET['delete'])){
    $delete_product_image = $conn->prepare("SELECT * FROM `products` WHERE id = ?");
    $delete_product_image->execute([$delete_id]);
    $fetch_delete_image = $delete_product_image->fetch(PDO::FETCH_ASSOC);
-   unlink('../uploaded_img/'.$fetch_delete_image['image']);
+   unlink('./uploaded_img/'.$fetch_delete_image['image']);
    $delete_product = $conn->prepare("DELETE FROM `products` WHERE id = ?");
    $delete_product->execute([$delete_id]);
    $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE pid = ?");
@@ -97,7 +97,7 @@ if(isset($_POST['remove-all-sales'])){
             $insert_new_price = $conn->prepare("UPDATE `products` SET is_sale = '0'
                                                 WHERE product_id = '$id' ");
             $insert_new_price->execute();
-            header('location:http://localhost/php_project/admin/sales.php');
+            header('location:http://localhost/MasterPiece_Healthlist/admin/sales.php');
         }
     } 
 
@@ -118,7 +118,7 @@ if( isset($_POST['add-sale-on-category'])){
             $insert_new_price = $conn->prepare("UPDATE `products` SET price_discount='$new_price' , is_sale = '1'
                                                 WHERE product_id = '$id' ");
             $insert_new_price->execute();
-            header('location:http://localhost/php_project/admin/sales.php');
+            header('location:http://localhost/MasterPiece_Healthlist/admin/sales.php');
         }
     }
 }
@@ -136,7 +136,7 @@ if( isset($_POST['remove-category-sale'])){
             $insert_new_price = $conn->prepare("UPDATE `products` SET is_sale = '0'
                                                 WHERE product_id = '$id' ");
             $insert_new_price->execute();
-            header('location:http://localhost/php_project/admin/sales.php');
+            header('location:http://localhost/MasterPiece_Healthlist/admin/sales.php');
         }
     }
 }
@@ -379,9 +379,9 @@ if( isset($_POST['remove-category-sale'])){
 
                                             <td><?= $fetch_products['name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
-                                            <td style="color:rgb(0, 220, 0);">$<?= $fetch_products['price']; ?></td>
+                                            <td style="color:rgb(0, 220, 0);">JOD<?= $fetch_products['price']; ?></td>
 
                                             <td><a href="add_sale.php?sale=<?= $fetch_products['product_id']; ?>" style="color:blue" class="option-btn">Add</a></td>
                                             </tr>
@@ -420,10 +420,10 @@ if( isset($_POST['remove-category-sale'])){
 
                                             <td><?= $fetch_products['name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
                                             <td><del style="text-decoration:line-through; color:silver">$<?= $fetch_products['price']; ?></del></td>
-                                            <td><ins style="color:rgb(0, 220, 0);"> $<?=$fetch_products['price_discount'];?></ins></td>
+                                            <td><ins style="color:rgb(0, 220, 0);">JOD<?=$fetch_products['price_discount'];?></ins></td>
 
                                             <td><a href="remove_sale.php?removeSale=<?= $fetch_products['product_id']; ?>" style="color:red" class="option-btn">Remove</a></td>
                                             </tr>

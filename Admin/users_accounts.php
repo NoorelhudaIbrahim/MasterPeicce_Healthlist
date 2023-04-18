@@ -117,6 +117,7 @@ if(isset($_GET['delete'])){
                 <div class="navbar-nav w-100">
                     <a href="dashboard.php" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="products.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Products</a>
+                    <a href="Recipe.php" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Recipes</a>
                     <a href="sales.php" class="nav-item nav-link"><i class="fa fa-keyboard me-2"></i>Sales</a>
                     <a href="category.php" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Category</a>
                     <a href="orders.php" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>Orders</a>
