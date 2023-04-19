@@ -17,7 +17,7 @@ if(isset($_GET['delete'])){
    $delete_id = $_GET['delete'];
    $delete_admins = $conn->prepare("DELETE FROM `admins` WHERE id = ?");
    $delete_admins->execute([$delete_id]);
-   header('location:dashboard.php');
+   header('location:admin.php');
 }
 
 
@@ -296,7 +296,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
                                                 <?php if ($fetch_accounts['id'] == $admin_id ) {
                                                     echo '-';
                                                 } else { ?>
-                                                <a href="admin_accounts.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('delete this account?')" class="delete-btn">Delete</a>
+                                                <a href="admin.php?delete=<?= $fetch_accounts['id']; ?>" onclick="return confirm('delete this account?')" class="delete-btn">Delete</a>
                                                 <?php } ?>
                                             </td>
                                         </tr>
