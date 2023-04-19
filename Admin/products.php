@@ -185,7 +185,7 @@ if(isset($_GET['delete'])){
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
-                        <h4 class="mb-0">
+                    <h4 class="mb-0 text-decoration-underline ms-4">
 
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();
@@ -373,7 +373,7 @@ if(isset($_GET['delete'])){
                                                             $i++;
                                             ?>
 
-                                            <td>Category : <?= $fetch_product_category['category_name']; ?></td>
+                                            <td><?= $fetch_product_category['category_name']; ?></td>
 
                                             <?php } } } ?>
 
@@ -387,7 +387,7 @@ if(isset($_GET['delete'])){
                                                             $i++;
                                             ?>
 
-                                            <td>Brand : <?= $fetch_product_brand['brand_name']; ?></td>
+                                            <td><?= $fetch_product_brand['brand_name']; ?></td>
 
                                             <?php } } } ?>
                                             <td><?= $fetch_products['description']; ?></td>

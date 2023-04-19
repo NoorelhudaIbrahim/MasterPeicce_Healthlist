@@ -103,7 +103,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['new_price'])){
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
-                        <h4 class="mb-0">
+                    <h4 class="mb-0 text-decoration-underline ms-4">
 
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();

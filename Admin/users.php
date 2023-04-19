@@ -18,7 +18,7 @@ if(isset($_GET['delete'])){
    $delete_orders->execute([$delete_id]);
    $delete_cart = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
    $delete_cart->execute([$delete_id]);
-   header('location:users_accounts.php');
+   header('location:users.php');
 }
 
 ?>
@@ -108,7 +108,7 @@ if(isset($_GET['delete'])){
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
-                        <h4 class="mb-0">
+                    <h4 class="mb-0 text-decoration-underline ms-4">
 
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();
@@ -142,7 +142,7 @@ if(isset($_GET['delete'])){
                 <div class="row g-4">
                     <div class="col-12">
                         <div class="bg-secondary rounded h-100 p-4" style="background-color: #fff !important; ">
-                            <h5 class="mb-4">What Your Customers Ordered</h5>
+                            <h5 class="mb-4"> Customers Table</h5>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>

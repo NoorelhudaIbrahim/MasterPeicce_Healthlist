@@ -19,7 +19,7 @@ if(isset($_POST['add_recipe'])){
    $name = $_POST['name'];
    $name = htmlspecialchars($name, ENT_QUOTES);
    $rcategory = $_POST['rcategory'];
-   $rcategory= htmlspecialchars($price, ENT_QUOTES);
+   $rcategory= htmlspecialchars($rcategory, ENT_QUOTES);
    $author = $_POST['author'];
    $author = htmlspecialchars($author, ENT_QUOTES);
    $ingredients = $_POST['ingredients'];
@@ -39,7 +39,7 @@ if(isset($_POST['add_recipe'])){
 // تحديد المسار الموجودة فيه الصورة
    $image_tmp_name = $_FILES['image']['tmp_name'];
 // تحديد المسار الجديد للصورة و تذكر انه يجب انشاء مجلد جديد مشابه للاسم المختار في المسار الجديد
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = './uploaded_img/'.$image;
 
 
 // قراءة جميع الوصفات الموجودة في الداتابيس لتأكد من ان اسم الوصفة غير متكرر , جدول الوصفات-عمود الاسم
@@ -102,9 +102,9 @@ if(isset($_GET['delete'])){
    unlink('./uploaded_img/'.$fetch_delete_image['image']);
 
 // هون بدي امسح الوصفة كاملة و بعدين اقله انقلني على صفحة الوصفات عشان ما اضطر اعمل ريفريش للصفحة لما احذف وصفة
-   $delete_product = $conn->prepare("DELETE FROM `recipes` WHERE recipe_id = ?");
-   $delete_product->execute([$delete_id]);
-   header('location:recipes.php');
+   $delete_recipe = $conn->prepare("DELETE FROM `recipes` WHERE recipe_id = ?");
+   $delete_recipe->execute([$delete_id]);
+   header('location:Recipe.php');
 }
 
 
@@ -189,7 +189,7 @@ if(isset($_GET['delete'])){
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
-                        <h4 class="mb-0">
+                    <h4 class="mb-0 text-decoration-underline ms-4">
 
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();
@@ -288,7 +288,7 @@ if(isset($_GET['delete'])){
                                         ?>    
                                     </select>
                                 </div>
-                                <button type="submit" class="btn btn-primary" value="Add Product" name="add_product">Add Recipe</button>
+                                <button type="submit" class="btn btn-primary" value="Add Recipe" name="add_recipe">Add Recipe</button>
                             </form>
                         </div>
                     </div>
@@ -367,7 +367,7 @@ if(isset($_GET['delete'])){
 
                                             <td><a href="update_recipe.php?update=<?= $fetch_recipes['recipe_id']; ?>" style="color:blue" class="option-btn">Update</a></td>
 
-                                            <td><a href="recipes.php?delete=<?= $fetch_recipes['recipe_id']; ?>" class="delete-btn" onclick="return confirm('delete this recipe?');">Delete</a></td>
+                                            <td><a href="Recipe.php?delete=<?= $fetch_recipes['recipe_id']; ?>" class="delete-btn" onclick="return confirm('delete this recipe?');">Delete</a></td>
                                         </tr>
                                        <?php } } else{
                                                 echo '<p class="empty">no accounts available!</p>';

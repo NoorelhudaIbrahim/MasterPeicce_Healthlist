@@ -150,6 +150,9 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
         .bg-secondary {
             background-color: #189116 !important;
         }
+        .bg-success{
+            background-color:#189116!important;
+        }
     </style>
 </head>
 
@@ -164,7 +167,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
                 </a>
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="ms-3">
-                        <h4 class="mb-0">
+                        <h4 class="mb-0 text-decoration-underline ms-4">
                         <?php $select_accounts = $conn->prepare("SELECT * FROM `admins` WHERE id = '$admin_id'");
                                 $select_accounts->execute();
                                 $admin_name = $select_accounts->fetch();
@@ -199,7 +202,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
             <div class="row mt-7">
                    <div class="col-xl-3 col-md-6 ">
 
-                     <div class="card bg-success text-white mb-4">
+                     <div class="card bg-success text-white mb-4 shadow-lg">
                         <div class="card-body text-white">Total Categories
                         <?php $select_category = $conn->prepare("SELECT COUNT(*) FROM `category`");
                                 $select_category->execute();
@@ -221,7 +224,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
 
                 <div class="col-xl-3 col-md-6">
 
-                    <div class="card bg-success text-white mb-4">
+                    <div class="card bg-success text-white mb-4 shadow-lg">
                     <div class="card-body text-white">Total Products
                     <?php $select_product = $conn->prepare("SELECT COUNT(*) FROM `products`");
                             $select_product->execute();
@@ -238,7 +241,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
 
                     <div class="col-xl-3 col-md-6">
 
-                    <div class="card bg-success text-white mb-4">
+                    <div class="card bg-success text-white mb-4 shadow-lg">
                     <div class="card-body text-white">Total Brands
                     <?php $select_brand = $conn->prepare("SELECT COUNT(*) FROM `brands`");
                             $select_brand->execute();
@@ -255,7 +258,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
 
                     <div class="col-xl-3 col-md-6">
 
-                    <div class="card bg-success text-white mb-4">
+                    <div class="card bg-success text-white mb-4 shadow-lg">
                     <div class="card-body text-white">Total Recipes
                     <?php $select_recipe = $conn->prepare("SELECT COUNT(*) FROM `recipes`");
                             $select_recipe->execute();
@@ -270,7 +273,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
                     </div>
                     <div class="col-xl-3 col-md-6 ">
 
-                     <div class="card bg-success text-white mb-4">
+                     <div class="card bg-success text-white mb-4 shadow-lg">
                         <div class="card-body text-white">Total Users
                         <?php $select_user = $conn->prepare("SELECT COUNT(*) FROM `users`");
                                 $select_user->execute();
@@ -288,7 +291,7 @@ if(isset($_POST['new-admin']) && isset($_POST['password-newadmin'])){
 
                 <div class="col-xl-3 col-md-6 ">
 
-                    <div class="card bg-success text-white mb-4">
+                    <div class="card bg-success text-white mb-4 shadow-lg">
                     <div class="card-body text-white">Total Orders
                     <?php $select_order = $conn->prepare("SELECT COUNT(*) FROM `orders`");
                             $select_order->execute();
