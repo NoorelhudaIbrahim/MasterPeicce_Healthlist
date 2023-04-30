@@ -15,7 +15,7 @@
     <!-- ------------------external css--------------------- -->
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/checkout.css">
-    <title>Sign In</title>   
+    <title>Checkout</title>   
 </head>
 
 <body>

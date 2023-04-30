@@ -15,11 +15,10 @@
     <!-- ------------------external css--------------------- -->
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/login.css">
-    <title>Sign In</title>   
+    <title>Login</title>   
 </head>
 
 <body>
-<!-- -------------------------Header-------------------------------- -->
 <!-- -------------------------logo bar-------------------------------- -->
     <div class="main-navbar shadow-sm sticky-top">
         <div class="top-navbar">

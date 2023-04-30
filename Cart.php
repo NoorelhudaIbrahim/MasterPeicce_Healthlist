@@ -15,7 +15,7 @@
     <!-- ------------------external css--------------------- -->
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="CSS/cart.css">
-    <title>Sign In</title>   
+    <title>Cart</title>   
 </head>
 
 <body>

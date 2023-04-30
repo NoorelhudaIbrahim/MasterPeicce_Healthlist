@@ -1,9 +1,5 @@
-/*!
- * Bootstrap v5.0.0 (https://getbootstrap.com/)
- * Copyright 2011-2021 The Bootstrap Authors
- * Copyright 2011-2021 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
- */
+
+
 :root {
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
@@ -20,7 +16,7 @@
   --bs-gray-dark: #343a40;
   --bs-primary: #eb1616;
   --bs-secondary: #191c24;
-  --bs-success: #189116;
+  --bs-success: #0aad0a;
   --bs-info: #0dcaf0;
   --bs-warning: #ffc107;
   --bs-danger: #dc3545;
@@ -2638,7 +2634,7 @@ fieldset:disabled .btn {
 .btn-check:focus + .btn-success,
 .btn-success:focus {
   color: #fff;
-  background-color: #157347;
+  background-color: #0aad0a;
   border-color: #146c43;
   box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.5);
 }
@@ -2648,7 +2644,7 @@ fieldset:disabled .btn {
 .btn-success.active,
 .show > .btn-success.dropdown-toggle {
   color: #fff;
-  background-color: #146c43;
+  background-color: #0aad0a;
   border-color: #13653f;
 }
 .btn-check:checked + .btn-success:focus,
@@ -2661,7 +2657,7 @@ fieldset:disabled .btn {
 .btn-success:disabled,
 .btn-success.disabled {
   color: #fff;
-  background-color: #189116;
+  background-color: #0aad0a;
   border-color: #198754;
 }
 .btn-info {
@@ -2946,7 +2942,7 @@ fieldset:disabled .btn {
 .btn-outline-success.active,
 .btn-outline-success.dropdown-toggle.show {
   color: #fff;
-  background-color: #198754;
+  background-color: #0aad0a;
   border-color: #198754;
 }
 .btn-check:checked + .btn-outline-success:focus,
@@ -6839,7 +6835,7 @@ fieldset:disabled .btn {
   background-color: #191c24 !important;
 }
 .bg-success {
-  background-color: #189116 !important;
+  background-color: #0aad0a !important;
 }
 .bg-info {
   background-color: #0dcaf0 !important;

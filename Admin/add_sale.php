@@ -155,7 +155,7 @@ if($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['new_price'])){
                                 $fetch_products = $select_products->fetch(PDO::FETCH_ASSOC);
                                         ?>
                     <div class="col-sm-12 col-xl-6">
-                            <img src="../uploaded_img/<?= $fetch_products['image']; ?> ?>" width="400px" height="400px">
+                            <img src="./uploaded_img/<?= $fetch_products['image']; ?> ?>" width="400px" height="400px">
                     </div>
                     <?php } ?>
                 </div>

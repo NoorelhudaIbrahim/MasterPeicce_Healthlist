@@ -34,7 +34,7 @@ if(isset($_POST['add_product'])){
 // تحديد المسار الموجودة فيه الصورة
    $image_tmp_name = $_FILES['image']['tmp_name'];
 // تحديد المسار الجديد للصورة و تذكر انه يجب انشاء مجلد جديد مشابه للاسم المختار في المسار الجديد
-   $image_folder = '../uploaded_img/'.$image;
+   $image_folder = './uploaded_img/'.$image;
 
 
 // قراءة جميع المنتجات الموجودة في الداتابيس لتأكد من ان اسم المنتج غير متكرر , جدول المنتجات-عمود الاسم
@@ -250,7 +250,7 @@ if(isset($_GET['delete'])){
 
                                             <td><?= $fetch_products['name']; ?></td>
 
-                                            <td><img src="../uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
+                                            <td><img src="./uploaded_img/<?= $fetch_products['image']; ?>" alt="" width="50px" height="50px"></td> <!-- image -->
 
                                             <?php if ($fetch_products['is_sale'] == 1){ ?>
 

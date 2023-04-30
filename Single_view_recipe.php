@@ -1,16 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Healthlist</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Noorelhuda_Ibrahim_portfolio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ------------------bootstrap link(CDN)--------------------- -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ------------------fontawesome link(CDN)--------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-    
+    <!-- ------------------icon with title--------------------- -->
+    <link rel="icon" type="image/x-icon" href="./Images/logotitle.png">
+    <!-- ------------------googlefont--------------------- -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cinzel+Decorative:wght@700&family=Mr+Dafoe&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    <!-- ------------------external css--------------------- -->
     <link rel="stylesheet" href="css/contact.css">
     <link rel="stylesheet" href="css/style2.css">
     <link rel="stylesheet" href="css/home.css">
+    <title>Healthlist</title>
+  
+
 
 </head>
 <body>

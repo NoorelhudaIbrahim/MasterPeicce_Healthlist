@@ -1,39 +1,70 @@
-<footer class="footer" style="background-color: rgb(0, 0, 69) !important;"> 
-
-   <section class="grid">
-
-      <div class="box">
-         <h3>quick links</h3>
-         <a href="home.php" > <i class="fas fa-angle-right" ></i> Home</a>
-         <a href="about.php"> <i class="fas fa-angle-right"></i> About</a>
-         <a href="shop.php"> <i class="fas fa-angle-right"></i> Shop</a>
-         <a href="contact.php"> <i class="fas fa-angle-right" ></i> Contact</a>
-      </div>
-
-      <div class="box">
-         <h3>extra links</h3>
-         <a href="user_login.php"> <i class="fas fa-angle-right"></i> Login</a>
-         <a href="user_register.php"> <i class="fas fa-angle-right"></i> Register</a>
-         <a href="cart.php"> <i class="fas fa-angle-right"></i> Cart</a>
-         <a href="orders.php"> <i class="fas fa-angle-right"></i> Orders</a>
-      </div>
-
-      <div class="box">
-         <h3>contact us</h3>
-         <a href="tel:1234567890"><i class="fas fa-phone"></i>07-7807-9497</a>
-         <a href="mailto:shaikh@gmail.com" target="_blank"><i class="fas fa-envelope"></i> Art Hand Craft@gmail.com</a>
-         <a href="https://www.google.com/myplace" target="_blank"><i class="fas fa-map-marker-alt"></i> Aqaba, Jordan - 123456 </a>
-      </div>
-
-      <div class="box">
-         <h3>follow us</h3>
-         <a href="https://web.facebook.com/?_rdc=1&_rdr" target="_blank" ><i class="fab fa-facebook-f" ></i>Facebook</a>
-         <a href="https://twitter.com/i/flow/login" target="_blank" ><i class="fab fa-twitter" ></i>Twitter</a>
-         <a href="https://www.instagram.com/accounts/login/" target="_blank"><i class="fab fa-instagram"  ></i>Instagram</a>
-         <a href="https://www.linkedin.com/home" target="_blank" ><i class="fab fa-linkedin" ></i>Linkedin</a>
-      </div>
-
-   </section>
-   
-   
-</footer>
+<!-- -------------------------footer-------------------------------- -->
+<div>
+        <div class="footer-area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Healthlist E-Commerce</h4>
+                        <div class="footer-underline"></div>
+                        <p>
+                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                        </p>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Quick Links</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2"><a href="" class="text-white">Home</a></div>
+                        <div class="mb-2"><a href="" class="text-white">About Us</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+                        <!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Extra Links</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2"><a href="" class="text-white">Login</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Register</a></div>
+                        <div class="mb-2"><a href="" class="text-white">Cart</a></div>
+                        <div class="mb-2"><a href="" class="text-white">orders</a></div>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="footer-heading">Reach Us</h4>
+                        <div class="footer-underline"></div>
+                        <div class="mb-2">
+                            <p>
+                                <i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+                            </p>
+                        </div>
+                        <div class="mb-2">
+                            <a href="" class="text-white">
+                                <i class="fa fa-phone"></i> +91 888-XXX-XXXX
+                            </a>
+                        </div>
+                        <div class="mb-2">
+                            <a href="" class="text-white">
+                                <i class="fa fa-envelope"></i> healthlist@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-area " >
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="social-media">
+                            Get Connected:
+                            <a href=""><i class="fa fa-facebook"></i></a>
+                            <a href=""><i class="fa fa-twitter"></i></a>
+                            <a href=""><i class="fa fa-instagram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

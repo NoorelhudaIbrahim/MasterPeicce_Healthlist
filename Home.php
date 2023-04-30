@@ -1,15 +1,183 @@
 <!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Healthlist</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="Noorelhuda_Ibrahim_portfolio">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- ------------------bootstrap link(CDN)--------------------- -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- ------------------fontawesome link(CDN)--------------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style2.css">
-    <link rel="stylesheet" href="css/home.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 
+    <!-- ------------------icon with title--------------------- -->
+    <link rel="icon" type="image/x-icon" href="./Images/logotitle.png">
+    <!-- ------------------googlefont--------------------- -->
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cinzel+Decorative:wght@700&family=Mr+Dafoe&family=Tangerine:wght@700&display=swap" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+    <!-- ------------------external css--------------------- -->
+    <!-- <link rel="stylesheet" href="./css/style2.css"> -->
+    <link rel="stylesheet" href="./css/home.css">
+    <title>Healthlist</title>
+  
+<style>
+/*------------------------------------------------------ */
+/* Start Category Section                              */
+/*------------------------------------------------------ */
+/* Google Fonts - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+.category{
+  min-height: 73vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+ .slide-container{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    max-width: 1120px;
+    width: 100%;
+    padding: 40px 0;
+  }
+  .slide-content{
+    margin: 0 40px;
+    overflow: hidden;
+    border-radius: 25px;
+  }
+  .card{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 25px;
+    background-color: #FFF;
+  }
+  .image-content,
+  .card-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+  }
+  .image-content{
+    position: relative;
+    row-gap: 5px;
+    padding: 25px 0;
+  }
+  .overlay{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #189116;
+    border-radius: 25px 25px 0 25px;
+  }
+  .overlay::before,
+  .overlay::after{
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -40px;
+    height: 40px;
+    width: 40px;
+    background-color: #189116;
+  }
+  .overlay::after{
+    border-radius: 0 25px 0 0;
+    background-color: #FFF;
+  }
+  .card-image{
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background: #FFF;
+    padding: 3px;
+  }
+  .card-image .card-img{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #189116;
+  }
+  .name{
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+  .description{
+    font-size: 14px;
+    color: #707070;
+    text-align: center;
+  }
+
+  .card .button{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+}
+
+.card .button button{
+  background:  #189116;
+  outline: none;
+  border: none;
+  color: #fff;
+  padding:13px 37px;
+  border-radius: 20px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.button button:hover{
+  background: yellowgreen;
+}
+
+
+
+  .swiper-navBtn{
+    color: #189116;
+    transition: color 0.3s ease;
+  }
+  .swiper-navBtn:hover{
+    color:gray;
+  }
+  .swiper-navBtn::before,
+  .swiper-navBtn::after{
+    font-size: 35px;
+  }
+  .swiper-button-next{
+    right: 0;
+  }
+  .swiper-button-prev{
+    left: 0;
+  }
+  .swiper-pagination-bullet{
+    background-color: gray;
+    opacity: 1;
+  }
+  .swiper-pagination-bullet-active{
+    background-color:#189116 ;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .slide-content{
+      margin: 0 10px;
+    }
+    .swiper-navBtn{
+      display: none;
+    }
+  }
+   
+    </style>
+  
 </head>
+
+
+
+
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
     <div class="main-navbar shadow-sm sticky-top">
@@ -19,7 +187,7 @@
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
                         <img src="./Images/logo1.png" width="160rem" height="50rem">
                     </div>
-                    <div class="col-md-5 my-auto" style="position: relative;left:12rem;">
+                    <div class="col-md-5 my-auto mx-auto" >
                         <form role="search">
                             <div class="input-group">
                                 <input type="search" placeholder="Search your product" class="form-control" />
@@ -64,8 +232,8 @@
 <!-- -------------------------navbar-------------------------------- --> 
         <nav class="navbar navbar-expand-lg">
             <div class="container-fluid">
-                <a class="navbar-brand d-block d-sm-block d-md-none d-lg-none" href="#">
-                    Funda Ecom
+                <a class="navbar-brand d-block d-sm-block d-md-none d-lg-none" href="Home.php">
+                    Healthlist
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -73,7 +241,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav me-20 mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="Home.php"><b>Home</b></a>
+                        <a class="nav-link active" style="background-color:yellowgreen" href="Home.php"><b>Home</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="About.php"><b>About Us</b></a>
@@ -90,15 +258,7 @@
                         <li class="nav-item">
                             <a class="nav-link" href="Contact.php"><b>Contact</b></a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="#">Accessories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Appliances</a>
-                        </li> -->
+
                     </ul>
                 </div>
             </div>
@@ -183,15 +343,6 @@
 		</div>
 	  </header>
 	  
-	  <!-- Page Content -->
-	  <!-- <section class="py-5">
-		<div class="container">
-		  <h1 class="font-weight-light">Image Slider Two</h1>
-		  <p class="lead">Here you can write anything about the website. These are the sample pictures ,replace them and use your own. These pictures are taken from unsplash.</p>
-		  <p class = "lead">Bacon ipsum dolor amet drumstick short loin ribeye sirloin ham spare ribs landjaeger, pig turducken meatball sausage. Salami cow shoulder pork loin. Meatloaf turducken andouille chuck beef ribs picanha. Filet mignon pastrami fatback ribeye leberkas shank boudin sirloin beef short ribs tail pig pork loin shoulder buffalo. Short ribs andouille swine chicken leberkas. Fatback sirloin pork belly turkey landjaeger corned beef biltong, buffalo bresaola strip steak brisket short loin salami.</p>
-		</div>
-	  </section> -->
-	  
 	  <script>
         $(function () {
             $(document).scroll(function () {
@@ -200,354 +351,212 @@
             });
         });
     </script>
-<!-- ----------------------------------------------------------- -->
+<!-- --------------------------Features---------------------------------------- -->
+
+<section id="feature" class="feature-section">
+            <div class="container mt-20">
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="feature">
+                            <i class="fa fa-magic"></i>
+                            <div class="feature-content">
+                                <h4>Web Design</h4>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor. reprehenderit</p>
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-3 -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="feature">
+                            <i class="fa fa-gift"></i>
+                            <div class="feature-content">
+                                <h4>Graphics Design</h4>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor. reprehenderit</p>
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-3 -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="feature">
+                            <i class="fa fa-wordpress"></i>
+                            <div class="feature-content">
+                                <h4>Wordpress Theme</h4>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor. reprehenderit</p>
+                            </div>
+                        </div>
+                    </div><!-- /.col-md-3 -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="feature">
+                            <i class="fa fa-plug"></i>
+                            <div class="feature-content">
+                                <h4>Wordpress Plugin</h4>
+                                <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor. reprehenderit</p>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- /.row -->
+            
+            </div><!-- /.container -->
+        </section>
 
 
-
+        
 <!-- -------------------------shop by category-------------------------------- -->
-<section class="category">
-
-
-   <h1 class="heading">shop by category</h1>
-
-
-   <div >
-
-      
-
-
-
-         <a href="category.php?category=Dairy Free" class="swiper-slide slide">
-            <img src="./uploaded_img/Dairy_Free.png" alt="">
-            <h3>Dairy Free</h3>
-         </a>
-
-         <a href="category.php?category=Gluten Free" class="swiper-slide slide">
-            <img src="./uploaded_img/Gluten_Free.png" alt="">
-            <h3>Gluten Free</h3>
-         </a>
-
-         <a href="category.php?category=Vegan" class="swiper-slide slide">
-            <img src="./uploaded_img/Vegan.png" alt="">
-            <h3>Vegan</h3>
-         </a>
-
-         <a href="category.php?category=Diabetes Friendly" class="swiper-slide slide">
-            <img src="./uploaded_img/Diabetes_Friendly.png" alt="">
-            <h3>Diabetes_Friendly</h3>
-         </a>
-
-      </div>
-     
-
-
+<section id="category" class="category">
+    <div class="slide-container swiper">
+        <h2 class="text-center pb-5" style="color: #666 ;font-family: 'Oswald', sans-serif;">Shop By Category</h2>
+        <div class="slide-content">
+            <div class="card-wrapper swiper-wrapper">
+                <?php
+                // Connect to database
+                include './Components/connect.php';                
+                // Fetch categories
+                $stmt = $conn->query('SELECT * FROM category');
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                // Loop through categories
+                foreach ($results as $category) {
+                    // Fetch products for category
+                    $stmt = $conn->prepare('SELECT * FROM products WHERE category_id = :category_id');
+                    $stmt->execute(['category_id' => $category['category_id']]);
+                    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // Fetch recipes for category
+                    $stmt = $conn->prepare('SELECT * FROM recipes WHERE category_id = :category_id');
+                    $stmt->execute(['category_id' => $category['category_id']]);
+                    $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                    
+                    // Display category card
+                    ?>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+                            <div class="card-image">
+                                <img src="./admin/uploaded_img/<?php echo $category['image_01']; ?>" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name"><?php echo $category['category_name']; ?></h2>
+                            <p class="description"><?php echo $category['description']; ?></p>
+                            <div class="button">
+                                <form action="Product.php" method="get">
+                                    <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
+                                    <button type="submit">Products</button>
+                                </form>
+                                <form action="Recipes.php" method="get">
+                                    <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
+                                    <button type="submit">Recipes</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="swiper-button-next swiper-navBtn"></div>
+            <div class="swiper-button-prev swiper-navBtn"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
 </section>
 
-<!-- ----------------------------------------------------------------------- -->
-<div class="col-lg-12">
-                    <div class="title-all text-center">
-                        <h1>Featured Products</h1>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet lacus enim.</p>
+
+<!-- -------------------------Features Products-------------------------------- -->
+<section id="category" class="category">
+<div class="slide-container swiper">
+<h2 class="text-center pb-5" style="color: #666 ;font-family: 'Oswald', sans-serif;">Features Products</h2>
+
+            <div class="slide-content">
+                <div class="card-wrapper swiper-wrapper">
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="images/profile1.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h2 class="name">David Dell</h2>
+                            <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+                        
+                            <button class="button">View More</button>
+                        </div>
                     </div>
-                    <div class="featured-products-box owl-carousel owl-theme owl-loaded owl-drag">
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                    <div class="owl-stage-outer"><div class="owl-stage" style="transform: translate3d(-1125px, 0px, 0px); transition: all 0.25s ease 0s; width: 4500px;"><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="images/profile2.jpg" alt="" class="card-img">
                             </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h2 class="name">David Dell</h2>
+                            <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                            <button class="button">View More</button>
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="images/profile3.jpg" alt="" class="card-img">
                             </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h2 class="name">David Dell</h2>
+                            <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                            <button class="button">View More</button>
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="images/profile4.jpg" alt="" class="card-img">
                             </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h2 class="name">David Dell</h2>
+                            <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                            <button class="button">View More</button>
+                        </div>
+                    </div>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+
+                            <div class="card-image">
+                                <img src="images/profile5.jpg" alt="" class="card-img">
                             </div>
-                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item active" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-01.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-02.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-03.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div><div class="owl-item cloned" style="width: 266.25px; margin-right: 15px;"><div class="item">
-                            <div class="products-single fix">
-                                <div class="box-img-hover">
-                                    <img src="images/img-pro-04.jpg" class="img-fluid" alt="Image">
-                                    <div class="mask-icon">
-                                        <ul>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="View"><i class="fas fa-eye"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Compare"><i class="fas fa-sync-alt"></i></a></li>
-                                            <li><a href="#" data-toggle="tooltip" data-placement="right" title="" data-original-title="Add to Wishlist"><i class="far fa-heart"></i></a></li>
-                                        </ul>
-                                        <a class="cart" href="#">Add to Cart</a>
-                                    </div>
-                                </div>
-                                <div class="why-text">
-                                    <h4>Lorem ipsum dolor sit amet</h4>
-                                    <h5> $9.79</h5>
-                                </div>
-                            </div>
-                        </div></div></div></div><div class="owl-nav"><button type="button" role="presentation" class="owl-prev"><i class="fas fa-arrow-left"></i></button><button type="button" role="presentation" class="owl-next"><i class="fas fa-arrow-right"></i></button></div><div class="owl-dots disabled"></div></div>
-                </div>
+                        </div>
+
+                        <div class="card-content">
+                            <h2 class="name">David Dell</h2>
+                            <p class="description">The lorem text the section that contains header with having open functionality. Lorem dolor sit amet consectetur adipisicing elit.</p>
+
+                            <button class="button">View More</button>
+                        </div>
+                    </div>
+                    
+                    
+            </div>
+
+            <div class="swiper-button-next swiper-navBtn"></div>
+            <div class="swiper-button-prev swiper-navBtn"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+        </section> 
+
 
 <!-- -------------------------footer-------------------------------- -->
       <div>
@@ -594,7 +603,7 @@
                         </div>
                         <div class="mb-2">
                             <a href="" class="text-white">
-                                <i class="fa fa-envelope"></i> healthlist@gmail.com
+                                <i class="fa fa-envelope"></i>Healthlist@gmail.com
                             </a>
                         </div>
                     </div>
@@ -620,6 +629,46 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+
+
 </body>
+<!-- ------------------------------------------------------------------------------------- -->
+  <!-- Swiper JS -->
+  <script src="./js/swiper-bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
+ 
+<script>
+         
+         var swiper = new Swiper(".slide-content", {
+             slidesPerView: 3,
+             spaceBetween: 25,
+             loop: true,
+             centerSlide: 'true',
+             fade: 'true',
+             grabCursor: 'true',
+             pagination: {
+               el: ".swiper-pagination",
+               clickable: true,
+               dynamicBullets: true,
+             },
+             navigation: {
+               nextEl: ".swiper-button-next",
+               prevEl: ".swiper-button-prev",
+             },
+         
+             breakpoints:{
+                 0: {
+                     slidesPerView: 1,
+                 },
+                 520: {
+                     slidesPerView: 2,
+                 },
+                 950: {
+                     slidesPerView: 3,
+                 },
+             },
+           });
+         
+    </script>
+    
 </html>

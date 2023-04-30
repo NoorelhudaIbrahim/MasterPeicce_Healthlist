@@ -2,6 +2,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Seymour+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap'); 
 
+/* :root{
+   --main-color:rgb(0, 0, 69) !important;
+   --orange:#7d7d7d;
+   --red:rgb(0, 0, 69) !important;
+   --black: rgb(0, 0, 69) !important;
+   --gray:rgb(149, 147, 147);
+   --white:#fff;
+   --light-color:#b0a6a6;
+   --light-bg:#eee;
+   --border:.2rem solid var(--black);
+   --box-shadow: 10px 10px 8px -3px rgba(12, 12, 12, 0.1), 10px 10px 8px #cf7b7b;
+   
+} */
+
+
+
 .main-navbar{
     border-bottom: 1px solid #ccc;
 }
@@ -41,7 +57,14 @@
     padding: 8px 20px;
     color: white;
     font-size: 15px;
+    
 }
+
+
+
+
+
+
 
 @media only screen and (max-width: 600px) {
     .main-navbar .top-navbar .nav-link{
@@ -93,8 +116,128 @@
   .font-weight-light{
       font-family: 'Source Serif Pro', serif;
   }
+
+
+
+
+/*------------------------------------------------------ */
+/* Start Feature Section                              */
+/*------------------------------------------------------ */
+.services-section {
+    padding-top: 80px;
+    padding-bottom: 20px;
+}
+.feature-section {
+    margin-top: -6rem;
+    padding-top: 100px;
+}
+
+.feature, .feature-2, .feature-3 {
+    padding-bottom: 80px;
+}
+
+.feature, .feature-3 {
+    text-align: center;
+}
+.feature h4,
+.feature-3 h4 {
+    font-size: 15px;
+    color: #666;
+    font-weight: 300;
+    font-family: 'Oswald', sans-serif;
+}
+
+.feature-2 h4{
+    font-size: 15px;
+    color: #666;
+    padding-bottom: 10px;
+    font-weight: 300;
+    font-family: 'Oswald', sans-serif;
+}
+
+.feature p, 
+.feature-2 p,
+.feature-3 p {
+    color: #444;
+    font-size: 13px;
+    line-height: 20px;
+    font-weight: 300;
+}
+
+.feature i,
+.feature-3 i {
+    font-size:2.5em;
+    width: 80px;
+    height: 80px;
+   padding:25px;
+    margin-bottom: 10px;
+   position: relative;
+}
+
+.feature i {
+    color:#189116;
+	box-shadow: 0 0 0 30px transparent;
+	-webkit-transform: translate3d(2, 2, 2);
+	-moz-transform: translate3d(2, 2, 2);
+	-o-transform: translate3d(2, 2, 2);
+	transform: translate3d(2, 2, 2);
+	-webkit-transition: box-shadow .6s ease-in-out;
+	-moz-transition: box-shadow .6s ease-in-out;
+	-o-transition: box-shadow .6s ease-in-out;
+	transition: box-shadow .6s ease-in-out;
+}
+.no-touch .feature:hover i,
+	.no-touch .feature:active i,
+	.no-touch .feature:focus i {		
+		
+		-webkit-transition: box-shadow .4s ease-in-out;
+		-moz-transition: box-shadow .4s ease-in-out;
+		-o-transition: box-shadow .4s ease-in-out;
+		transition: box-shadow .4s ease-in-out;
+}
+
+.feature-3 i {
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -o-transition: all 0.3s;
+}
+
+.feature-3:hover .border {
+    margin: 0 35%;
+}
+
+.feature-2 i {
+   font-size:2.5em;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+   padding:20px;
+   position: relative;
+    
+}
+
+.feature-2 .media-body {
+    margin-left: 25px !important;
+}
+
+.feature-2 .border {
+    margin-top: 20px;
+    margin-left: 49.999%;
+    margin-right: 49.999%;
+	border-color: #fff;
+}
+
+.feature-2:hover .border {
+    margin-left: 0%;
+    margin-right: 0%;
+}
+
+/*------------------------------------------------------ */
+/* Start Footer Section                              */
+/*------------------------------------------------------ */
   
-  .footer-area{
+.footer-area{
     margin-top: 100rem;
     padding: 40px 0px;
     background-color: #189116;
@@ -130,43 +273,5 @@
     width: 20px;
 }
   
-.category{
-    margin-top: 50px;
- }
- 
- .category .slide{
-    margin-bottom:2rem  !important; 
-    box-shadow: var(--box-shadow);
-    border:var(--border);
-    text-align: center;
-    padding:2rem;
-    background: var(--white);
-    border-radius: .5rem;
- }
- 
- .category .slide:hover{
-    background-color: var(--black);
- }
- 
- .category .slide:hover img{
-    filter:invert();
- }
- 
- .category .slide:hover h3{
-    color:var(--white);
- }
- 
- .category .slide img{
-    height: 7rem;
-    width: 100%;
-    object-fit: contain;
-    margin-bottom: 1rem;
-    user-select: none;
- }
- 
- .category .slide h3{
-    font-size: 2rem;
-    color:var(--black);
-    user-select: none;
- }
+
  

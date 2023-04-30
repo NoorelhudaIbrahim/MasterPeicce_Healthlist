@@ -79,7 +79,7 @@ if($select_all_products->rowCount()>0){
         $insert_new_price = $conn->prepare("UPDATE `products` SET price_discount='$new_price' , is_sale = '1'
                                             WHERE product_id = '$id' ");
         $insert_new_price->execute();
-        header('location:http://localhost/php_project/admin/sales.php');
+        header('location:http://localhost/MasterPiece_Healthlist/admin/sales.php');
     }
 }
 
@@ -336,11 +336,9 @@ if( isset($_POST['remove-category-sale'])){
                     </div>
                     <div class="col-sm-6 col-xl-3">
                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4" style="background-color: #fff !important; ">
-                            <!-- <i class="fa fa-chart-pie fa-3x text-primary" style="color:rgb(0, 0, 69) !important"></i> -->
                             <div class="ms-3">
                                 <form action="" method="post">
                                     <button type="submit" name="remove-all-sales" class="mb-2 sales-btn1" style="width:90%">Remove Sale From All Products In Market</button>
-                                    <!-- <h6 class="mb-0" style="color:black !important">$2606</h6> -->
                                 </form>
                             </div>
                         </div>
