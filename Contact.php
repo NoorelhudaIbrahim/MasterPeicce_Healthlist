@@ -121,7 +121,7 @@
 
 
 <div class="container-fluid page-header wow fadeIn " data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn; back; background-image: url(https://t4.ftcdn.net/jpg/01/76/36/95/240_F_176369556_9ctY3plObjG6okZForkT9vkQl2CxES7E.jpg);background-size: cover;"><div class="container">
-<h1 class="display-3 mb-3  slideInDown text-center text-success" >Contact Us</h1>
+<h1 class="display-3 mb-3  slideInDown text-center text-success" >#Let us know how we can help you</h1>
 <nav aria-label="breadcrumb animated slideInDown">
 <ol class="breadcrumb mb-0 ">
 <li class="breadcrumb-item text-decoration-underline"><a class="text-body" href="Home.php">Home</a></li>
@@ -137,9 +137,9 @@
 <div class="container-xxl py-6">
 <div class="container"  style=" box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
 
-<div class="row g-5 justify-content-center">
+<div class="row g-5 justify-content-center my-4 mx-auto">
 <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;margin:auto">
-<div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5">
+<div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5" style="background-color:#189116 !important;">
 <h5 class="text-white">Call Us</h5>
 <p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
 <h5 class="text-white">Email Us</h5>
@@ -184,7 +184,7 @@
 </div>
 </div>
 <div class="col-12">
-<button class="btn btn-success rounded-pill py-3 px-5" type="submit">Send Message</button>
+<button class="btn btn-success rounded-pill py-3 px-5 ml-17" type="submit" style="background-color:#189116 !important;">Send Message</button>
 </div>
 </div>
 </form>

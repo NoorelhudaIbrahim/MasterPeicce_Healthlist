@@ -36,7 +36,7 @@
   background-color: white;
 }
  .slide-container{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); */
     max-width: 1120px;
     width: 100%;
     padding: 40px 0;
@@ -69,7 +69,7 @@
     top: 0;
     height: 100%;
     width: 100%;
-    background-color: #189116;
+    background-color: #94cb8a;
     border-radius: 25px 25px 0 25px;
   }
   .overlay::before,
@@ -80,7 +80,7 @@
     bottom: -40px;
     height: 40px;
     width: 40px;
-    background-color: #189116;
+    background-color: #94cb8a
   }
   .overlay::after{
     border-radius: 0 25px 0 0;
@@ -132,7 +132,7 @@
 }
 
 .button button:hover{
-  background: yellowgreen;
+  background: #94cb8a;
 }
 
 
@@ -241,7 +241,7 @@
                 <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                     <ul class="navbar-nav me-20 mb-2 mb-lg-0">
                         <li class="nav-item">
-                        <a class="nav-link active" style="background-color:yellowgreen" href="Home.php"><b>Home</b></a>
+                        <a class="nav-link active" style="background-color:#94cb8a+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++" href="Home.php"><b>Home</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="About.php"><b>About Us</b></a>
@@ -439,11 +439,11 @@
                             <div class="button">
                                 <form action="Product.php" method="get">
                                     <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
-                                    <button type="submit">Products</button>
+                                    <button type="submit"><i class="fa fa-shopping-cart p-1"></i>Products</button>
                                 </form>
                                 <form action="Recipes.php" method="get">
                                     <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
-                                    <button type="submit">Recipes</button>
+                                    <button type="submit"><i class="fa-solid fa-utensils p-1" style="color: #ffffff;"></i>Recipes</button>
                                 </form>
                             </div>
                         </div>
