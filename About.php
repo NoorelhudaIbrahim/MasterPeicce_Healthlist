@@ -64,10 +64,9 @@
                                 <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
                                 <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
                                 <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-sign-up"></i> Register</a></li>
+                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
                                 <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i> Logout</a></li>
-                                </ul>
+                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
                             </li>
                         </ul>
                     </div>
@@ -89,7 +88,7 @@
                         <a class="nav-link"  href="Home.php"><b>Home</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" style="background-color:yellowgreen" href="About.php"><b>About Us</b></a>
+                            <a class="nav-link active" style="background-color:#94cb8a" href="About.php"><b>About Us</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Product.php"><b>Products</b></a>
@@ -165,9 +164,9 @@
 
 <!-- -------------------------footer-------------------------------- -->
 <div>
-	<div class="footer-area">
+	<div class="footer-area mt-1">
 		<div class="container">
-			<div class="row">
+			<div class="row ">
 				<div class="col-md-3">
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>

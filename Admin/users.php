@@ -62,12 +62,7 @@ if(isset($_GET['delete'])){
 
     <style>
         <?php include("../css/dashboardstyle.css") ?>
-        /* :root {
-            --primary: #eb8f16;
-            --secondary: #000000;
-            --light: #6C7293;
-            --dark: #000000;
-        } */
+      
         .fa-bars:before {
             content: "\f0c9";
         }
@@ -96,8 +91,7 @@ if(isset($_GET['delete'])){
 
 <body style="background-color: black;">
     <div class="container-fluid position-relative d-flex p-0">
-        <!-- Spinner Start -->
-        <!-- Spinner End -->
+       
 
 
         <!-- Sidebar Start -->
@@ -151,7 +145,6 @@ if(isset($_GET['delete'])){
                                             <th scope="col">Customer ID</th>
                                             <th scope="col">Customer Username</th>
                                             <th scope="col">Customer email</th>
-                                            <th scope="col">Customer Number</th>
                                             <th scope="col">Delete</th>
                                         </tr>
                                     </thead>
@@ -172,7 +165,7 @@ if(isset($_GET['delete'])){
                                             <td><?= $fetch_accounts['name']; ?></td> <!-- image -->
                                             
                                             <td><?= $fetch_accounts['email']; ?></td>
-                                            <td><?= $fetch_accounts['mobile']; ?></td>
+                                           
 
                                             <td><a href="users_accounts.php?delete=<?= $fetch_accounts['user_id']; ?>" onclick="return confirm('delete this account? the user related information will also be delete!')" class="delete-btn">Delete</a></td>
 

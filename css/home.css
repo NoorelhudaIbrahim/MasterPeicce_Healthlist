@@ -2,19 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Seymour+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&display=swap'); 
 
-/* :root{
-   --main-color:rgb(0, 0, 69) !important;
-   --orange:#7d7d7d;
-   --red:rgb(0, 0, 69) !important;
-   --black: rgb(0, 0, 69) !important;
-   --gray:rgb(149, 147, 147);
-   --white:#fff;
-   --light-color:#b0a6a6;
-   --light-bg:#eee;
-   --border:.2rem solid var(--black);
-   --box-shadow: 10px 10px 8px -3px rgba(12, 12, 12, 0.1), 10px 10px 8px #cf7b7b;
-   
-} */
+
 
 
 
@@ -124,16 +112,18 @@
 /* Start Feature Section                              */
 /*------------------------------------------------------ */
 .services-section {
+
     padding-top: 80px;
     padding-bottom: 20px;
 }
 .feature-section {
-    margin-top: -6rem;
+    
+    margin-top: -5rem;
     padding-top: 100px;
 }
 
 .feature, .feature-2, .feature-3 {
-    padding-bottom: 80px;
+    padding-bottom: 20px;
 }
 
 .feature, .feature-3 {
