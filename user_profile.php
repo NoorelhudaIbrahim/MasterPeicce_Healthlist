@@ -1,7 +1,53 @@
 <?php
 
 include './Components/connect.php'; 
+
+// start the session
 session_start();
+
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
+}
+
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+?>
+
+<?php
+
+include './Components/connect.php'; 
+// session_start();
 if(isset($_SESSION['user_id'])){
     $user_id = $_SESSION['user_id'];
 
@@ -55,20 +101,20 @@ $user = $stmt->fetch();
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -81,18 +127,24 @@ $user = $stmt->fetch();
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -176,7 +228,7 @@ $user = $stmt->fetch();
                                             <a class="nav-link" id="account-detail-tab" data-bs-toggle="tab" href="#account-detail" role="tab" aria-controls="account-detail" aria-selected="true"><i class="fi-rs-user mr-10"></i>Account details</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="page-login.html"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
+                                            <a class="nav-link" href="./Components/user_logout.php"><i class="fi-rs-sign-out mr-10"></i>Logout</a>
                                         </li>
                                     </ul>
                                 </div>

@@ -1,3 +1,50 @@
+<?php
+
+include './Components/connect.php'; 
+
+// start the session
+session_start();
+
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
+}
+
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+?>
+
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -23,6 +70,55 @@
     <title>Healthlist</title>   
 </head>
 
+<style>
+/* ---------------------about------------------------------ */
+
+.art-border {
+    border: 10px solid #189116; /* Art border color */
+    border-radius: 10px; /* Border radius */
+}
+
+.about {
+    padding: 20px; /* Add some padding to the container */
+}
+
+.content {
+    margin-bottom: 20px; /* Add margin at the bottom */
+}
+
+.content h2 {
+    font-family: 'Oswald', sans-serif !important;
+    color: #666 !important;
+}
+
+.content p {
+    font-family: auto;
+    color: #666;
+}
+
+.aboutcontact {
+    background: #189116;
+    outline: none;
+    border: none;
+    color: #fff;
+    padding: 7px 25px;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.aboutcontact a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.image img {
+    border: none; /* Remove default image border */
+    max-width: 100%; /* Make sure the image doesn't exceed its container */
+}
+</style>
+
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
 <div class="main-navbar shadow-sm sticky-top">
@@ -30,20 +126,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -56,18 +152,24 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -121,7 +223,7 @@
 
 
 <div class="container-fluid page-header wow fadeIn " data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn; back; background-image: url(https://t4.ftcdn.net/jpg/01/76/36/95/240_F_176369556_9ctY3plObjG6okZForkT9vkQl2CxES7E.jpg);background-size: cover;"><div class="container">
-<h1 class="display-3 mb-3  slideInDown text-center text-success" >About Us</h1>
+<h1 class="display-3 mb-3  slideInDown text-center text-success" >Let's Know us</h1>
 <nav aria-label="breadcrumb animated slideInDown">
 <ol class="breadcrumb mb-0 ">
 <li class="breadcrumb-item text-decoration-underline"><a class="text-body" href="Home.php">Home</a></li>
@@ -135,28 +237,19 @@
 <!-- -------------------------About-------------------------------- -->
         
 <section>
-    <div class="about bg-light" >
+  
+
+    <div class="about bg-light">
         <div class="row">
             <div class="content">
-                <h2 class="text-success">Who we are?</h2>
-                <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat vero voluptatem deleniti reprehenderit, et, numquam accusamus totam recusandae dicta cupiditate cum facere minima commodi. Qui voluptates delectus quia, consequatur sed necessitatibus dolorum eligendi possimus magnam aliquam dolores sit ipsa esse hic ratione nihil ut soluta natus doloribus voluptatem ipsum? Molestias!</p>
-                <a href="#" class="btn">learn more</a>
+                <h2 class="text-success">Our Vision</h2>
+                <p>It is important to encourage healthy food choices and provide healthy products to everyone, especially those who have allergies or diabetes disease and facing to find suitable food products for their diet. These individuals face a significant challenge locally due to the limited availability and abundance of food products for their diet. To address this challenge, Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.</p>
+                <button class="aboutcontact" type="submit"><a href="Contact.php" class="text-white text-decoration-none">Contact Us</a></button>
             </div>
             <div class="image">
-                <img src="#" alt="">
+                <img src="https://t3.ftcdn.net/jpg/04/35/84/96/240_F_435849604_C86M9A3JPnztEx06xgEsZa5mzJoH1qq4.jpg" alt="" class="art-border">
             </div>
         </div>
-        <div class="row">
-          <div class="image">
-            <img src="#" alt="">
-        </div>
-          <div class="content" id="our-vision">
-              <h2 class="text-success">Our vision</h2>
-              <p class="text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat vero voluptatem deleniti reprehenderit, et, numquam accusamus totam recusandae dicta cupiditate cum facere minima commodi. Qui voluptates delectus quia, consequatur sed necessitatibus dolorum eligendi possimus magnam aliquam dolores sit ipsa esse hic ratione nihil ut soluta natus doloribus voluptatem ipsum? Molestias!</p>
-              <a href="#" class="btn">learn more</a>
-          </div>
-          
-      </div>
     </div>
 </section>
 

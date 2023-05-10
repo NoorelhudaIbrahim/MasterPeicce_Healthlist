@@ -72,7 +72,23 @@
     -o-background-size: cover;
     background-size: cover;
   }
+
+
+  .carousel-item img {
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
   
+  .carousel-caption{
+    background-color: rgb(203, 221, 196);
+    opacity: 0.9;
+    margin-block: 6rem;
+    border-radius: 1.5rem;
+  }
+
+
+
   #mainNavbar{
       padding-left:  50px;
       padding-top: 20px;
@@ -95,11 +111,11 @@
   .lead{
       font-family: 'Source Serif Pro', serif;
   }
-  
+/*   
   .navbar.scrolled {
       background: rgb(34, 31, 31);
       transition: background 500ms;
-  }
+  } */
   
   .font-weight-light{
       font-family: 'Source Serif Pro', serif;
@@ -263,5 +279,13 @@
     width: 20px;
 }
   
+
+
+
+
+
+
+
+
 
  

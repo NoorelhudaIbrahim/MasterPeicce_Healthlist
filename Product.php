@@ -1,3 +1,53 @@
+<?php
+ob_start(); // Start output buffering
+
+include './Components/connect.php'; 
+
+// start the session
+session_start();
+
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
+}
+
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
+ob_end_flush(); // End output buffering and send output to the browser
+?>
+
+
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -37,20 +87,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -63,18 +113,24 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -139,505 +195,90 @@
 
 <!-- -------------------------product-------------------------------- --> 
 <div class="catg-section">
-    <div class="category">
-      <div class="pop">
-        <h4>We found <span>29</span> items for you!</h4>
-        <div class="all-features">
-          <label for="show">
-            <div class="feature">
-              <i class="fa-solid fa-grip"></i>
-              <span>Show: 50</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </div>
-          </label>
-          <input type="checkbox" id="show">
-          <ul class="drop-down1">
-            <li><a class=" a1 active" href="#">50</a></li>
-            <li><a class=" a1 " href="#">100</a></li>
-            <li><a class=" a1 " href="#">150</a></li>
-            <li><a class=" a1 " href="#">200</a></li>
-            <li><a class=" a1 " href="#">All</a></li>
-          </ul>
-          <label for="sort">
-            <div class="feature">
-              <i class="fa-solid fa-arrow-down-wide-short"></i>
-              <span>Sort by: Featured</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </div>
-          </label>
-          <input type="checkbox" id="sort">
-          <ul class="drop-down2">
-            <li><a class=" a2 active" href="#">Featured</a></li>
-            <li><a class=" a2 " href="#">Price:Low To High</a></li>
-            <li><a class=" a2 " href="#">Price:high To Low</a></li>
-            <li><a class=" a2 " href="#">Release Date</a></li>
-            <li><a class=" a2 " href="#">Avg Rating</a></li>
-          </ul>
-        </div>
+  <div class="category">
+    <div class="pop">
+      <?php
+        // Connect to the database
+        include './Components/connect.php';
+
+        // Retrieve the category ID from the URL parameter
+        $category_id = filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT);
+
+        // Retrieve the category name
+        $stmt = $conn->prepare("SELECT category_name FROM category WHERE category_id = :category_id");
+        $stmt->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Display the category name
+        echo '<h2 style="color: #666;font-family: Oswald, sans-serif;">Category:ALL</h2>';
+      ?>
+      <div class="all-features">
+        <label for="sort">
+          <div class="feature">
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+            <span>Sort by: Price</span>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+        </label>
+        <input type="checkbox" id="sort">
+        <ul class="drop-down2">
+          <li><a class="a2" href="#">Price:Low To High</a></li>
+          <li><a class="a2" href="#">Price:high To Low</a></li>
+        </ul>
       </div>
-      <div class="prod-container">
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up hot">Hot</span>
-          <img src="images/pic-1.png" alt="">
-          <div class="text">
-            <span class="tag">snak</span>
-            <h3>Seeds of Change Organic Quinoa, Brown, &amp; Red Rice</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$28.85 <del>$32.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
+    </div>
+    <div class="prod-container">
+      <?php
+        // Connect to the database
+        include './Components/connect.php';
+
+        // Retrieve all products
+        $stmt = $conn->prepare("SELECT * FROM products");
+        $stmt->execute();
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        
+        // Display all the products
+        foreach ($products as $product) {
+            // Retrieve the category name for the current product
+            $stmt = $conn->prepare("SELECT category_name FROM category WHERE category_id = :category_id");
+            $stmt->bindValue(':category_id', $product['category_id'], PDO::PARAM_INT);
+            $stmt->execute();
+            $category = $stmt->fetch(PDO::FETCH_ASSOC);
+          echo '<div class="card">';
+          echo '<div class="wishlist">';
+          echo '<a class="heart" href="Wishlist.php"><i class="fa-regular fa-heart"></i></a>';
+          echo '<a class="eye" href="Single_view_product.php"><i class="fa-regular fa-eye"></i></a>';
+          echo '</div>';
+          if ($product['discount'] > 0) {
+            echo '<span class="up discount">-' . $product['discount'] . '%</span>';
+          }
+          echo '<img src="./admin/uploaded_img/' . $product['image'] . '" alt="">';
+          echo '<div class="text">';
+          echo '<span class="tag">' . htmlspecialchars($category['category_name'], ENT_QUOTES) . '</span>';
+          echo '<h3>' . htmlspecialchars($product['name'], ENT_QUOTES) . '</h3>';
+          echo '<p>' . htmlspecialchars($product['description'], ENT_QUOTES) . '</p>';
+
+          echo '</div>';
+          echo '<div class="price">';
+            if (isset($product['discount']) && is_numeric($product['discount']) && $product['discount'] > 0 && $product['discount'] <= 100) {
+              $price_discount = $product['price'] - ($product['price'] * $product['discount'] / 100);
+                echo '<h4>JOD' . number_format($price_discount, 2) . ' <del>JOD' . number_format($product['price'], 2) . '</del></h4>';
+            } else {
+                echo '<h4>JOD' . number_format($product['price'], 2) . '</h4>';
+            }
+            echo '<div class="add">';
+            echo '<a href="Cart.php">Add</a>';
+            echo '<i class="fa-solid fa-cart-shopping"></i>';
+            echo '</div>';
+
+          echo '</div>';
+          echo '</div>';
+        }
+        ?>
         </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up sale">Sale</span>
-          <img src="images/pic-2.png" alt="">
-          <div class="text">
-            <span class="tag">Hodo Foods</span>
-            <h3>All Natural Italian-Style Chicken Meatballs</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(3.5)</span>
-              <p class="by">By <span>Stouffer</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$52.85 <del>$55.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up new">New</span>
-          <img src="images/pic-3.png" alt="">
-          <div class="text">
-            <span class="tag">snak</span>
-            <h3>Angie’s Boomchickapop Sweet &amp; Salty Kettle Corn</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>StarKist</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$48.85 <del>$$52.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <img src="images/pic-4.png" alt="">
-          <div class="text">
-            <span class="tag">Vegetables</span>
-            <h3>Foster Farms Takeout Crispy Buffalo Wings</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$17.85 <del>$19.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up discount">-14%</span>
-          <img src="images/pic-5.png" alt="">
-          <div class="text">
-            <span class="tag">Pet Foods</span>
-            <h3>Blue Diamond Almonds Lightly Salted Vegetables</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$23.85 <del>$25.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <img src="images/pic-6.png" alt="">
-          <div class="text">
-            <span class="tag">Hodo Foods</span>
-            <h3>Chobani Complete Vanilla Greek Yogurt</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$54.85 <del>$55.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up discount">-25%</span>
-          <img src="images/product-7-1.jpeg" alt="">
-          <div class="text">
-            <span class="tag">Meats</span>
-            <h3>Canada Dry Ginger Ale – 2 L Bottle - 200ml - 400g</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$28.85 <del>$32.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up sale">Sale</span>
-          <img src="images/product-8-1.jpeg" alt="">
-          <div class="text">
-            <span class="tag">snak</span>
-            <h3>Encore Seafoods Stuffed Alaskan Salmon</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$35.85 <del>$37.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up hot">Hot</span>
-          <img src="images/product-9-1.jpeg" alt="">
-          <div class="text">
-            <span class="tag">Coffes</span>
-            <h3>Gorton’s Beer Battered Fish Fillets with soft paper</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>Old El Paso</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$23.85 <del>$25.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up new">New</span>
-          <img src="images/product-10-1.jpeg" alt="">
-          <div class="text">
-            <span class="tag">Cream</span>
-            <h3>Haagen-Dazs Caramel Cone Ice Cream Ketchup</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>Tyson</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$28.85 <del>32.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up hot">Hot</span>
-          <img src="images/product-7-1.jpeg" alt="">
-          <div class="text">
-            <span class="tag">snak</span>
-            <h3>Seeds of Change Organic Quinoa, Brown, &amp; Red Rice</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$28.85 <del>$32.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up sale">Sale</span>
-          <img src="images/product-16-6.jpeg" alt="">
-          <div class="text">
-            <span class="tag">Hodo Foods</span>
-            <h3>All Natural Italian-Style Chicken Meatballs</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(3.5)</span>
-              <p class="by">By <span>Stouffer</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$52.85 <del>$55.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up new">New</span>
-          <img src="images/product-13-2.jpeg" alt="">
-          <div class="text">
-            <span class="tag">snak</span>
-            <h3>Angie’s Boomchickapop Sweet &amp; Salty Kettle Corn</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>StarKist</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$48.85 <del>$$52.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <img src="images/product-16-6.jpeg" alt="">
-          <div class="text">
-            <span class="tag">Vegetables</span>
-            <h3>Foster Farms Takeout Crispy Buffalo Wings</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$17.85 <del>$19.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <span class="up discount">-14%</span>
-          <img src="images/pic-2.png" alt="">
-          <div class="text">
-            <span class="tag">Pet Foods</span>
-            <h3>Blue Diamond Almonds Lightly Salted Vegetables</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$23.85 <del>$25.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="wishlist">
-            <a class="heart" href="#"><i class="fa-regular fa-heart"></i></a>
-            <a class="shuffle" href="#"><i class="fa-solid fa-shuffle"></i></a>
-            <a class="eye" href="#"><i class="fa-regular fa-eye"></i></a>
-          </div>
-          <img src="images/pic-3.png" alt="">
-          <div class="text">
-            <span class="tag">Hodo Foods</span>
-            <h3>Chobani Complete Vanilla Greek Yogurt</h3>
-            <div class="rate">
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-solid fa-star"></i>
-              <i class=" filled fa-regular fa-star"></i>
-              <span class="number">(4.0)</span>
-              <p class="by">By <span>NestFood</span></p>
-            </div>
-          </div>
-          <div class="price">
-            <h4>$54.85 <del>$55.8</del></h4>
-            <div class="add">
-              <a href="#">Add</a>
-              <i class="fa-solid fa-cart-shopping"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="pagination">
+        <div class="pagination">
         <ul class="pag-wrapper">
           <li><a href="#"><i class="fa-solid fa-arrow-left wide-arrow"></i></a></li>
           <li><a href="#">1</a></li>
@@ -647,42 +288,38 @@
           <li><a href="#">6</a></li>
           <li><a href="#"><i class="fa-solid fa-arrow-right wide-arrow"></i></a></li>
         </ul>
-      </div>
+        </div>
     </div>
+    
     <div class="aside">
-      <div class="cat1">
-        <h2>Category</h2>
-        <div class="products">
-          <img src="images/category-1.svg" alt="">
-          <span class="text">Milk &amp;<br>Dairies</span>
-          <span class="number">30</span>
-        </div>
-        <div class="products">
-          <img src="images/category-2.svg" alt="">
-          <span class="text">Clothing</span>
-          <span class="number">30</span>
-        </div>
-        <div class="products">
-          <img src="images/category-3.svg" alt="">
-          <span class="text">Pets Foods</span>
-          <span class="number">10</span>
-        </div>
-        <div class="products">
-          <img src="images/category-4.svg" alt="">
-          <span class="text">Backing<br>material</span>
-          <span class="number">8</span>
-        </div>
-        <div class="products">
-          <img src="images/category-5.svg" alt="">
-          <span class="text">Fresh Fruit</span>
-          <span class="number">0</span>
-        </div>
-      </div>
-     
-     
-    </div>
-  </div>
+          <div class="cat1 ">
+            <h2 style="color: #666;font-family: 'Oswald', sans-serif;">Category</h2>
+            <?php
+              // Connect to the database
+              include './Components/connect.php'; 
 
+              // Retrieve the category data
+              $stmt = $conn->query("SELECT c.category_id, c.category_name, COUNT(p.product_id) as product_count
+              FROM category c
+              LEFT JOIN products p ON c.category_id = p.category_id
+              GROUP BY c.category_id
+              ");
+              $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+              // Display the category data with links to each category page
+              foreach ($categories as $category) {
+                echo '<div class="products">';
+                echo '<a href="Category.php?category_id=' . $category['category_id'] . '">';
+                echo '<span class="text" style="color:#189116;font-family:auto;font-size:1.25rem;">' . $category['category_name'] . '</span>';
+                // echo '<span class="number mt-auto">' . $category['product_count'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+              }
+            ?>
+          </div>
+        </div>
+            </div>
+     
 <!-- -------------------------footer-------------------------------- -->
 <div>
 	<div class="footer-area mt-5">
@@ -757,4 +394,6 @@
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </html>
+
+
 

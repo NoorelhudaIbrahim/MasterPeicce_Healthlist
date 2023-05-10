@@ -209,6 +209,7 @@
     padding: 10px 15px;
     border-radius: 10px;
     cursor: pointer;
+    /* padding-block:inherit; */
   }
   
   .catg-section .category .all-features .feature:hover {
@@ -543,7 +544,7 @@
   .catg-section .category .price .add {
     width: 85px;
     height: 35px;
-    background-color:#DEF9EC;
+    background-color:#189116;
     border-radius: 4px;
     display: flex;
     justify-content: center;
@@ -592,7 +593,7 @@
   .catg-section .pagination a {
     width: 40px;
     height: 40px;
-    background-color: #F2F3F4;
+    background-color: #189116;
     border: none;
     border-radius: 50%;
     display: flex;
@@ -646,7 +647,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    background-color: #BCE3C9;
+    background-color: #189116;
     width: 100px;
     height: 2px;
   }
@@ -675,12 +676,13 @@
   }
   
   .catg-section .aside .cat1 span {
-    font-family: 'Lato', sans-serif;
+    font-family: auto;
     font-size: 14px;
+    color:#189116;
   }
   
   .catg-section .aside .cat1 .number {
-    background-color: #BCE3C9;
+    background-color: #189116;
     border-radius: 50%;
     border: none;
     width: 25px;
@@ -703,7 +705,7 @@
   #rang {
     appearance: none;
     outline: none;
-    background-color: #D6D7D9;
+    background-color: #189116;
     width: 180px;
     height: 4px;
     position: relative;

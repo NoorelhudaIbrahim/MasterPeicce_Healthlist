@@ -1,36 +1,54 @@
 <?php
 
-include './Components/connect.php';                
+include './Components/connect.php'; 
 
+// start the session
 session_start();
 
-if(isset($_SESSION['user_id'])){
-   $user_id = $_SESSION['user_id'];
-}else{
-   $user_id = '';
-   header('location:user_login.php');
-};
+// check if the form has been submitted
+if(isset($_POST['search'])) {
 
-if(isset($_POST['delete'])){
-   $cart_id = $_POST['cart_id'];
-   $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE id = ?");
-   $delete_cart_item->execute([$cart_id]);
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
 }
 
-if(isset($_GET['delete_all'])){
-   $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
-   $delete_cart_item->execute([$user_id]);
-   header('location:cart.php');
-}
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
 
-if(isset($_POST['update_qty'])){
-   $cart_id = $_POST['cart_id'];
-   $qty = $_POST['quantity'];
-   $update_qty = $conn->prepare("UPDATE `cart` SET quantity = ? WHERE id = ?");
-   $update_qty->execute([$qty, $cart_id]);
-}
+  
+
 
 ?>
+
+
+
 
 <!DOCTYPE html>
 <head>
@@ -56,7 +74,39 @@ if(isset($_POST['update_qty'])){
     <link rel="stylesheet" href="./css/home.css">
     <title>Healthlist</title>   
 </head>
+<style>
+  
+  table {
+        border-collapse: collapse;
+        width: 100%;
+        margin-bottom: 20px;
+    }
 
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+
+    th {
+        background-color: #f2f2f2;
+    }
+
+    img {
+        max-width: 50px;
+        max-height: 50px;
+    }
+
+    input[type="number"] {
+        width: 50px;
+        text-align: center;
+    }
+
+    .actions button {
+        margin-left: 5px;
+    }
+
+</style>
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
 <div class="main-navbar shadow-sm sticky-top">
@@ -64,20 +114,20 @@ if(isset($_POST['update_qty'])){
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -90,18 +140,24 @@ if(isset($_POST['update_qty'])){
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -167,73 +223,67 @@ if(isset($_POST['update_qty'])){
 
 <!-- -------------------------cart-------------------------------- --> 
 
-<section class="products shopping-cart">
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+       
+// Check if the cart is not empty
+if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+  // Establish a PDO connection
+  $pdo = new PDO('mysql:host=localhost;dbname=your_database_name', 'your_username', 'your_password');
 
-<h3 class="heading">shopping cart</h3>
+  // Get the product IDs from the cart
+  $productIds = array_keys($_SESSION['cart']);
 
-<div class="box-container">
+  // Prepare the SQL query
+  $query = "SELECT * FROM cart WHERE product_id IN (" . implode(',', $productIds) . ")";
+  $stmt = $conn->query($query);
 
-<?php
-   $total_price = 0;
-   $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-   $select_cart->execute([$user_id]);
-   if($select_cart->rowCount() > 0){
-      while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-?>
-<form action="" method="post" class="box">
-   <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
+  // Display the cart items
+  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+      $productId = $row['product_id'];
+      $productName = $row['name'];
+      $productPrice = $row['price'];
+      $productQuantity = $_SESSION['cart'][$productId];
+      $subtotal = $productPrice * $productQuantity;
+      $productImage = $row['image'];
 
-   <a href="Single_view_product.php?pid=<?= $fetch_cart['product_id']; ?>" class="fas fa-eye"></a>
-   <img src="./admin/uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
-   <div class="name"><?= $fetch_cart['name']; ?></div>
-
-   
-   <div class="flex">
-      <?php
-      $product_cart_id = $fetch_cart['product_id'];
-      $select_product = $conn->prepare("SELECT * FROM `products` WHERE product_id = $product_cart_id");
-      $select_product->execute();
-      if($select_product->rowCount() > 0){
-
-         while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
-            $x = 0;
-         
-         if ($fetch_product['is_sale'] == 1){ ?>
-
-         <div class="price"><span><del style="text-decoration:line-through; color:silver">$<?= $fetch_product['price']; ?></del><ins style="color:rgb(0, 0, 69) !important;"> $<?=$fetch_product['price_discount'];?></ins> </span></div>
-
-         <?php $x = $fetch_product['price_discount']; } else { ?>
-
-         <div class="name" style="color:rgb(0, 0, 69) !important; padding:20px 0px">$<?= $fetch_product['price']; ?></div> <?php  $x = $fetch_product['price']; } ?>
-
-         <?php if ($fetch_product['category_id'] != '9'){?>
-
-         <input type="number" name="quantity" class="qty" min="1" max="<?= $fetch_product['store']-$fetch_product['sold'];?>" value="<?=$fetch_cart['quantity'];?>">
-         <button type="submit" class="fas fa-edit" name="update_qty"></button>
-         <?php } else { ?>
-         <input type="hidden" name="quantity" value="1">
-         <?php } } } ?> 
-   </div>
-   <div class="sub-total"> Sub Total : <span>$<?= $sub_total = ($x * $fetch_cart['quantity']); ?></span> </div>
-   <input type="submit" value="delete item" onclick="return confirm('delete this from cart?');" class="delete-btn" name="delete">
-</form>
-<?php
-$total_price += $sub_total;
-   }
-}else{
-   echo '<p class="empty">your cart is empty</p>';
+      echo '<tr>';
+      echo '<td data-th="Product">';
+      echo '<div class="row">';
+      echo '<div class="col-sm-2 hidden-xs"><img src="' . $productImage . '" alt="..." class="img-responsive"/></div>';
+      echo '<div class="col-sm-10">';
+      echo '<h4 class="nomargin">' . $productName . '</h4>';
+      echo '</div>';
+      echo '</div>';
+      echo '</td>';
+      echo '<td data-th="Price">' . $productPrice . '</td>';
+      echo '<td data-th="Quantity">';
+      echo '<input type="number" class="form-control text-center" value="' . $productQuantity . '">';
+      echo '</td>';
+      echo '<td data-th="Subtotal" class="text-center">' . $subtotal . '</td>';
+      echo '<td class="actions" data-th="">';
+      echo '<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
+      echo '</td>';
+      echo '</tr>';
+  }
+} else {
+  // Display a message if the cart is empty
+  echo '<p>Your cart is empty.</p>';
 }
 ?>
-</div>
-
-<div class="cart-total">
-   <p>Total Price : <span>$<?= $total_price; ?></span></p>
-   <a href="shop.php" class="option-btn">continue shopping</a>
-   <a href="cart.php?delete_all" class="delete-btn <?= ($total_price > 1)?'':'disabled'; ?>" onclick="return confirm('delete all from cart?');">delete all item</a>
-   <a href="checkout.php" class="btn <?= ($total_price > 1)?'':'disabled'; ?>">proceed to checkout</a>
-</div>
-
-</section>
+        
+    </tbody>
+</table>
 
 <!-- -------------------------footer-------------------------------- -->
 <div>

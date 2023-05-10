@@ -1,8 +1,48 @@
 <?php
 
-include './Components/connect.php';                
+include './Components/connect.php'; 
 
+// start the session
 session_start();
+
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
+}
+
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+
 
 if(isset($_SESSION['user_id'])){
    $user_id = $_SESSION['user_id'];
@@ -52,11 +92,142 @@ if(isset($_POST['update_qty'])){
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="./css/swiper-bundle.min.css">
     <!-- ------------------external css--------------------- -->
-    <link rel="stylesheet" href="./css/cart.css">
+    <link rel="stylesheet" href="./css/wishlist.css">
     <link rel="stylesheet" href="./css/home.css">
     <title>Healthlist</title>   
 </head>
+<style>
+    
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Wishlist Container */
+  .wishlist-container {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 0 10px;
+  }
+  
+  /* Wishlist Table */
+  .wishlist-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  /* Wishlist Table Head */
+  .wishlist-table th {
+    text-align: left;
+    font-weight: bold;
+    padding: 10px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  /* Wishlist Table Body */
+  .wishlist-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  /* Product Info */
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .product-info img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 10px;
+  }
+  
+  .product-details h4,
+  .product-details p {
+    margin: 0;
+  }
+  
+  /* Status */
+  .status {
+    font-weight: bold;
+  }
+  
+  .in-stock {
+    color: green;
+  }
+  
+  .out-of-stock {
+    color: red;
+  }
+  
+  /* Actions */
+  .action-btn {
+    padding: 8px 12px;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  }
+  
+  .add-to-cart-btn {
+  background-color: #5cb85c;
+  color: #fff;
+  }
+  
+  .contact-us-btn {
+  background-color: #d9534f;
+  color: #fff;
+  }
+  
+  .remove-item-btn {
+  padding: 4px;
+  }
+  
+  /* Continue Shopping */
+  .continue-shopping {
+  text-align: left;
+  margin-top: 20px;
+  }
+  
+  .continue-shopping a {
+  padding: 10px 15px;
+  background-color: #f0ad4e;
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  }
+  
+  /* Responsive Styling */
+  @media screen and (max-width: 768px) {
+  .wishlist-table {
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  }
+  
+  .wishlist-table th,
+  .wishlist-table td {
+  display: inline-block;
+  width: 100%;
+  text-align: left;
+  }
+  
+  .product-info img {
+  width: 80px;
+  height: 80px;
+  }
+  
+  .continue-shopping a {
+  display: block;
+  width: 100%;
+  text-align: center;
+  }
+  }
+</style>
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
 <div class="main-navbar shadow-sm sticky-top">
@@ -64,20 +235,20 @@ if(isset($_POST['update_qty'])){
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -90,18 +261,24 @@ if(isset($_POST['update_qty'])){
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -155,86 +332,68 @@ if(isset($_POST['update_qty'])){
 
 
 <div class="container-fluid page-header wow fadeIn " data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn; back; background-image: url(https://t4.ftcdn.net/jpg/01/76/36/95/240_F_176369556_9ctY3plObjG6okZForkT9vkQl2CxES7E.jpg);background-size: cover;"><div class="container">
-<h1 class="display-3 mb-3  slideInDown text-center text-success" >My Cart</h1>
+<h1 class="display-3 mb-3  slideInDown text-center text-success" >My wishlist</h1>
 <nav aria-label="breadcrumb animated slideInDown">
 <ol class="breadcrumb mb-0 ">
 <li class="breadcrumb-item text-decoration-underline"><a class="text-body" href="Home.php">Home</a></li>
-<li class="breadcrumb-item text-decoration-underline text-dark active" aria-current="page">My Cart</li>
+<li class="breadcrumb-item text-decoration-underline text-dark active" aria-current="page">My wishlist</li>
 </ol>
 </nav>
 </div>
 </div>
 
 <!-- ------------------------wishlist------------------------------- --> 
-
-<section class="products shopping-cart">
-
-<h3 class="heading">shopping cart</h3>
-
-<div class="box-container">
-
-<?php
-   $total_price = 0;
-   $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-   $select_cart->execute([$user_id]);
-   if($select_cart->rowCount() > 0){
-      while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-?>
-<form action="" method="post" class="box">
-   <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
-
-   <a href="Single_view_product.php?pid=<?= $fetch_cart['product_id']; ?>" class="fas fa-eye"></a>
-   <img src="./admin/uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
-   <div class="name"><?= $fetch_cart['name']; ?></div>
-
-   
-   <div class="flex">
-      <?php
-      $product_cart_id = $fetch_cart['product_id'];
-      $select_product = $conn->prepare("SELECT * FROM `products` WHERE product_id = $product_cart_id");
-      $select_product->execute();
-      if($select_product->rowCount() > 0){
-
-         while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
-            $x = 0;
-         
-         if ($fetch_product['is_sale'] == 1){ ?>
-
-         <div class="price"><span><del style="text-decoration:line-through; color:silver">$<?= $fetch_product['price']; ?></del><ins style="color:rgb(0, 0, 69) !important;"> $<?=$fetch_product['price_discount'];?></ins> </span></div>
-
-         <?php $x = $fetch_product['price_discount']; } else { ?>
-
-         <div class="name" style="color:rgb(0, 0, 69) !important; padding:20px 0px">$<?= $fetch_product['price']; ?></div> <?php  $x = $fetch_product['price']; } ?>
-
-         <?php if ($fetch_product['category_id'] != '9'){?>
-
-         <input type="number" name="quantity" class="qty" min="1" max="<?= $fetch_product['store']-$fetch_product['sold'];?>" value="<?=$fetch_cart['quantity'];?>">
-         <button type="submit" class="fas fa-edit" name="update_qty"></button>
-         <?php } else { ?>
-         <input type="hidden" name="quantity" value="1">
-         <?php } } } ?> 
-   </div>
-   <div class="sub-total"> Sub Total : <span>$<?= $sub_total = ($x * $fetch_cart['quantity']); ?></span> </div>
-   <input type="submit" value="delete item" onclick="return confirm('delete this from cart?');" class="delete-btn" name="delete">
-</form>
-<?php
-$total_price += $sub_total;
-   }
-}else{
-   echo '<p class="empty">your cart is empty</p>';
-}
-?>
-</div>
-
-<div class="cart-total">
-   <p>Total Price : <span>$<?= $total_price; ?></span></p>
-   <a href="shop.php" class="option-btn">continue shopping</a>
-   <a href="cart.php?delete_all" class="delete-btn <?= ($total_price > 1)?'':'disabled'; ?>" onclick="return confirm('delete all from cart?');">delete all item</a>
-   <a href="checkout.php" class="btn <?= ($total_price > 1)?'':'disabled'; ?>">proceed to checkout</a>
-</div>
-
-</section>
-
+<div class="wishlist-container">
+    <table class="wishlist-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <div class="product-info">
+              <img src="http://placehold.it/100x100" alt="Product Image">
+              <div class="product-details">
+                <h4>Product Name</h4>
+                <p>Product description goes here</p>
+              </div>
+            </div>
+          </td>
+          <td>$9.99</td>
+          <td class="status in-stock">In Stock</td>
+          <td>
+            <button class="action-btn add-to-cart-btn">Add to Cart</button>
+            <button class="action-btn remove-item-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div class="product-info">
+              <img src="http://placehold.it/100x100" alt="Product Image">
+              <div class="product-details">
+                <h4>Product Name</h4>
+                <p>Product description goes here</p>
+              </div>
+            </div>
+          </td>
+          <td>$19.99</td>
+          <td class="status out-of-stock">Out of Stock</td>
+          <td>
+            <button class="action-btn contact-us-btn">Contact Us</button>
+            <button class="action-btn remove-item-btn"><i class="fas fa-trash"></i></button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="continue-shopping">
+    <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+    </div>
+  </div>
 <!-- -------------------------footer-------------------------------- -->
 <div>
 	<div class="footer-area mt-5">

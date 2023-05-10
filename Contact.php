@@ -1,3 +1,50 @@
+<?php
+
+include './Components/connect.php'; 
+
+// start the session
+session_start();
+
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
+    $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
+
+    // bind the parameters
+    $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
+
+    // execute the query
+    $stmt->execute();
+
+    // fetch the results
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // redirect to 404 page if no results found
+    if (count($results) === 0) {
+        header("Location: 404Page.php");
+        exit();
+    }
+
+    // store the results in the session
+    $_SESSION['results'] = $results;
+
+    // redirect to the search results page
+    header("Location: Search_result.php");
+    exit();
+}
+
+// Check if the user is logged in
+if(isset($_SESSION['user_id'])) {
+    // Fetch the user's information from the database
+    $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+    $stmt->execute([$_SESSION['user_id']]);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+?>
+
+
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
@@ -30,20 +77,20 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-2 my-auto d-none d-sm-none d-md-block d-lg-block ml-">
-                        <img src="./Images/logo1.png" width="160rem" height="50rem">
+                        <a href="Home.php"><img src="./Images/logo1.png" width="160rem" height="50rem"></a>
                     </div>
-                    <div class="col-md-5 my-auto mx-auto" >
-                        <form role="search">
-                            <div class="input-group">
-                                <input type="search" placeholder="Search your product" class="form-control" />
-                                <button class="btn bg-white" type="submit">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
+                    <div class="col-md-5 my-auto mx-auto">
+                    <form role="search" method="POST">
+                        <div class="input-group">
+                            <input type="search" placeholder="Search your product" class="form-control" name="search"/>
+                            <button class="btn bg-white" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
                     <div class="col-md-5 my-auto">
-                        <ul class="nav justify-content-end">
+                        <ul class="nav justify-content-end "style="font-family:auto">
                             
                             <li class="nav-item">
                                 <a class="nav-link" href="Cart.php">
@@ -56,18 +103,24 @@
                                 </a>
                             </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="user_profile.php" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa fa-user"></i> Username 
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item" href="user_profile.php"><i class="fa fa-user"></i> Profile</a></li>
-                                <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li>
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
-                                <li><a class="dropdown-item" href="user_register.php"><i class="fa fa-user-plus"></i> Register</a></li>
-                                <li><a class="dropdown-item" href="user_login.php"><i class="fa fa-sign-in"></i> Login</a></li>
-                                <li><a class="dropdown-item" href="./components/user_logout.php" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
-                            </li>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
+                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
+                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
+                                    <?php else: ?>
+                                    <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
+                                    <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
+                                    <?php endif; ?>
+                                    <?php if(isset($user)): ?>
+                                    <li><a class="dropdown-item" href="./components/user_logout.php"style="color:#189116" onclick="return confirm('logout from the website?');"><i class="fa fa-sign-out"></i> Logout</a></li>
+                                    <?php endif; ?>
+                                </ul>
+                                </li>
                         </ul>
                     </div>
                 </div>
@@ -120,7 +173,7 @@
 
 
 <div class="container-fluid page-header wow fadeIn " data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn; back; background-image: url(https://t4.ftcdn.net/jpg/01/76/36/95/240_F_176369556_9ctY3plObjG6okZForkT9vkQl2CxES7E.jpg);background-size: cover;"><div class="container">
-<h1 class="display-3 mb-3  slideInDown text-center text-success" >#Let us know how we can help you</h1>
+<h1 class="display-3 mb-3  slideInDown text-center text-success" >#Let's Talk With Us</h1>
 <nav aria-label="breadcrumb animated slideInDown">
 <ol class="breadcrumb mb-0 ">
 <li class="breadcrumb-item text-decoration-underline"><a class="text-body" href="Home.php">Home</a></li>
@@ -130,7 +183,6 @@
 </div>
 </div>
 
-
 <!-- -------------------------contact-------------------------------- --> 
 
 <div class="container-xxl py-6">
@@ -138,13 +190,14 @@
 
 <div class="row g-5 justify-content-center my-4 mx-auto">
 <div class="col-lg-5 col-md-12 wow fadeInUp" data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeInUp;margin:auto">
-<div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5" style="background-color:#189116 !important;">
+<div class="bg-success text-white d-flex flex-column justify-content-center h-100 p-5" style="background-image:url('https://media.healthyfood.com/wp-content/uploads/2023/05/Trust-your-gut-500x500.jpg')!important;opacity:0.6;!important;">
+    <div style="background-color:gray;opacity:0.8;font-family:auto">
 <h5 class="text-white">Call Us</h5>
-<p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+<p class="mb-5"><i class="fa fa-phone-alt me-3"></i>+962 345 67890</p>
 <h5 class="text-white">Email Us</h5>
-<p class="mb-5"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+<p class="mb-5"><i class="fa fa-envelope me-3"></i>Healthlist@gmail.com</p>
 <h5 class="text-white">Office Address</h5>
-<p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>123 Street, New York, USA</p>
+<p class="mb-5"><i class="fa fa-map-marker-alt me-3"></i>Happy Street, Aqaba, Jordan</p>
 <h5 class="text-white">Follow Us</h5>
 <div class="d-flex pt-2">
 <a class="btn btn-square btn-outline-light rounded-circle me-1" href=""><i class="fab fa-twitter"></i></a>
@@ -154,12 +207,13 @@
 </div>
 </div>
 </div>
+</div>
 <div class="col-lg-7 col-md-12 wow fadeInUp" data-wow-delay="0.5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
-<p class="mb-4">The contact form is currently inactive. Get a functional and working contact form with Ajax &amp; PHP in a few minutes. Just copy and paste the files, add a little code and you're done. </p>
+<p class="mb-4 "style="font-family:auto">If you have any feedback or questions please complete the form below, we’d love to hear from you. </p>
 <form>
-<div class="row g-3">
+<div class="row g-3"style="font-family:auto">
 <div class="col-md-6">
-<div class="form-floating">
+<div class="form-floating" >
 <input type="text" class="form-control" id="name" placeholder="Your Name">
 <label for="name">Your Name</label>
 </div>
@@ -183,7 +237,7 @@
 </div>
 </div>
 <div class="col-12">
-<button class="btn btn-success rounded-pill py-3 px-5 ml-17" type="submit" style="background-color:#189116 !important;">Send Message</button>
+<button class="btn btn-success rounded-pill py-3 px-5 ml-17" type="submit" style="background: #189116 !important;outline: none !important;border: none !important;color: #fff !important;padding:7px 25px !important;border-radius: 6px !important;font-size: 14px !important;transition: all 0.3s ease !important;cursor: pointer !important;">Send Message</button>
 </div>
 </div>
 </form>
