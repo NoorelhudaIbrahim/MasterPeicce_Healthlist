@@ -8,11 +8,15 @@
 	border-radius: 3px;
 }
 .signup-form {
+	background-image: url('https://media.healthyfood.com/wp-content/uploads/2023/05/Trust-your-gut-500x500.jpg');
+	opacity:0.6;
 	width: 400px;
 	margin: 0 auto;
 	padding: 30px 0;		
 }
 .signup-form form {
+	background-image: url('https://media.healthyfood.com/wp-content/uploads/2023/05/Trust-your-gut-500x500.jpg');
+	opacity:0.85;
 	color: #999;
 	border-radius: 3px;
 	margin-bottom: 15px;

@@ -1,5 +1,6 @@
 <?php
 
+
 include './Components/connect.php'; 
 
 // start the session
@@ -40,9 +41,12 @@ if(isset($_SESSION['user_id'])) {
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+}
+
 
 ?>
+
+
 
 <!DOCTYPE html>
 <head>
@@ -189,158 +193,104 @@ if(isset($_SESSION['user_id'])) {
 </div>
 </div>
 
-<!-- -------------------------product-------------------------------- --> 
+<!-- -------------------------recipe-------------------------------- --> 
 <div class="blogs-section">
-    <div class="category">
-      <div class="pop">
-        <div class="figure">
-          <img src="images/category-1.svg" alt="">
-          <h1>Recips Articles</h1>
-        </div>
-        <div class="all-features">
-          <label for="show">
-            <div class="feature">
-              <i class="fa-solid fa-grip"></i>
-              <span>Show: 50</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </div>
-          </label>
-          <input type="checkbox" id="show">
-          <ul class="drop-down1">
-            <li><a class=" a1 active" href="#">50</a></li>
-            <li><a class=" a1 " href="#">100</a></li>
-            <li><a class=" a1 " href="#">150</a></li>
-            <li><a class=" a1 " href="#">200</a></li>
-            <li><a class=" a1 " href="#">All</a></li>
-          </ul>
-          <label for="sort">
-            <div class="feature">
-              <i class="fa-solid fa-arrow-down-wide-short"></i>
-              <span>Sort by: Featured</span>
-              <i class="fa-solid fa-angle-down"></i>
-            </div>
-          </label>
-          <input type="checkbox" id="sort">
-          <ul class="drop-down2">
-            <li><a class=" a2 active" href="#">Featured</a></li>
-            <li><a class=" a2 " href="#">Price:Low To High</a></li>
-            <li><a class=" a2 " href="#">Price:high To Low</a></li>
-            <li><a class=" a2 " href="#">Release Date</a></li>
-            <li><a class=" a2 " href="#">Avg Rating</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="prod-container">
-        <div class="card">
-          <img src="images/blog-1.png" alt="">
-          <div class="text">
-            <span>Side Dish</span>
-            <h3>The Intermediate Guide to Healthy Food</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
+<div class="aside">
+          <div class="cat1 ">
+            <h2 style="color: #666;font-family: 'Oswald', sans-serif;">Category</h2>
+            <?php
+              // Connect to the database
+              include './Components/connect.php'; 
+
+              // Retrieve the category data
+              $stmt = $conn->query("SELECT c.category_id, c.category_name, COUNT(r.recipe_id) as recipe_count
+              FROM category c
+              LEFT JOIN recipes r ON c.category_id = r.category_id
+              GROUP BY c.category_id
+              ");
+              $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+              // Display the category data with links to each category page
+              foreach ($categories as $category) {
+                echo '<div class="products">';
+                echo '<a href="Category_recipe.php?category_id=' . $category['category_id'] . '">';
+                echo '<span class="text" style="color:#189116;font-family:auto;font-size:1.25rem;">' . $category['category_name'] . '</span>';
+                // echo '<span class="number mt-auto">' . $category['product_count'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+              }
+            ?>
           </div>
         </div>
-        <div class="card">
-          <img src="images/blog-2.png" alt="">
-          <div class="text">
-            <span>Soups and Stews</span>
-            <h3>Summer Quinoa Salad Jars with Lemon Dill</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
+  <div class="category">
+    <div class="pop">
+      <?php
+      // Connect to the database
+      include './Components/connect.php';
+
+      // Retrieve the category ID from the URL parameter
+      $category_id = filter_input(INPUT_GET, 'category_id', FILTER_SANITIZE_NUMBER_INT);
+
+      // Retrieve the category name
+      $stmt = $conn->prepare("SELECT category_name FROM category WHERE category_id = :category_id");
+      $stmt->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+      $stmt->execute();
+      $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+      // Display the category name
+      echo '<h2 style="color: #666;font-family: Oswald, sans-serif;">Category: ALL</h2>';
+      ?>
+      <!-- <div class="all-features">
+        <label for="sort">
+          <div class="feature">
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+            <span>Sort by: Menu Dishes</span>
+            <i class="fa-solid fa-angle-down"></i>
           </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-3.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Caprese Chicken with Smashed Potatoes</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-4.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>The Absolute Easiest Spinach and Pizza</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-5.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Smoky Beans &amp; Greens Tacos with Aji Verde</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-6.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>The Absolute Easiest Spinach and Pizza</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-7.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>The Absolute Easiest Spinach and Pizza</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-8.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Caprese Chicken with Smashed Potatoes</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-9.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Creamy Garlic Sun-Dried Tomato Pasta</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-10.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Caprese Chicken with Smashed Potatoes</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-2.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Creamy Garlic Sun-Dried Tomato Pasta</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-        <div class="card">
-          <img src="images/blog-12.png" alt="">
-          <div class="text">
-            <span>Salad</span>
-            <h3>Creamy Garlic Sun-Dried Tomato Pasta</h3>
-            <p>25 April 2021 - 126k Views - 4 mins</p>
-            <a href="#">Read More....</a>
-          </div>
-        </div>
-      </div>
-      <div class="pagination">
+        </label>
+        <input type="checkbox" id="sort">
+        <ul class="drop-down2">
+          <li><a class="a2 active" href="#">Featured</a></li>
+          <li><a class="a2" href="#">Main</a></li>
+          <li><a class="a2" href="#">Salads</a></li>
+          <li><a class="a2" href="#">Dessert</a></li>
+          <li><a class="a2" href="#">Side Dishes</a></li>
+        </ul>
+      </div> -->
+    </div>
+    <div class="prod-container">
+      <?php
+      // Connect to the database
+      include './Components/connect.php';
+
+      // Retrieve all recipes
+      $stmt = $conn->prepare("SELECT * FROM recipes");
+      $stmt->execute();
+      $recipes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+      // Display all the recipes
+      foreach ($recipes as $recipe) {
+        // Retrieve the category name for the current recipe
+        $stmt = $conn->prepare("SELECT category_name FROM category WHERE category_id = :category_id");
+        $stmt->bindValue(':category_id', $recipe['category_id'], PDO::PARAM_INT);
+        $stmt->execute();
+        $category = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        echo '<div class="card">';
+        echo '<img src="./admin/uploaded_img/' . $recipe['image'] . '"  alt="">';
+        echo '<div class="text text-center">';
+        echo '<span class="tag">' . htmlspecialchars($category['category_name'], ENT_QUOTES) . '</span>';
+        echo '<h3>' . htmlspecialchars($recipe['name'], ENT_QUOTES) . '</h3>';
+        echo '<span class="tag">' . htmlspecialchars($recipe['rcategory'], ENT_QUOTES) . '</span>';
+        echo '<p>Author: ' . htmlspecialchars($recipe['author'], ENT_QUOTES) . '</p>';
+        echo '</div>';
+        echo '<a href="Single_view_recipe.php" class="text-center text-white bg-success">Explore...</a>';
+        echo '</div>';
+      }
+      ?>
+    </div>
+
+      <!-- <div class="pagination">
         <ul class="pag-wrapper">
           <li><a href="#"><i class="fa-solid fa-arrow-left wide-arrow"></i></a></li>
           <li><a href="#">1</a></li>
@@ -350,42 +300,11 @@ if(isset($_SESSION['user_id'])) {
           <li><a href="#">6</a></li>
           <li><a href="#"><i class="fa-solid fa-arrow-right wide-arrow"></i></a></li>
         </ul>
-      </div>
+      </div> -->
     </div>
-    <div class="aside">
-      <div class="cat1">
-        <h2>Category</h2>
-        <div class="products">
-          <img src="images/category-1.svg" alt="">
-          <span class="text">Milk &amp;<br>Dairies</span>
-          <span class="number">30</span>
-        </div>
-        <div class="products">
-          <img src="images/category-2.svg" alt="">
-          <span class="text">Clothing</span>
-          <span class="number">30</span>
-        </div>
-        <div class="products">
-          <img src="images/category-3.svg" alt="">
-          <span class="text">Pets Foods</span>
-          <span class="number">10</span>
-        </div>
-        <div class="products">
-          <img src="images/category-4.svg" alt="">
-          <span class="text">Backing<br>material</span>
-          <span class="number">8</span>
-        </div>
-        <div class="products">
-          <img src="images/category-5.svg" alt="">
-          <span class="text">Fresh Fruit</span>
-          <span class="number">0</span>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-
+   
+            </div>
+     
 <!-- -------------------------footer-------------------------------- -->
 <div>
 	<div class="footer-area mt-5">
@@ -395,43 +314,42 @@ if(isset($_SESSION['user_id'])) {
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
 					</p>
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Quick Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Home</a></div>
-					<div class="mb-2"><a href="" class="text-white">About Us</a></div>
-					<div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
 					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
 					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Extra Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Login</a></div>
-					<div class="mb-2"><a href="" class="text-white">Register</a></div>
-					<div class="mb-2"><a href="" class="text-white">Cart</a></div>
-					<div class="mb-2"><a href="" class="text-white">orders</a></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Reach Us</h4>
 					<div class="footer-underline"></div>
 					<div class="mb-2">
 						<p>
-							<i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
 						</p>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-phone"></i> +91 888-XXX-XXXX
+							<i class="fa fa-phone"></i> +962 345 67890
 						</a>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-envelope"></i> healthlist@gmail.com
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
 						</a>
 					</div>
 				</div>
@@ -442,7 +360,7 @@ if(isset($_SESSION['user_id'])) {
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
 				</div>
 				<div class="col-md-4">
 					<div class="social-media">
@@ -456,6 +374,8 @@ if(isset($_SESSION['user_id'])) {
 		</div>
 	</div>
 </div>
+
+
 </body>
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

@@ -40,9 +40,10 @@ if(isset($_SESSION['user_id'])) {
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+}
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -57,6 +58,10 @@ if(isset($_SESSION['user_id'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&family=Quicksand:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
     <!-- ------------------icon with title--------------------- -->
     <link rel="icon" type="image/x-icon" href="./Images/logotitle.png">
@@ -65,60 +70,13 @@ if(isset($_SESSION['user_id'])) {
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="./css/swiper-bundle.min.css">
     <!-- ------------------external css--------------------- -->
-    <link rel="stylesheet" href="./css/about.css">
+    <!-- <link rel="stylesheet" href="css/style2.css"> -->
     <link rel="stylesheet" href="./css/home.css">
+    <link rel="stylesheet" href="./css/contact.css">
+    <link rel="stylesheet" href="./css/product.css">
+
     <title>Healthlist</title>   
 </head>
-
-<style>
-/* ---------------------about------------------------------ */
-
-.art-border {
-    border: 10px solid #189116; /* Art border color */
-    border-radius: 10px; /* Border radius */
-}
-
-.about {
-    padding: 91px; /* Add some padding to the container */
-    text-align:center;
-}
-
-.content {
-    margin-bottom: 20px; /* Add margin at the bottom */
-}
-
-.content h2 {
-    font-family: 'Oswald', sans-serif !important;
-    color: #666 !important;
-}
-
-.content p {
-    font-family: auto;
-    color: #666;
-}
-
-.aboutcontact {
-    background: #189116;
-    outline: none;
-    border: none;
-    color: #fff;
-    padding: 7px 25px;
-    border-radius: 6px;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-}
-
-.aboutcontact a {
-    text-decoration: none;
-    color: #fff;
-}
-
-.image img {
-    border: none; /* Remove default image border */
-    max-width: 100%; /* Make sure the image doesn't exceed its container */
-}
-</style>
 
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
@@ -191,10 +149,10 @@ if(isset($_SESSION['user_id'])) {
                         <a class="nav-link"  href="Home.php"><b>Home</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" style="background-color:#94cb8a" href="About.php"><b>About Us</b></a>
+                            <a class="nav-link "  href="About.php"><b>About Us</b></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="Product.php"><b>Products</b></a>
+                            <a class="nav-link active" style="background-color:#94cb8a" href="Product.php"><b>Products</b></a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="Brand_product.php"><b>Brands</b></a>
@@ -222,38 +180,157 @@ if(isset($_SESSION['user_id'])) {
 
 <!-- -------------------------header-------------------------------- -->
 
-
 <div class="container-fluid page-header wow fadeIn " data-wow-delay="0.1s" style="visibility: visible; animation-delay: 0.1s; animation-name: fadeIn; back; background-image: url(https://t4.ftcdn.net/jpg/01/76/36/95/240_F_176369556_9ctY3plObjG6okZForkT9vkQl2CxES7E.jpg);background-size: cover;"><div class="container">
-<h1 class="display-3 mb-3  slideInDown text-center text-success" >Let's Know us</h1>
+<h1 class="display-3 mb-3  slideInDown text-center text-success" >Products</h1>
 <nav aria-label="breadcrumb animated slideInDown">
 <ol class="breadcrumb mb-0 ">
 <li class="breadcrumb-item text-decoration-underline"><a class="text-body" href="Home.php">Home</a></li>
-<li class="breadcrumb-item text-decoration-underline text-dark active" aria-current="page">About Us</li>
+<li class="breadcrumb-item text-decoration-underline text-dark active" aria-current="page">Products</li>
 </ol>
 </nav>
 </div>
 </div>
 
+<!-- -------------------------product-------------------------------- --> 
+<div class="catg-section">
+<div class="aside">
+          <div class="cat1 ">
+            <h2 style="color: #666;font-family: 'Oswald', sans-serif;">Brand</h2>
+            <?php
+              // Connect to the database
+              include './Components/connect.php'; 
 
-<!-- -------------------------About-------------------------------- -->
-        
-<section>
-    <div class="about bg-light">
-        <div class="row" style="display: flex; flex-wrap: wrap;">
-            <div class="content" style="width: 50%;">
-                <h2 class="text-success">Our Vision</h2>
-                <p>It is important to encourage healthy food choices and provide healthy products to everyone, especially those who have allergies or diabetes disease and facing to find suitable food products for their diet. These individuals face a significant challenge locally due to the limited availability and abundance of food products for their diet. To address this challenge, Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.</p>
-                <button class="aboutcontact" type="submit"><a href="Contact.php" class="text-white text-decoration-none">Contact Us</a></button>
-            </div>
-            <div class="image" style="flex: 1;">
-                <img src="https://t3.ftcdn.net/jpg/04/35/84/96/240_F_435849604_C86M9A3JPnztEx06xgEsZa5mzJoH1qq4.jpg" alt="" class="art-border">
-            </div>
+              // Retrieve the brand data
+              $stmt = $conn->query("SELECT b.brand_id, b.brand_name, COUNT(p.product_id) as product_count
+              FROM brands b
+              LEFT JOIN products p ON b.brand_id = p.brand_id
+              GROUP BY b.brand_id
+              ");
+              $brands = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+              // Display the category data with links to each brand page
+              foreach ($brands as $brand) {
+                echo '<div class="products">';
+                echo '<a href="Category brand.php?brand_id=' . $brand['brand_id'] . '">';
+                echo '<span class="text"style="color:#189116;font-family:auto;font-size:1.25rem;">' . $brand['brand_name'] . '</span>';
+                // echo '<span class="number mt-auto">' . $category['product_count'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+              }
+            ?>
+          </div>
         </div>
+  <div class="category">
+    <div class="pop">
+      <?php
+        // Connect to the database
+        include './Components/connect.php';
+
+
+        // Retrieve the brand ID from the URL parameter
+        $brand_id = filter_input(INPUT_GET, 'brand_id', FILTER_SANITIZE_NUMBER_INT);
+
+        // Check if the category ID is numeric
+        // if (!is_numeric($category_id)) {
+        //   header("Location: 404Page.php");
+        //   exit();
+        // }
+
+
+        // Retrieve the brand name
+        $stmt = $conn->prepare("SELECT brand_name FROM brands WHERE brand_id = :brand_id");
+        $stmt->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $brand = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+
+        // Display the category name
+        echo '<h2 style="color: #666;font-family: Oswald, sans-serif;">Category: ' . htmlspecialchars($brand['brand_name'], ENT_QUOTES) . '</h2>';
+      ?>
+      <!-- <div class="all-features">
+        <label for="sort">
+          <div class="feature">
+            <i class="fa-solid fa-arrow-down-wide-short"></i>
+            <span>Sort by: Price</span>
+            <i class="fa-solid fa-angle-down"></i>
+          </div>
+        </label>
+        <input type="checkbox" id="sort">
+        <ul class="drop-down2">
+          <li><a class="a2" href="#">Price:Low To High</a></li>
+          <li><a class="a2" href="#">Price:high To Low</a></li>
+        </ul>
+      </div> -->
     </div>
-</section>
+    <div class="prod-container">
+      <?php
+        // Connect to the database
+        include './Components/connect.php';
 
+        // Retrieve the brand ID from the URL parameter
+        $brand_id = filter_input(INPUT_GET, 'brand_id', FILTER_SANITIZE_NUMBER_INT);
 
+        // Retrieve the brand name
+        $stmt = $conn->prepare("SELECT brand_name FROM brands WHERE brand_id = :brand_id");
+        $stmt->bindValue(':brand_id', $brand_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $brand = $stmt->fetch(PDO::FETCH_ASSOC);
 
+        // Retrieve the products based on the selected category
+        $stmt = $conn->prepare("SELECT * FROM products WHERE brand_id = ?");
+        $stmt->execute([$brand_id]);
+        $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Display all the products for the selected category
+        foreach ($products as $product) {
+          echo '<div class="card">';
+          echo '<div class="wishlist">';
+          echo '<a class="heart" href="Wishlist.php"><i class="fa-regular fa-heart"></i></a>';
+          echo '<a class="eye" href="Single_view_product.php"><i class="fa-regular fa-eye"></i></a>';
+          echo '</div>';
+          if ($product['discount'] > 0) {
+            echo '<span class="up discount">-' . $product['discount'] . '%</span>';
+          }
+          echo '<img src="./admin/uploaded_img/' . $product['image'] . '"  alt="">';
+          echo '<div class="text">';
+          echo '<span class="tag">' . $brand['brand_name'] . '</span>';
+          echo '<h3>' . htmlspecialchars($product['name'], ENT_QUOTES) . '</h3>';
+          echo '<p>' . htmlspecialchars($product['description'], ENT_QUOTES) . '</p>';
+
+          echo '</div>';
+          echo '<div class="price">';
+            if (isset($product['discount']) && is_numeric($product['discount']) && $product['discount'] > 0 && $product['discount'] <= 100) {
+                $discounted_price = $product['price'] - ($product['price'] * $product['discount'] / 100);
+                echo '<h4>$' . number_format($discounted_price, 2) . ' <del>$' . number_format($product['price'], 2) . '</del></h4>';
+            } else {
+                echo '<h4>$' . number_format($product['price'], 2) . '</h4>';
+            }
+            echo '<div class="add">';
+            echo '<a href="Cart.php">Add</a>';
+            echo '<i class="fa-solid fa-cart-shopping"></i>';
+            echo '</div>';
+
+          echo '</div>';
+          echo '</div>';
+        }
+        ?>
+        </div>
+        <!-- <div class="pagination">
+        <ul class="pag-wrapper">
+          <li><a href="#"><i class="fa-solid fa-arrow-left wide-arrow"></i></a></li>
+          <li><a href="#">1</a></li>
+          <li><a class="active" href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">...</a></li>
+          <li><a href="#">6</a></li>
+          <li><a href="#"><i class="fa-solid fa-arrow-right wide-arrow"></i></a></li>
+        </ul>
+        </div> -->
+    </div>
+    
+   
+            </div>
+     
 <!-- -------------------------footer-------------------------------- -->
 <div>
 	<div class="footer-area mt-5">
@@ -329,3 +406,6 @@ if(isset($_SESSION['user_id'])) {
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 </html>
+
+
+

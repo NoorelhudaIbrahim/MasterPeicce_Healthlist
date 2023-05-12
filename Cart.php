@@ -2,48 +2,70 @@
 
 include './Components/connect.php'; 
 
-// start the session
+// Start the session
 session_start();
 
-// check if the form has been submitted
-if(isset($_POST['search'])) {
-
-    // prepare the search query
+// Check if the form has been submitted
+if (isset($_POST['search'])) {
+    // Prepare the search query
     $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
 
-    // bind the parameters
+    // Bind the parameters
     $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
 
-    // execute the query
+    // Execute the query
     $stmt->execute();
 
-    // fetch the results
+    // Fetch the results
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // redirect to 404 page if no results found
+    // Redirect to 404 page if no results found
     if (count($results) === 0) {
         header("Location: 404Page.php");
         exit();
     }
 
-    // store the results in the session
+    // Store the results in the session
     $_SESSION['results'] = $results;
 
-    // redirect to the search results page
+    // Redirect to the search results page
     header("Location: Search_result.php");
     exit();
 }
 
 // Check if the user is logged in
-if(isset($_SESSION['user_id'])) {
+$user = null;
+if (isset($_SESSION['user_id'])) {
     // Fetch the user's information from the database
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+}
 
-  
+// Set the user_id value
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
 
+// Handle deleting a cart item
+if (isset($_POST['delete'])) {
+    $cart_id = $_POST['id'];
+    $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE id = ?");
+    $delete_cart_item->execute([$cart_id]);
+}
+
+// Handle deleting all cart items
+if (isset($_GET['delete_all'])) {
+    $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
+    $delete_cart_item->execute([$user_id]);
+    header('location:Cart.php');
+}
+
+// Handle updating the quantity of a cart item
+if (isset($_POST['update_qty'])) {
+    $cart_id = $_POST['id'];
+    $qty = $_POST['quantity'];
+    $update_qty = $conn->prepare("UPDATE `cart` SET quantity = ? WHERE id = ?");
+    $update_qty->execute([$qty, $cart_id]);
+}
 
 ?>
 
@@ -222,68 +244,74 @@ if(isset($_SESSION['user_id'])) {
 </div>
 
 <!-- -------------------------cart-------------------------------- --> 
+<section class="products shopping-cart">
 
-<table>
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-            <th>Remove</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-       
-// Check if the cart is not empty
-if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-  // Establish a PDO connection
-  $pdo = new PDO('mysql:host=localhost;dbname=your_database_name', 'your_username', 'your_password');
+<h3 class="heading">shopping cart</h3>
 
-  // Get the product IDs from the cart
-  $productIds = array_keys($_SESSION['cart']);
+<div class="box-container">
 
-  // Prepare the SQL query
-  $query = "SELECT * FROM cart WHERE product_id IN (" . implode(',', $productIds) . ")";
-  $stmt = $conn->query($query);
+<?php
+   $total_price = 0;
+   $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
+   $select_cart->execute([$user_id]);
+   if($select_cart->rowCount() > 0){
+      while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
+?>
+<form action="" method="post" class="box">
+   <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
 
-  // Display the cart items
-  while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-      $productId = $row['product_id'];
-      $productName = $row['name'];
-      $productPrice = $row['price'];
-      $productQuantity = $_SESSION['cart'][$productId];
-      $subtotal = $productPrice * $productQuantity;
-      $productImage = $row['image'];
+   <a href="quick_view.php?pid=<?= $fetch_cart['product_id']; ?>" class="fas fa-eye"></a>
+   <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
+   <div class="name"><?= $fetch_cart['name']; ?></div>
 
-      echo '<tr>';
-      echo '<td data-th="Product">';
-      echo '<div class="row">';
-      echo '<div class="col-sm-2 hidden-xs"><img src="' . $productImage . '" alt="..." class="img-responsive"/></div>';
-      echo '<div class="col-sm-10">';
-      echo '<h4 class="nomargin">' . $productName . '</h4>';
-      echo '</div>';
-      echo '</div>';
-      echo '</td>';
-      echo '<td data-th="Price">' . $productPrice . '</td>';
-      echo '<td data-th="Quantity">';
-      echo '<input type="number" class="form-control text-center" value="' . $productQuantity . '">';
-      echo '</td>';
-      echo '<td data-th="Subtotal" class="text-center">' . $subtotal . '</td>';
-      echo '<td class="actions" data-th="">';
-      echo '<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>';
-      echo '</td>';
-      echo '</tr>';
-  }
-} else {
-  // Display a message if the cart is empty
-  echo '<p>Your cart is empty.</p>';
+   
+   <div class="flex">
+      <?php
+      $product_cart_id = $fetch_cart['product_id'];
+      $select_product = $conn->prepare("SELECT * FROM `products` WHERE product_id = $product_cart_id");
+      $select_product->execute();
+      if($select_product->rowCount() > 0){
+
+         while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
+            $x = 0;
+         
+         if ($fetch_product['is_sale'] == 1){ ?>
+
+         <div class="price"><span><del style="text-decoration:line-through; color:silver">$<?= $fetch_product['price']; ?></del><ins style="color:rgb(0, 0, 69) !important;"> $<?=$fetch_product['price_discount'];?></ins> </span></div>
+
+         <?php $x = $fetch_product['price_discount']; } else { ?>
+
+         <div class="name" style="color:rgb(0, 0, 69) !important; padding:20px 0px">$<?= $fetch_product['price']; ?></div> <?php  $x = $fetch_product['price']; } ?>
+
+         <?php if ($fetch_product['category_id'] != '9'){?>
+
+         <input type="number" name="quantity" class="qty" min="1" max="<?= $fetch_product['store']-$fetch_product['sold'];?>" value="<?=$fetch_cart['quantity'];?>">
+         <button type="submit" class="fas fa-edit" name="update_qty"></button>
+         <?php } else { ?>
+         <input type="hidden" name="quantity" value="1">
+         <?php } } } ?> 
+   </div>
+   <div class="sub-total"> Sub Total : <span>$<?= $sub_total = ($x * $fetch_cart['quantity']); ?></span> </div>
+   <input type="submit" value="delete item" onclick="return confirm('delete this from cart?');" class="delete-btn" name="delete">
+</form>
+<?php
+$total_price += $sub_total;
+   }
+}else{
+   echo '<p class="empty">your cart is empty</p>';
 }
 ?>
-        
-    </tbody>
-</table>
+</div>
+
+<div class="cart-total">
+   <p>Total Price : <span>$<?= $total_price; ?></span></p>
+   <a href="products.php" class="option-btn">continue shopping</a>
+   <a href="cart.php?delete_all" class="delete-btn <?= ($total_price > 1)?'':'disabled'; ?>" onclick="return confirm('delete all from cart?');">delete all item</a>
+   <a href="checkout.php" class="btn <?= ($total_price > 1)?'':'disabled'; ?>">proceed to checkout</a>
+</div>
+
+</section>
+
 
 <!-- -------------------------footer-------------------------------- -->
 <div>
@@ -294,43 +322,42 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
 					</p>
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Quick Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Home</a></div>
-					<div class="mb-2"><a href="" class="text-white">About Us</a></div>
-					<div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
 					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
 					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Extra Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Login</a></div>
-					<div class="mb-2"><a href="" class="text-white">Register</a></div>
-					<div class="mb-2"><a href="" class="text-white">Cart</a></div>
-					<div class="mb-2"><a href="" class="text-white">orders</a></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Reach Us</h4>
 					<div class="footer-underline"></div>
 					<div class="mb-2">
 						<p>
-							<i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
 						</p>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-phone"></i> +91 888-XXX-XXXX
+							<i class="fa fa-phone"></i> +962 345 67890
 						</a>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-envelope"></i> healthlist@gmail.com
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
 						</a>
 					</div>
 				</div>
@@ -341,7 +368,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
 				</div>
 				<div class="col-md-4">
 					<div class="social-media">
@@ -355,6 +382,8 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 		</div>
 	</div>
 </div>
+
+
 </body>
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

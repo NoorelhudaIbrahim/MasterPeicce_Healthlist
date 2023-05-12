@@ -45,7 +45,6 @@ if(isset($_SESSION['user_id'])) {
 ?>
 
 <?php
-
 include './Components/connect.php'; 
 
 // session_start();
@@ -57,21 +56,26 @@ if(isset($_SESSION['user_id'])){
 };
 
 if(isset($_POST['submit'])){
-
    $name = $_POST['name'];
    $name = htmlspecialchars($name, ENT_QUOTES);
    $email = $_POST['email'];
    $email = htmlspecialchars($email, ENT_QUOTES);
    $pass = sha1($_POST['pass']);
-   $pass =htmlspecialchars($pass, ENT_QUOTES);
+   $pass = htmlspecialchars($pass, ENT_QUOTES);
    $cpass = sha1($_POST['cpass']);
    $cpass = htmlspecialchars($cpass, ENT_QUOTES);
    $mobile = $_POST['mobile'];
   
+   // Regular expression patterns for validation
+   $namePattern = "/^[a-zA-Z ]+$/";
+   $emailPattern = "/^\S+@\S+\.\S+$/";
+   $mobilePattern = "/^\d{10}$/";
 
    $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
    $select_user->execute([$email,]);
    $row = $select_user->fetch(PDO::FETCH_ASSOC);
+
+   $message = array();
 
    if($select_user->rowCount() > 0){
       $message[] = 'Email <span style="color:red">Already</span> Exists!';
@@ -79,39 +83,31 @@ if(isset($_POST['submit'])){
       if($pass != $cpass){
          $message[] = 'Confirm Password <span style="color:red">Not Matched</span>!';
       }else{
-         $insert_user = $conn->prepare("INSERT INTO `users`(name, email, password, mobile) VALUES(?,?,?,?)");
-         $insert_user->execute([$name, $email, $cpass, $mobile]);
-         $message[] = 'Registered <span style="color:green">Successfully</span>, Login Now Please!';
-         header("Location: http://localhost/MasterPiece_Healthlist/user_login.php");
-        }
+         if(!preg_match($namePattern, $name)){
+            $message[] = 'Invalid Name!';
+         }
+         if(!preg_match($emailPattern, $email)){
+            $message[] = 'Invalid Email!';
+         }
+         if(!preg_match($mobilePattern, $mobile)){
+            $message[] = 'Invalid Mobile Number!';
+         }
+         if(empty($message)){
+            $insert_user = $conn->prepare("INSERT INTO `users`(name, email, password, mobile) VALUES(?,?,?,?)");
+            $insert_user->execute([$name, $email, $cpass, $mobile]);
+            $message[] = 'Registered <span style="color:green">Successfully</span>, Login Now Please!';
+            header("Location: http://localhost/MasterPiece_Healthlist/user_login.php");
+         }
+      }
    }
 
-//    $select_user_for_cart = $conn->prepare("SELECT * FROM `users` ORDER BY user_id DESC LIMIT 1");
-//    $select_user_for_cart->execute();
-//    if($select_user_for_cart->rowCount()>0){
-//       while($fetch_select_user_for_cart = $select_user_for_cart->fetch(PDO::FETCH_ASSOC)){
-//          $user_id = $fetch_select_user_for_cart['user_id'];
-//          $cart_array = $_SESSION['cart'];
-//          for( $i = 0 ; $i < count($cart_array) ; $i++){
-//             $sql = $conn->prepare("INSERT INTO cart (user_id , product_id , name , price , image , quantity)
-//                                     VALUES (?,?,?,?,?,?)");
-//             $sql->execute([$user_id , $cart_array[$i][0],$cart_array[$i][1],$cart_array[$i][2],$cart_array[$i][3],$cart_array[$i][4]]);
-//          }
-//          $fav_array = $_SESSION['cart'];
-//          for( $i = 0 ; $i < count($fav_array) ; $i++){
-//             $stm = $conn->prepare("INSERT INTO favorite (user_id , product_id)
-//                                     VALUES (?,?)");
-//             $stm->execute([$user_id , $fav_array[$i][0]]);
-//          }
-//       }
-//    }
-
-//    $_SESSION['cart']=[];
-//    $_SESSION['fav']=[];
-
+   // Display validation messages
+   foreach($message as $msg){
+      echo $msg . '<br>';
+   }
 }
-
 ?>
+
 
 
 <!DOCTYPE html>
@@ -243,9 +239,9 @@ if(isset($_POST['submit'])){
         });
     </script>
 <!-- -------------------------Sign Up Form-------------------------------- -->
-<div class="signup-form">
+<div class="signup-form" style="background-image: url('https://media.healthyfood.com/wp-content/uploads/2023/05/Trust-your-gut-500x500.jpg');opacity:0.9;">
     <form action="" method="post">
-		<h2>Sign Up</h2>
+		<h2 style="color: #666;font-family: 'Oswald', sans-serif;">Welcome</h2>
 		<p>Please fill in this form to create an account!</p>
 		<hr>
         <div class="form-group">
@@ -255,7 +251,7 @@ if(isset($_POST['submit'])){
 						<span class="fa fa-user"></span>
 					</span>                    
 				</div>
-				<input type="text" class="form-control" name="name" required placeholder="enter your username" maxlength="20">
+				<input type="text" class="form-control" name="name" required placeholder="enter your username" maxlength="20" pattern="[a-zA-Z ]+" title="Only alphabetic characters and spaces are allowed">
 			</div>
         </div>
         <div class="form-group">
@@ -265,22 +261,19 @@ if(isset($_POST['submit'])){
 						<i class="fa fa-paper-plane"></i>
 					</span>                    
 				</div>
-				<input type="email" class="form-control" name="email" required placeholder="enter your email" maxlength="50"  oninput="this.value = this.value.replace(/\s/g, '')">
+				<input type="email" class="form-control" name="email" required placeholder="enter your email" maxlength="50" pattern="[^\s@]+@[^\s@]+\.[^\s@]+" title="Invalid email format">
 			</div>
         </div>
-
-
         <div class="form-group">
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<span class="input-group-text">
-						<i class="fa fa-paper-plane"></i>
+						<i class="fa fa-phone"></i>
 					</span>                    
 				</div>
-				<input type="text" class="form-control" name="mobile" required placeholder="enter your phone" maxlength="10" >
+				<input type="tel" class="form-control" name="mobile" required placeholder="enter your phone" pattern="\d{10}" maxlength="10" title="Mobile number should contain 10 digits">
 			</div>
         </div>
-    
 		<div class="form-group">
 			<div class="input-group">
 				<div class="input-group-prepend">
@@ -288,7 +281,7 @@ if(isset($_POST['submit'])){
 						<i class="fa fa-lock"></i>
 					</span>                    
 				</div>
-				<input type="password" class="form-control" name="pass" required placeholder="enter your password" maxlength="20"  oninput="this.value = this.value.replace(/\s/g, '')">
+				<input type="password" class="form-control" name="pass" required placeholder="enter your password" maxlength="20" pattern="^\S+$" title="Password should not contain spaces">
 			</div>
         </div>
 		<div class="form-group">
@@ -299,87 +292,90 @@ if(isset($_POST['submit'])){
 						<i class="fa fa-check"></i>
 					</span>                    
 				</div>
-				<input type="password" class="form-control" name="cpass" required placeholder="confirm your password" maxlength="20"  oninput="this.value = this.value.replace(/\s/g, '')">
+				<input type="password" class="form-control" name="cpass" required placeholder="confirm your password" maxlength="20" pattern="^\S+$" title="Password should not contain spaces">
 			</div>
         </div>
         <div class="form-group">
 			<label class="form-check-label"><input type="checkbox" required="required"> I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
 		</div>
 		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg" value="register now"  name="submit">Sign Up</button>
+            <button type="submit" class="btn btn-primary btn-lg" value="register now" name="submit">Sign Up</button>
         </div>
     </form>
-	<div class="text-center">Already have an account? <a href="user_login.php">Login here</a></div>
+	<div class="text-center text-white">Already have an account? <a href="user_login.php" class="bg-white">Login here</a></div>
 </div>
+
 <!-- -------------------------footer-------------------------------- -->
 <div>
-        <div class="footer-area mt-5">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3">
-                        <h4 class="footer-heading">Healthlist E-Commerce</h4>
-                        <div class="footer-underline"></div>
-                        <p>
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
-                        </p>
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="footer-heading">Quick Links</h4>
-                        <div class="footer-underline"></div>
-                        <div class="mb-2"><a href="" class="text-white">Home</a></div>
-                        <div class="mb-2"><a href="" class="text-white">About Us</a></div>
-                        <div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+	<div class="footer-area mt-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<h4 class="footer-heading">Healthlist E-Commerce</h4>
+					<div class="footer-underline"></div>
+					<p>
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
+					</p>
+				</div>
+				<div class="col-md-3">
+					<h4 class="footer-heading">Quick Links</h4>
+					<div class="footer-underline"></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
+					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
+				</div>
+				<div class="col-md-3">
+					<h4 class="footer-heading">Extra Links</h4>
+					<div class="footer-underline"></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
+				</div>
+				<div class="col-md-3">
+					<h4 class="footer-heading">Reach Us</h4>
+					<div class="footer-underline"></div>
+					<div class="mb-2">
+						<p>
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
+						</p>
+					</div>
+					<div class="mb-2">
+						<a href="" class="text-white">
+							<i class="fa fa-phone"></i> +962 345 67890
+						</a>
+					</div>
+					<div class="mb-2">
+						<a href="" class="text-white">
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="copyright-area " >
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8">
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
+				</div>
+				<div class="col-md-4">
+					<div class="social-media">
+						Get Connected:
+						<a href=""><i class="fab fa-facebook"></i></a>
+						<a href=""><i class="fab fa-twitter"></i></a>
+						<a href=""><i class="fab fa-instagram"></i></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="footer-heading">Extra Links</h4>
-                        <div class="footer-underline"></div>
-                        <div class="mb-2"><a href="" class="text-white">Login</a></div>
-                        <div class="mb-2"><a href="" class="text-white">Register</a></div>
-                        <div class="mb-2"><a href="" class="text-white">Cart</a></div>
-                        <div class="mb-2"><a href="" class="text-white">orders</a></div>
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="footer-heading">Reach Us</h4>
-                        <div class="footer-underline"></div>
-                        <div class="mb-2">
-                            <p>
-                                <i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
-                            </p>
-                        </div>
-                        <div class="mb-2">
-                            <a href="" class="text-white">
-                                <i class="fa fa-phone"></i> +91 888-XXX-XXXX
-                            </a>
-                        </div>
-                        <div class="mb-2">
-                            <a href="" class="text-white">
-                                <i class="fa fa-envelope"></i> healthlist@gmail.com
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="copyright-area " >
-            <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="social-media">
-                            Get Connected:
-                            <a href=""><i class="fab fa-facebook"></i></a>
-                            <a href=""><i class="fab fa-twitter"></i></a>
-                            <a href=""><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 </body>
 
 <script src="./js/swiper-bundle.min.js"></script>

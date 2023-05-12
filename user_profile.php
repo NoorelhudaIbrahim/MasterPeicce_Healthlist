@@ -243,8 +243,8 @@ $user = $stmt->fetch();
 
                                             <div class="card-body">
                                                 <p>
-                                                    From your account dashboard. you can easily check &amp; view your <a href="#">recent orders</a>,<br>
-                                                    manage your <a href="#">shipping and billing addresses</a> and <a href="#">edit your password and account details.</a>
+                                                    From your account dashboard. you can easily check and view your  orders 
+                                                    manage your edit your password and account details.</a>
                                                 </p>
                                             </div>
                                         </div>
@@ -335,50 +335,49 @@ $user = $stmt->fetch();
 
 <!-- -------------------------footer-------------------------------- -->
 <div>
-	<div class="footer-area mt-4">
+	<div class="footer-area mt-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-3">
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
 					</p>
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Quick Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Home</a></div>
-					<div class="mb-2"><a href="" class="text-white">About Us</a></div>
-					<div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
 					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
 					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Extra Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Login</a></div>
-					<div class="mb-2"><a href="" class="text-white">Register</a></div>
-					<div class="mb-2"><a href="" class="text-white">Cart</a></div>
-					<div class="mb-2"><a href="" class="text-white">orders</a></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Reach Us</h4>
 					<div class="footer-underline"></div>
 					<div class="mb-2">
 						<p>
-							<i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
 						</p>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-phone"></i> +91 888-XXX-XXXX
+							<i class="fa fa-phone"></i> +962 345 67890
 						</a>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-envelope"></i> healthlist@gmail.com
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
 						</a>
 					</div>
 				</div>
@@ -389,7 +388,7 @@ $user = $stmt->fetch();
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
 				</div>
 				<div class="col-md-4">
 					<div class="social-media">
@@ -403,6 +402,8 @@ $user = $stmt->fetch();
 		</div>
 	</div>
 </div>
+
+
 </body>
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

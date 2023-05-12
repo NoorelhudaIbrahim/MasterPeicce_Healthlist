@@ -2,45 +2,94 @@
 
 include './Components/connect.php'; 
 
-// start the session
+// Start the session
 session_start();
 
-// check if the form has been submitted
-if(isset($_POST['search'])) {
-
-    // prepare the search query
+// Check if the form has been submitted
+if (isset($_POST['search'])) {
+    // Prepare the search query
     $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
 
-    // bind the parameters
+    // Bind the parameters
     $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
 
-    // execute the query
+    // Execute the query
     $stmt->execute();
 
-    // fetch the results
+    // Fetch the results
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // redirect to 404 page if no results found
+    // Redirect to 404 page if no results found
     if (count($results) === 0) {
         header("Location: 404Page.php");
         exit();
     }
 
-    // store the results in the session
+    // Store the results in the session
     $_SESSION['results'] = $results;
 
-    // redirect to the search results page
+    // Redirect to the search results page
     header("Location: Search_result.php");
     exit();
 }
 
 // Check if the user is logged in
-if(isset($_SESSION['user_id'])) {
+$user = null;
+if (isset($_SESSION['user_id'])) {
     // Fetch the user's information from the database
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-  }
+}
+
+// Set the user_id value
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
+
+// Initialize the cart session if it doesn't exist
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = [];
+}
+
+// Handle adding products to the cart
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['addTOcart'])) {
+    $product_id = $_POST['product_id'];
+    $product_name = $_POST['name'];
+    $product_price = $_POST['price'];
+    $product_image = $_POST['image'];
+    $product_quantity = $_POST['quantity'];
+
+    $check_product_id = $conn->prepare("SELECT product_id FROM `cart` WHERE user_id = ?");
+    $check_product_id->execute([$user_id]);
+
+    $flag = true;
+
+    while ($fetch_product = $check_product_id->fetch(PDO::FETCH_ASSOC)) {
+        if (in_array($product_id, $fetch_product)) {
+            $flag = false;
+            break;
+        }
+    }
+
+    if ($flag) {
+        if ($user_id > 0) {
+            $send_to_cart = $conn->prepare("INSERT INTO `cart` (user_id, product_id, name, price, image, quantity)
+                                          VALUES (?, ?, ?, ?, ?, ?)"); 
+            $send_to_cart->execute([$user_id, $product_id, $product_name, $product_price, $product_image, $product_quantity]);
+        } else {
+            $array_cart = [$product_id, $product_name, $product_price, $product_image, $product_quantity];
+            array_push($_SESSION['cart'], $array_cart);
+        }
+    }
+
+    // Update the $check_cart_numbers query to use the $product_id value
+    $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE product_id = ? AND user_id = ?");
+    $check_cart_numbers->execute([$product_id, $user_id]);
+
+    if ($check_cart_numbers->rowCount() > 0) {
+        $message[] = 'Your Product <span style="color:red">Already</span> Added To Cart!';
+    }
+}
+
 
 ?>
 
@@ -778,7 +827,7 @@ margin-right: 0%;
                                     <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
                                     <button type="submit"><i class="fa fa-shopping-cart p-1"></i>Products</button>
                                 </form>
-                                <form action="Recipes.php" method="get">
+                                <form action="Category_recipe.php" method="get">
                                     <input type="hidden" name="category_id" value="<?php echo $category['category_id']; ?>">
                                     <button type="submit"><i class="fa-solid fa-utensils p-1" style="color: #ffffff;"></i>Recipes</button>
                                 </form>
@@ -798,69 +847,125 @@ margin-right: 0%;
 
 
 <!-- -------------------------Sales Products-------------------------------- -->
-
 <section id="category" class="category">
     <div class="slide-container swiper">
-        <h2 class="text-center pb-5" style="color: #666 ;font-family: 'Oswald', sans-serif;">Sales Products</h2>
+        <h2 class="text-center pb-5" style="color: #666; font-family: 'Oswald', sans-serif;">Sales Products</h2>
         <div class="slide-content">
-        <div class="card-wrapper swiper-wrapper">
+            <div class="card-wrapper swiper-wrapper">
 
-        <?php
-            // Step 1: Connect to the database using PDO
-            include './Components/connect.php';                
+                <?php
+                // Step 1: Connect to the database using PDO
+                include './Components/connect.php';
 
-            // Step 2: Prepare and execute a query to retrieve sales products
-            $stmt = $conn->prepare('SELECT * FROM products WHERE is_sale = 1');
-            $stmt->execute();
+                // Step 2: Prepare and execute a query to retrieve sales products
+                $stmt = $conn->prepare('SELECT * FROM products WHERE is_sale = 1');
+                $stmt->execute();
 
-            // Step 3: Loop through the results and output the product information
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        ?>
+                // Step 3: Loop through the results and output the product information
+                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                    ?>
 
-            <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
-                <div class="card">
-                    <div class="sale-badge"><span>Sale</span></div>
-                    <!-- Thumbnail -->
-                    <div class="product-thumbnail">
-                        <div class="img">
-                            <a href="Single_view_product.php">
-                                <img src="./admin/uploaded_img/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
-                            </a>
+                    <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
+                        <div class="card">
+                            <div class="sale-badge"><span>Sale</span></div>
+                            <!-- Thumbnail -->
+                            <div class="product-thumbnail">
+                                <div class="img">
+                                    <a href="Single_view_product.php">
+                                        <img src="./admin/uploaded_img/<?php echo $row['image']; ?>"
+                                            alt="<?php echo $row['name']; ?>">
+                                    </a>
+                                </div>
+                                <a class="wishlist" href="Wishlist.php"><i class="far fa-heart"></i></a>
+                                <div class="product-overly-btn">
+                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i
+                                            class="far fa-eye text-success"></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i
+                                            class="far fa-heart text-success"></i></a>
+                                </div>
+                                <form action="Cart.php" method="POST">
+                                    <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                                    <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
+                                    <input type="hidden" name="price" value="<?php echo $row['price_discount']; ?>">
+                                    <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <button type="submit" class="add-to-cart" name="addTOcart">Add To Cart</button>
+                                </form>
+                            </div>
+                            <div class="product-content">
+                                <h4><a href="Single_view_product.php"
+                                        style="color:#253d4e; font-family:auto"><?php echo $row['name']; ?></a></h4>
+                                <div class="pricing">
+                                    <span><?php echo $row['price_discount']; ?> JOD <del><?php echo $row['price']; ?>
+                                            JOD </del></span>
+                                </div>
+                            </div>
                         </div>
-                        <a class="wishlist" href="Wishlist.php"><i class="far fa-heart"></i></a>
-                        <div class="product-overly-btn">
-                            <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i class="far fa-eye text-success"></i></a>
-                            <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i class="far fa-heart text-success"></i></a>
-
-                        </div>
-                        <a class="add-to-cart" href="Cart.php">Add to Cart</a>
                     </div>
-                    <div class="product-content">
-                        <!-- <div class="ratting">
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                            <span><i class="fas fa-star"></i></span>
-                        </div> -->
-                        <h4><a href="Single_view_product.php" style="color:#253d4e; font-family:auto"><?php echo $row['name']; ?></a></h4>
-                        <div class="pricing">
-                            <span><?php echo $row['price_discount']; ?> JOD <del><?php echo $row['price']; ?> JOD </del></span>
-                        </div>
-                    </div>
-                </div>
+
+                <?php
+                }
+                ?>
             </div>
-
-        <?php
-            }
-        ?>
-       </div>
             <div class="swiper-button-next swiper-navBtn"></div>
             <div class="swiper-button-prev swiper-navBtn"></div>
             <div class="swiper-pagination"></div>
         </div>
     </div>
 </section>
+
+<!-- ---------------------------brands-------------------------------- -->
+<section id="category" class="category">
+    <div class="slide-container swiper">
+        <h2 class="text-center pb-5" style="color: #666 ;font-family: 'Oswald', sans-serif;">Shop By Brands</h2>
+        <div class="slide-content">
+            <div class="card-wrapper swiper-wrapper">
+                <?php
+                // Connect to database
+                include './Components/connect.php';                
+                // Fetch categories
+                $stmt = $conn->query('SELECT * FROM brands');
+                $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                
+                // Loop through brands
+                foreach ($results as $brand) {
+                    // Fetch products for brands
+                    $stmt = $conn->prepare('SELECT * FROM products WHERE brand_id = :brand_id');
+                    $stmt->execute(['brand_id' => $brand['brand_id']]);
+                    $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                  
+                    
+                    // Display brand card
+                    ?>
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+                            <div class="card-image" style="border-radius:0">
+                                <img src="./admin/uploaded_img/<?php echo $brand['image_01']; ?>" alt="" class="card-img"style="border-radius:0">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                           
+                            <div class="button">
+                                <form action="Category brand.php" method="get">
+                                    <input type="hidden" name="brand_id" value="<?php echo $brand['brand_id']; ?>">
+                                    <button type="submit"><i class="fa fa-shopping-cart p-1"></i>Products</button>
+                                </form>
+                               
+                            </div>
+                        </div>
+                    </div>
+                    <?php
+                }
+                ?>
+            </div>
+            <div class="swiper-button-next swiper-navBtn"></div>
+            <div class="swiper-button-prev swiper-navBtn"></div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
 
 <!-- -------------------------footer-------------------------------- -->
 <div>
@@ -871,43 +976,42 @@ margin-right: 0%;
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
 					</p>
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Quick Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Home</a></div>
-					<div class="mb-2"><a href="" class="text-white">About Us</a></div>
-					<div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
 					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
 					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Extra Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Login</a></div>
-					<div class="mb-2"><a href="" class="text-white">Register</a></div>
-					<div class="mb-2"><a href="" class="text-white">Cart</a></div>
-					<div class="mb-2"><a href="" class="text-white">orders</a></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Reach Us</h4>
 					<div class="footer-underline"></div>
 					<div class="mb-2">
 						<p>
-							<i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
 						</p>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-phone"></i> +91 888-XXX-XXXX
+							<i class="fa fa-phone"></i> +962 345 67890
 						</a>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-envelope"></i> healthlist@gmail.com
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
 						</a>
 					</div>
 				</div>
@@ -918,7 +1022,7 @@ margin-right: 0%;
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
 				</div>
 				<div class="col-md-4">
 					<div class="social-media">

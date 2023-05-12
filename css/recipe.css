@@ -208,7 +208,7 @@
   }
   
   .blogs-section .prod-container .card img {
-    max-width: 305px;
+    max-width: 100%;
     height: 250px;
     border-radius: 15px;
   }

@@ -1,5 +1,5 @@
 <?php
-ob_start(); // Start output buffering
+
 
 include './Components/connect.php'; 
 
@@ -43,7 +43,7 @@ if(isset($_SESSION['user_id'])) {
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-ob_end_flush(); // End output buffering and send output to the browser
+
 ?>
 
 
@@ -195,7 +195,35 @@ ob_end_flush(); // End output buffering and send output to the browser
 
 <!-- -------------------------product-------------------------------- --> 
 <div class="catg-section">
+<div class="aside">
+          <div class="cat1 ">
+            <h2 style="color: #666;font-family: 'Oswald', sans-serif;">Category</h2>
+            <?php
+              // Connect to the database
+              include './Components/connect.php'; 
+
+              // Retrieve the category data
+              $stmt = $conn->query("SELECT c.category_id, c.category_name, COUNT(p.product_id) as product_count
+              FROM category c
+              LEFT JOIN products p ON c.category_id = p.category_id
+              GROUP BY c.category_id
+              ");
+              $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+              // Display the category data with links to each category page
+              foreach ($categories as $category) {
+                echo '<div class="products">';
+                echo '<a href="Category.php?category_id=' . $category['category_id'] . '">';
+                echo '<span class="text" style="color:#189116;font-family:auto;font-size:1.25rem;">' . $category['category_name'] . '</span>';
+                // echo '<span class="number mt-auto">' . $category['product_count'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+              }
+            ?>
+          </div>
+        </div>
   <div class="category">
+    
     <div class="pop">
       <?php
         // Connect to the database
@@ -213,7 +241,7 @@ ob_end_flush(); // End output buffering and send output to the browser
         // Display the category name
         echo '<h2 style="color: #666;font-family: Oswald, sans-serif;">Category:ALL</h2>';
       ?>
-      <div class="all-features">
+      <!-- <div class="all-features">
         <label for="sort">
           <div class="feature">
             <i class="fa-solid fa-arrow-down-wide-short"></i>
@@ -226,7 +254,7 @@ ob_end_flush(); // End output buffering and send output to the browser
           <li><a class="a2" href="#">Price:Low To High</a></li>
           <li><a class="a2" href="#">Price:high To Low</a></li>
         </ul>
-      </div>
+      </div> -->
     </div>
     <div class="prod-container">
       <?php
@@ -278,7 +306,7 @@ ob_end_flush(); // End output buffering and send output to the browser
         }
         ?>
         </div>
-        <div class="pagination">
+        <!-- <div class="pagination">
         <ul class="pag-wrapper">
           <li><a href="#"><i class="fa-solid fa-arrow-left wide-arrow"></i></a></li>
           <li><a href="#">1</a></li>
@@ -288,36 +316,10 @@ ob_end_flush(); // End output buffering and send output to the browser
           <li><a href="#">6</a></li>
           <li><a href="#"><i class="fa-solid fa-arrow-right wide-arrow"></i></a></li>
         </ul>
-        </div>
+        </div> -->
     </div>
     
-    <div class="aside">
-          <div class="cat1 ">
-            <h2 style="color: #666;font-family: 'Oswald', sans-serif;">Category</h2>
-            <?php
-              // Connect to the database
-              include './Components/connect.php'; 
-
-              // Retrieve the category data
-              $stmt = $conn->query("SELECT c.category_id, c.category_name, COUNT(p.product_id) as product_count
-              FROM category c
-              LEFT JOIN products p ON c.category_id = p.category_id
-              GROUP BY c.category_id
-              ");
-              $categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-              // Display the category data with links to each category page
-              foreach ($categories as $category) {
-                echo '<div class="products">';
-                echo '<a href="Category.php?category_id=' . $category['category_id'] . '">';
-                echo '<span class="text" style="color:#189116;font-family:auto;font-size:1.25rem;">' . $category['category_name'] . '</span>';
-                // echo '<span class="number mt-auto">' . $category['product_count'] . '</span>';
-                echo '</a>';
-                echo '</div>';
-              }
-            ?>
-          </div>
-        </div>
+    
             </div>
      
 <!-- -------------------------footer-------------------------------- -->
@@ -329,43 +331,42 @@ ob_end_flush(); // End output buffering and send output to the browser
 					<h4 class="footer-heading">Healthlist E-Commerce</h4>
 					<div class="footer-underline"></div>
 					<p>
-						Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-						Lorem Ipsum has been the industry's standard dummy text ever since the 1500s
+                    Healthlist was created to provide specialty products for those with specific health-food needs in various options and varieties.
 					</p>
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Quick Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Home</a></div>
-					<div class="mb-2"><a href="" class="text-white">About Us</a></div>
-					<div class="mb-2"><a href="" class="text-white">Contact Us</a></div>
+					<div class="mb-2"><a href="Home.php" class="text-white">Home</a></div>
+					<div class="mb-2"><a href="About" class="text-white">About Us</a></div>
+					<div class="mb-2"><a href="Contact" class="text-white">Contact Us</a></div>
 					<!-- <div class="mb-2"><a href="" class="text-white">Blogs</a></div>
 					<div class="mb-2"><a href="" class="text-white">Sitemaps</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Extra Links</h4>
 					<div class="footer-underline"></div>
-					<div class="mb-2"><a href="" class="text-white">Login</a></div>
-					<div class="mb-2"><a href="" class="text-white">Register</a></div>
-					<div class="mb-2"><a href="" class="text-white">Cart</a></div>
-					<div class="mb-2"><a href="" class="text-white">orders</a></div>
+					<div class="mb-2"><a href="user_login.php" class="text-white">Login</a></div>
+					<div class="mb-2"><a href="user_register.php" class="text-white">Register</a></div>
+					<div class="mb-2"><a href="Cart.php" class="text-white">Cart</a></div>
+					<!-- <div class="mb-2"><a href="" class="text-white">orders</a></div> -->
 				</div>
 				<div class="col-md-3">
 					<h4 class="footer-heading">Reach Us</h4>
 					<div class="footer-underline"></div>
 					<div class="mb-2">
 						<p>
-							<i class="fa fa-map-marker"></i> #444, some main road, some area, some street, bangalore, india - 560077
+							<i class="fa fa-map-marker"></i>Happy Street, Aqaba, Jordan
 						</p>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-phone"></i> +91 888-XXX-XXXX
+							<i class="fa fa-phone"></i> +962 345 67890
 						</a>
 					</div>
 					<div class="mb-2">
 						<a href="" class="text-white">
-							<i class="fa fa-envelope"></i> healthlist@gmail.com
+							<i class="fa fa-envelope"></i> Healthlist@gmail.com
 						</a>
 					</div>
 				</div>
@@ -376,7 +377,7 @@ ob_end_flush(); // End output buffering and send output to the browser
 		<div class="container">
 			<div class="row justify-content-center">
 				<div class="col-md-8">
-					<p class=""> &copy; 2022 Healthlist. Powered by Healthlist.</p>
+					<p class=""> &copy; 2023 Healthlist. Powered by Healthlist.</p>
 				</div>
 				<div class="col-md-4">
 					<div class="social-media">
@@ -390,6 +391,8 @@ ob_end_flush(); // End output buffering and send output to the browser
 		</div>
 	</div>
 </div>
+
+
 </body>
 <script src="./js/swiper-bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>

@@ -83,6 +83,6 @@
 .section-header.text-start::after {
   left: 0;
   transform: translateX(0);
+  
 }
-
 
