@@ -2,71 +2,79 @@
 
 include './Components/connect.php'; 
 
-// Start the session
+// start the session
 session_start();
 
-// Check if the form has been submitted
-if (isset($_POST['search'])) {
-    // Prepare the search query
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
     $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
 
-    // Bind the parameters
+    // bind the parameters
     $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
 
-    // Execute the query
+    // execute the query
     $stmt->execute();
 
-    // Fetch the results
+    // fetch the results
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Redirect to 404 page if no results found
+    // redirect to 404 page if no results found
     if (count($results) === 0) {
         header("Location: 404Page.php");
         exit();
     }
 
-    // Store the results in the session
+    // store the results in the session
     $_SESSION['results'] = $results;
 
-    // Redirect to the search results page
+    // redirect to the search results page
     header("Location: Search_result.php");
     exit();
 }
 
 // Check if the user is logged in
-$user = null;
-if (isset($_SESSION['user_id'])) {
+if(isset($_SESSION['user_id'])) {
     // Fetch the user's information from the database
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+  }
+
+
+
+// Check if the cart exists in the session
+if (!isset($_SESSION['cart'])) {
+    $_SESSION['cart'] = array();
 }
 
-// Set the user_id value
-$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-
-// Handle deleting a cart item
-if (isset($_POST['delete'])) {
-    $cart_id = $_POST['id'];
-    $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE id = ?");
-    $delete_cart_item->execute([$cart_id]);
+// Check if a product was added to the cart
+if (isset($_GET['product_id'])) {
+    $product_id = $_GET['product_id'];
+    $button_name = $_POST['addTOcart_'.$product_id];
+    
+    // Retrieve the product details from the form data
+    $name = $_POST['name'];
+    $price = $_POST['price'];
+    $image = $_POST['image'];
+    $quantity = $_POST['quantity'];
+    
+    // Add the product to the cart
+    $_SESSION['cart'][$product_id] = array(
+        'product_id' => $product_id,
+        'name' => $name,
+        'price' => $price,
+        'image' => $image,
+        'quantity' => $quantity
+    );
+    
+    // Redirect the user back to the "Sales Products" page or show a success message
+    header("Location: Cart.php"); // Replace "SalesProducts.php" with the actual page URL
+    
+    // Make sure to exit the script after redirecting
+    exit();
 }
-
-// Handle deleting all cart items
-if (isset($_GET['delete_all'])) {
-    $delete_cart_item = $conn->prepare("DELETE FROM `cart` WHERE user_id = ?");
-    $delete_cart_item->execute([$user_id]);
-    header('location:Cart.php');
-}
-
-// Handle updating the quantity of a cart item
-if (isset($_POST['update_qty'])) {
-    $cart_id = $_POST['id'];
-    $qty = $_POST['quantity'];
-    $update_qty = $conn->prepare("UPDATE `cart` SET quantity = ? WHERE id = ?");
-    $update_qty->execute([$qty, $cart_id]);
-}
-
 ?>
 
 
@@ -149,18 +157,39 @@ if (isset($_POST['update_qty'])) {
                     </form>
                 </div>
                     <div class="col-md-5 my-auto">
+                    <?php
+                        if(isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id'];
+
+                            // Retrieve the number of items in the cart
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM cart WHERE user_id = :user_id");
+                            $stmt->bindParam(':user_id', $user_id);
+                            $stmt->execute();
+                            $cart_count = $stmt->fetchColumn();
+
+                            // Retrieve the number of items in the wishlist
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM favorite WHERE user_id = :user_id");
+                            $stmt->bindParam(':user_id', $user_id);
+                            $stmt->execute();
+                            $wishlist_count = $stmt->fetchColumn();
+                        } else {
+                            $cart_count = 0;
+                            $wishlist_count = 0;
+                        }
+                        ?>
                         <ul class="nav justify-content-end "style="font-family:auto">
                             
-                            <li class="nav-item">
-                                <a class="nav-link" href="Cart.php">
-                                    <i class="fa fa-shopping-cart"></i> Cart (0)
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Wishlist.php">
-                                    <i class="fa fa-heart"></i> Wishlist (0)
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Cart.php">
+                                <i class="fa fa-shopping-cart"></i> Cart (<?php echo $cart_count; ?>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Wishlist.php">
+                                <i class="fa fa-heart"></i> Wishlist (<?php echo $wishlist_count; ?>)
+                            </a>
+                        </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
@@ -168,9 +197,6 @@ if (isset($_POST['update_qty'])) {
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <?php if(isset($user)): ?>
                                     <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
-                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
-                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
                                     <?php else: ?>
                                     <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
                                     <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
@@ -244,74 +270,127 @@ if (isset($_POST['update_qty'])) {
 </div>
 
 <!-- -------------------------cart-------------------------------- --> 
-<section class="products shopping-cart">
-
-<h3 class="heading">shopping cart</h3>
-
-<div class="box-container">
-
 <?php
-   $total_price = 0;
-   $select_cart = $conn->prepare("SELECT * FROM `cart` WHERE user_id = ?");
-   $select_cart->execute([$user_id]);
-   if($select_cart->rowCount() > 0){
-      while($fetch_cart = $select_cart->fetch(PDO::FETCH_ASSOC)){
-?>
-<form action="" method="post" class="box">
-   <input type="hidden" name="cart_id" value="<?= $fetch_cart['id']; ?>">
+// Step 1: Connect to the database using PDO
+include './Components/connect.php';
 
-   <a href="quick_view.php?pid=<?= $fetch_cart['product_id']; ?>" class="fas fa-eye"></a>
-   <img src="uploaded_img/<?= $fetch_cart['image']; ?>" alt="">
-   <div class="name"><?= $fetch_cart['name']; ?></div>
+// Step 2: Check if the 'cart' session variable is set and user is logged in
+if (isset($_SESSION['cart']) && isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
 
-   
-   <div class="flex">
-      <?php
-      $product_cart_id = $fetch_cart['product_id'];
-      $select_product = $conn->prepare("SELECT * FROM `products` WHERE product_id = $product_cart_id");
-      $select_product->execute();
-      if($select_product->rowCount() > 0){
+    // Loop through the cart items and insert them into the database
+    foreach ($_SESSION['cart'] as $product) {
+        $product_id = $product['product_id'];
+        $name = $product['name'];
+        $price = $product['price'];
+        $image = $product['image'];
+        $quantity = $product['quantity'];
 
-         while($fetch_product = $select_product->fetch(PDO::FETCH_ASSOC)){
-            $x = 0;
-         
-         if ($fetch_product['is_sale'] == 1){ ?>
-
-         <div class="price"><span><del style="text-decoration:line-through; color:silver">$<?= $fetch_product['price']; ?></del><ins style="color:rgb(0, 0, 69) !important;"> $<?=$fetch_product['price_discount'];?></ins> </span></div>
-
-         <?php $x = $fetch_product['price_discount']; } else { ?>
-
-         <div class="name" style="color:rgb(0, 0, 69) !important; padding:20px 0px">$<?= $fetch_product['price']; ?></div> <?php  $x = $fetch_product['price']; } ?>
-
-         <?php if ($fetch_product['category_id'] != '9'){?>
-
-         <input type="number" name="quantity" class="qty" min="1" max="<?= $fetch_product['store']-$fetch_product['sold'];?>" value="<?=$fetch_cart['quantity'];?>">
-         <button type="submit" class="fas fa-edit" name="update_qty"></button>
-         <?php } else { ?>
-         <input type="hidden" name="quantity" value="1">
-         <?php } } } ?> 
-   </div>
-   <div class="sub-total"> Sub Total : <span>$<?= $sub_total = ($x * $fetch_cart['quantity']); ?></span> </div>
-   <input type="submit" value="delete item" onclick="return confirm('delete this from cart?');" class="delete-btn" name="delete">
-</form>
-<?php
-$total_price += $sub_total;
-   }
-}else{
-   echo '<p class="empty">your cart is empty</p>';
+        // Step 3: Prepare and execute a query to insert the product into the cart table
+        $stmt = $conn->prepare('INSERT INTO cart (user_id, product_id, name, price, image, quantity) VALUES (?, ?, ?, ?, ?, ?)');
+        $stmt->execute([$user_id, $product_id, $name, $price, $image, $quantity]);
+    }
 }
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update'])) {
+    // Step 1: Connect to the database using PDO
+    include './Components/connect.php';
+
+    // Step 2: Check if the 'cart' session variable is set and user is logged in
+    if (isset($_SESSION['cart']) && isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $product_id = $_POST['product_id'];
+        $quantity = $_POST['quantity'];
+
+        // Step 3: Prepare and execute a query to update the quantity in the cart table
+        $stmt = $conn->prepare('UPDATE cart SET quantity = ? WHERE user_id = ? AND product_id = ?');
+        $stmt->execute([$quantity, $user_id, $product_id]);
+    }
+}
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['remove'])) {
+    // Step 1: Connect to the database using PDO
+    include './Components/connect.php';
+
+    // Step 2: Check if the 'cart' session variable is set and user is logged in
+    if (isset($_SESSION['cart']) && isset($_SESSION['user_id'])) {
+        $user_id = $_SESSION['user_id'];
+        $product_id = $_POST['product_id'];
+
+        // Step 3: Prepare and execute a query to remove the item from the cart table
+        $stmt = $conn->prepare('DELETE FROM cart WHERE user_id = ? AND product_id = ?');
+        $stmt->execute([$user_id, $product_id]);
+    }
+}
+
+
+
+
+// Step 4: Display the cart table
 ?>
+<table>
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php
+        // Step 5: Retrieve cart items from the database
+        $stmt = $conn->prepare('SELECT * FROM cart');
+        $stmt->execute();
+
+        $total = 0;
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $subtotal = $row['price'] * $row['quantity'];
+            $total += $subtotal;
+            ?>
+            <tr>
+                <td>
+                    <img src="./admin/uploaded_img/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>" width="50">
+                    <?php echo $row['name']; ?>
+                </td>
+                <td><?php echo $row['price']; ?> JOD</td>
+                <td>
+                    <form  method="POST">
+                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                        <input type="number" name="quantity" value="<?php echo $row['quantity']; ?>" min="1">
+                        <button type="submit" name="update">Update</button>
+                    </form>
+                </td>
+                <td><?php echo $subtotal; ?> JOD</td>
+                <td>
+                    <form  method="POST">
+                        <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
+                        <button type="submit" name="remove">Remove</button>
+                    </form>
+                </td>
+            </tr>
+            <?php
+        }
+        ?>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="3">Total</td>
+            <td><?php echo $total; ?> JOD</td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+
+<div class="cart-buttons">
+    <a href="Products.php" class="btn btn-outline-secondary">Continue Shopping</a>
+    <a href="Checkout.php" class="btn btn-primary">Proceed to Checkout</a>
 </div>
-
-<div class="cart-total">
-   <p>Total Price : <span>$<?= $total_price; ?></span></p>
-   <a href="products.php" class="option-btn">continue shopping</a>
-   <a href="cart.php?delete_all" class="delete-btn <?= ($total_price > 1)?'':'disabled'; ?>" onclick="return confirm('delete all from cart?');">delete all item</a>
-   <a href="checkout.php" class="btn <?= ($total_price > 1)?'':'disabled'; ?>">proceed to checkout</a>
-</div>
-
-</section>
-
 
 <!-- -------------------------footer-------------------------------- -->
 <div>

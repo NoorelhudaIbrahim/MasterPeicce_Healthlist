@@ -1,101 +1,50 @@
 <?php
 
+
 include './Components/connect.php'; 
 
-// Start the session
+// start the session
 session_start();
 
-// Check if the form has been submitted
-if (isset($_POST['search'])) {
-    // Prepare the search query
+// check if the form has been submitted
+if(isset($_POST['search'])) {
+
+    // prepare the search query
     $stmt = $conn->prepare("SELECT * FROM products WHERE name LIKE :name");
 
-    // Bind the parameters
+    // bind the parameters
     $stmt->bindValue(':name', '%' . $_POST['search'] . '%', PDO::PARAM_STR);
 
-    // Execute the query
+    // execute the query
     $stmt->execute();
 
-    // Fetch the results
+    // fetch the results
     $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Redirect to 404 page if no results found
+    // redirect to 404 page if no results found
     if (count($results) === 0) {
         header("Location: 404Page.php");
         exit();
     }
 
-    // Store the results in the session
+    // store the results in the session
     $_SESSION['results'] = $results;
 
-    // Redirect to the search results page
+    // redirect to the search results page
     header("Location: Search_result.php");
     exit();
 }
 
 // Check if the user is logged in
-$user = null;
-if (isset($_SESSION['user_id'])) {
+if(isset($_SESSION['user_id'])) {
     // Fetch the user's information from the database
     $stmt = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
     $stmt->execute([$_SESSION['user_id']]);
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-// Set the user_id value
-$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : '';
-
-// Initialize the cart session if it doesn't exist
-if (!isset($_SESSION['cart'])) {
-    $_SESSION['cart'] = [];
-}
-
-// Handle adding products to the cart
-if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['addTOcart'])) {
-    $product_id = $_POST['product_id'];
-    $product_name = $_POST['name'];
-    $product_price = $_POST['price'];
-    $product_image = $_POST['image'];
-    $product_quantity = $_POST['quantity'];
-
-    $check_product_id = $conn->prepare("SELECT product_id FROM `cart` WHERE user_id = ?");
-    $check_product_id->execute([$user_id]);
-
-    $flag = true;
-
-    while ($fetch_product = $check_product_id->fetch(PDO::FETCH_ASSOC)) {
-        if (in_array($product_id, $fetch_product)) {
-            $flag = false;
-            break;
-        }
-    }
-
-    if ($flag) {
-        if ($user_id > 0) {
-            $send_to_cart = $conn->prepare("INSERT INTO `cart` (user_id, product_id, name, price, image, quantity)
-                                          VALUES (?, ?, ?, ?, ?, ?)"); 
-            $send_to_cart->execute([$user_id, $product_id, $product_name, $product_price, $product_image, $product_quantity]);
-        } else {
-            $array_cart = [$product_id, $product_name, $product_price, $product_image, $product_quantity];
-            array_push($_SESSION['cart'], $array_cart);
-        }
-    }
-
-    // Update the $check_cart_numbers query to use the $product_id value
-    $check_cart_numbers = $conn->prepare("SELECT * FROM `cart` WHERE product_id = ? AND user_id = ?");
-    $check_cart_numbers->execute([$product_id, $user_id]);
-
-    if ($check_cart_numbers->rowCount() > 0) {
-        $message[] = 'Your Product <span style="color:red">Already</span> Added To Cart!';
-    }
-}
-
 
 ?>
-
-
-
-
 
 
 <!DOCTYPE html>
@@ -120,6 +69,8 @@ if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['addTOcart'])) {
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500&family=Cinzel+Decorative:wght@700&family=Mr+Dafoe&family=Tangerine:wght@700&display=swap" rel="stylesheet">
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="./css/swiper-bundle.min.css">
+    <!-- <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css"> -->
+
     <!-- ------------------external css--------------------- -->
     <!-- <link rel="stylesheet" href="css/style2.css"> -->
     <link rel="stylesheet" href="./css/home.css">
@@ -852,7 +803,6 @@ margin-right: 0%;
         <h2 class="text-center pb-5" style="color: #666; font-family: 'Oswald', sans-serif;">Sales Products</h2>
         <div class="slide-content">
             <div class="card-wrapper swiper-wrapper">
-
                 <?php
                 // Step 1: Connect to the database using PDO
                 include './Components/connect.php';
@@ -864,7 +814,6 @@ margin-right: 0%;
                 // Step 3: Loop through the results and output the product information
                 while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                     ?>
-
                     <div class="col-lg-3 col-md-4 col-sm-6 mb-30">
                         <div class="card">
                             <div class="sale-badge"><span>Sale</span></div>
@@ -872,37 +821,31 @@ margin-right: 0%;
                             <div class="product-thumbnail">
                                 <div class="img">
                                     <a href="Single_view_product.php">
-                                        <img src="./admin/uploaded_img/<?php echo $row['image']; ?>"
-                                            alt="<?php echo $row['name']; ?>">
+                                        <img src="./admin/uploaded_img/<?php echo $row['image']; ?>" alt="<?php echo $row['name']; ?>">
                                     </a>
                                 </div>
                                 <a class="wishlist" href="Wishlist.php"><i class="far fa-heart"></i></a>
                                 <div class="product-overly-btn">
-                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i
-                                            class="far fa-eye text-success"></i></a>
-                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i
-                                            class="far fa-heart text-success"></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i class="far fa-eye text-success"></i></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#QuickViewModal" href="#"><i class="far fa-heart text-success"></i></a>
                                 </div>
-                                <form action="Cart.php" method="POST">
+                                <form action="Cart.php?product_id=<?php echo $row['product_id']; ?>" method="POST">
                                     <input type="hidden" name="product_id" value="<?php echo $row['product_id']; ?>">
                                     <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
                                     <input type="hidden" name="price" value="<?php echo $row['price_discount']; ?>">
                                     <input type="hidden" name="image" value="<?php echo $row['image']; ?>">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="add-to-cart" name="addTOcart">Add To Cart</button>
+                                    <button type="submit" class="add-to-cart" name="addTOcart_<?php echo $row['product_id']; ?>">Add To Cart</button>
                                 </form>
                             </div>
                             <div class="product-content">
-                                <h4><a href="Single_view_product.php"
-                                        style="color:#253d4e; font-family:auto"><?php echo $row['name']; ?></a></h4>
+                                <h4><a href="Single_view_product.php" style="color:#253d4e; font-family:auto"><?php echo $row['name']; ?></a></h4>
                                 <div class="pricing">
-                                    <span><?php echo $row['price_discount']; ?> JOD <del><?php echo $row['price']; ?>
-                                            JOD </del></span>
+                                    <span><?php echo $row['price_discount']; ?> JOD <del><?php echo $row['price']; ?></del></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 <?php
                 }
                 ?>

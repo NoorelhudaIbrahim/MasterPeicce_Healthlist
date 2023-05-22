@@ -106,7 +106,84 @@ if(isset($_POST['submit'])){
     <title>Healthlist</title>
    
 </head>
-
+<style>
+    .signin-form {
+	max-width: 400px;
+	margin: 58px auto;
+	padding: 20px;
+	background-color: #f8f8f8;
+	border-radius: 5px;
+  }
+  
+  h2 {
+	text-align: center;
+	color: #333;
+  }
+  
+  hr {
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border: 0;
+	border-top: 1px solid #ccc;
+  }
+  
+  .form-group {
+	margin-bottom: 20px;
+  }
+  
+  .input-group-text {
+	background-color: #e9ecef;
+  }
+  
+  .form-control {
+	border-radius: 3px;
+  }
+  
+  .checkbox label {
+	font-weight: normal;
+  }
+  
+  .text {
+	color: #337ab7;
+  }
+  
+  .btn {
+	width: 100%;
+	transition: all 0.3s ease;
+  }
+  
+  .btn-primary {
+	background-color: #337ab7;
+	border-color: #337ab7;
+  }
+  
+  .btn-primary:hover,
+  .btn-primary:focus {
+	background-color: #286090;
+	border-color: #204d74;
+  }
+  
+  .text-center {
+	text-align: center;
+  }
+  
+  /* Animations */
+  @keyframes slideIn {
+	0% {
+	  opacity: 0;
+	  transform: translateY(50px);
+	}
+	100% {
+	  opacity: 1;
+	  transform: translateY(0);
+	}
+  }
+  
+  .signin-form {
+	animation: slideIn 0.5s ease;
+  }
+  
+</style>
 <body>
 <!-- -------------------------logo bar-------------------------------- -->
 <div class="main-navbar shadow-sm sticky-top">
@@ -208,41 +285,43 @@ if(isset($_POST['submit'])){
     </script>
 <!-- -------------------------Sign In Form-------------------------------- -->
 <div class="signin-form">
-    <form action="" method="post">
-		<h2>Welcome Back</h2>
-		<hr>
-   
-        <div class="form-group">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-paper-plane"></i>
-					</span>                    
-				</div>
-				<input type="email" class="form-control"name="email" required placeholder="enter your email" maxlength="50"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-			</div>
+  <form action="" method="post">
+    <h2>Welcome Back</h2>
+    <hr>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-paper-plane"></i>
+          </span>
         </div>
-		<div class="form-group">
-			<div class="input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">
-						<i class="fa fa-lock"></i>
-					</span>                    
-				</div>
-				<input type="password" class="form-control" name="pass" required placeholder="enter your password" maxlength="20"  class="box" oninput="this.value = this.value.replace(/\s/g, '')">
-			</div>
-        </div>
-		
-        <div class="form-group">
-			<label class="form-check-label"><input type="checkbox" required="required"> Remember me</label>
-            <a href="#" class="text">Forgot Password</a>
-		</div>
-		<div class="form-group">
-            <button type="submit" class="btn btn-primary btn-lg" value="login now"  name="submit">Sign In</button>
-        </div>
-    </form>
-	<div class="text-center">Don’t have an account? <a href="user_register.php">Register here</a></div>
+        <input type="email" class="form-control" name="email" required placeholder="Enter your email" maxlength="50" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+      </div>
     </div>
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">
+            <i class="fa fa-lock"></i>
+          </span>
+        </div>
+        <input type="password" class="form-control" name="pass" required placeholder="Enter your password" maxlength="20" class="box" oninput="this.value = this.value.replace(/\s/g, '')">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-check-label">
+        <input type="checkbox" required="required"> Remember me
+      </label>
+      <a href="#" class="text">Forgot Password</a>
+    </div>
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary btn-lg" value="login now" name="submit">Sign In</button>
+    </div>
+  </form>
+  <div class="text-center">Don’t have an account? <a href="user_register.php">Register here</a></div>
+</div>
+
+
 <!-- -------------------------footer-------------------------------- -->
 <div>
 	<div class="footer-area mt-5">

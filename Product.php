@@ -100,18 +100,39 @@ if(isset($_SESSION['user_id'])) {
                     </form>
                 </div>
                     <div class="col-md-5 my-auto">
+                    <?php
+                        if(isset($_SESSION['user_id'])) {
+                            $user_id = $_SESSION['user_id'];
+
+                            // Retrieve the number of items in the cart
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM cart WHERE user_id = :user_id");
+                            $stmt->bindParam(':user_id', $user_id);
+                            $stmt->execute();
+                            $cart_count = $stmt->fetchColumn();
+
+                            // Retrieve the number of items in the wishlist
+                            $stmt = $conn->prepare("SELECT COUNT(*) FROM favorite WHERE user_id = :user_id");
+                            $stmt->bindParam(':user_id', $user_id);
+                            $stmt->execute();
+                            $wishlist_count = $stmt->fetchColumn();
+                        } else {
+                            $cart_count = 0;
+                            $wishlist_count = 0;
+                        }
+                        ?>
                         <ul class="nav justify-content-end "style="font-family:auto">
                             
-                            <li class="nav-item">
-                                <a class="nav-link" href="Cart.php">
-                                    <i class="fa fa-shopping-cart"></i> Cart (0)
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="Wishlist.php">
-                                    <i class="fa fa-heart"></i> Wishlist (0)
-                                </a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Cart.php">
+                                <i class="fa fa-shopping-cart"></i> Cart (<?php echo $cart_count; ?>)
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="Wishlist.php">
+                                <i class="fa fa-heart"></i> Wishlist (<?php echo $wishlist_count; ?>)
+                            </a>
+                        </li>
+
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-user"></i> <?php echo isset($user) ? $user['name'] : 'Username'; ?>
@@ -119,9 +140,6 @@ if(isset($_SESSION['user_id'])) {
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <?php if(isset($user)): ?>
                                     <li><a class="dropdown-item" href="user_profile.php" style="color:#189116"><i class="fa fa-user"></i> Profile</a></li>
-                                    <!-- <li><a class="dropdown-item" href="Orders.php"><i class="fa fa-list"></i> My Orders</a></li> -->
-                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-heart"></i> My Wishlist</a></li> -->
-                                    <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-shopping-cart"></i> My Cart</a></li> -->
                                     <?php else: ?>
                                     <li><a class="dropdown-item" href="user_register.php"style="color:#189116"><i class="fa fa-user-plus"></i> Register</a></li>
                                     <li><a class="dropdown-item" href="user_login.php"style="color:#189116"><i class="fa fa-sign-in"></i> Login</a></li>
